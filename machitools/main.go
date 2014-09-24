@@ -23,7 +23,7 @@ func init() {
 
 	err := handler.SetRoutes(
 		// Traffic
-		rest.RouteObjectMethod("POST", "/api/#version/traffic/#traffic", &trafficItem, "PostTraffic"),
+		rest.RouteObjectMethod("POST", "/api/#version/traffic/#traffic/#direction", &trafficItem, "PostTraffic"),
 		rest.RouteObjectMethod("GET",  "/api/#version/traffic/#traffic/#direction", &trafficItem, "GetTraffic"),
 
 		// News

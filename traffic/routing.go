@@ -40,6 +40,12 @@ func (item *TrafficItem) PostTraffic(w rest.ResponseWriter, r *rest.Request) {
 		return
 	}
 
+	// check pathParam
+	if TrafficName(r.PathParam("traffic")) == "" || Direction(r.PathParam("direction")) == DirectionError {
+		rest.Error(w, "PathParam Error.", http.StatusBadRequest)
+		return
+	}
+
 	traffic := TrafficItem{}
 
 	if err := r.DecodeJsonPayload(&traffic); err != nil {
@@ -47,6 +53,7 @@ func (item *TrafficItem) PostTraffic(w rest.ResponseWriter, r *rest.Request) {
 		return
 	}
 
+	traffic.Direction = Direction(r.PathParam("direction"))
 	traffic.Author = u.String()
 	traffic.Date = time.Now()
 

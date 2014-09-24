@@ -58,7 +58,7 @@ func (item *NewsItem) GetNewsList(w rest.ResponseWriter, r *rest.Request) {
 func (item *NewsItem) PostNews(w rest.ResponseWriter, r *rest.Request) {
 	c := appengine.NewContext(r.Request)
 	u := user.Current(c)
-	if u == nil || user.IsAdmin(c) {
+	if u == nil || !user.IsAdmin(c) {
 		rest.Error(w, "Administrator login Required.", http.StatusUnauthorized)
 		return
 	}
