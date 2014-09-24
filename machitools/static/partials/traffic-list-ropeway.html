@@ -1,0 +1,70 @@
+<div class="panel panel-ropeway">
+  <div class="panel-heading">
+    <h3 class="panel-title">
+      ロープウェイ乗り場
+      <small>Ropeway station</small>
+    </h3>
+  </div>
+
+  <table class="table">
+    <thead>
+    <tr>
+      <th rowspan="2"
+          class="station col-xs-5">
+        駅名
+        <small>direction</small>
+      </th>
+      <td class="waiting col-xs-7">
+        待ち時間
+        <small>waiting time</small>
+      </td>
+    </tr>
+    <tr>
+      <td class="message col-xs-7">
+        備考
+        <small>message</small>
+      </td>
+    </tr>
+    </thead>
+
+    <tbody>
+    <!-- 上り -->
+    <tr>
+      <th rowspan="2"
+          class="station">
+        山麓駅(阿波おどり会館)<br>
+        (上り線)
+        <small>inbound</small>
+      </th>
+      <td class="waiting">
+        {{ ctrl.ropeway.inbound.Waiting }} 分
+        <small>minute(s)</small>
+      </td>
+    </tr>
+    <tr>
+      <td class="message">
+        {{ ctrl.ropeway.inbound.Message }}
+      </td>
+    </tr>
+
+    <!-- 下り -->
+    <tr>
+      <th rowspan="2"
+          class="station">
+        山頂駅<br>
+        (下り線)
+        <small>outbound</small>
+      </th>
+      <td class="waiting">
+        {{ ctrl.ropeway.outbound.Waiting }} 分
+        <small>minute(s)</small>
+      </td>
+    </tr>
+    <tr>
+      <td class="message">
+        {{ ctrl.ropeway.outbound.Message }}
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

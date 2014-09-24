@@ -1,0 +1,70 @@
+<div class="panel panel-bus">
+  <div class="panel-heading">
+    <h3 class="panel-title">
+      シャトルバス乗り場
+      <small>Shuttle bus station</small>
+    </h3>
+  </div>
+
+  <table class="table">
+    <thead>
+    <tr>
+      <th rowspan="2"
+          class="station col-xs-5">
+        駅名
+        <small>direction</small>
+      </th>
+      <td class="waiting col-xs-7">
+        待ち時間
+        <small>waiting time</small>
+      </td>
+    </tr>
+    <tr>
+      <td class="message col-xs-7">
+        備考
+        <small>message</small>
+      </td>
+    </tr>
+    </thead>
+
+    <tbody>
+    <!-- 上り -->
+    <tr>
+      <th rowspan="2"
+          class="station">
+        山麓駅(阿波おどり会館前)<br>
+        (上り線)
+        <small>inbound</small>
+      </th>
+      <td class="waiting">
+        {{ ctrl.bus.inbound.Waiting }} 分
+        <small>minute(s)</small>
+      </td>
+    </tr>
+    <tr>
+      <td class="message">
+        {{ ctrl.bus.inbound.Message }}
+      </td>
+    </tr>
+
+    <!-- 下り -->
+    <tr>
+      <th rowspan="2"
+          class="station">
+        かんぽの宿駅<br>
+        (下り線)
+        <small>outbound</small>
+      </th>
+      <td class="waiting">
+        {{ ctrl.bus.outbound.Waiting }} 分
+        <small>minute(s)</small>
+      </td>
+    </tr>
+    <tr>
+      <td class="message">
+        {{ ctrl.bus.outbound.Message }}
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

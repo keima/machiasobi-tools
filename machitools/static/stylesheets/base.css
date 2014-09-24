@@ -1,0 +1,37 @@
+/* Base CSS */
+body {
+    padding-top: 70px;
+}
+
+.nav-tabs {
+    margin-bottom: 20px;
+}
+
+/* panel */
+div.panel-ropeway {
+    border-color: #62ff9e;
+}
+div.panel-ropeway .panel-heading {
+    background-color: #62ff9e;
+    border-color: #62ff9e;
+}
+
+div.panel-bus {
+    border-color: #ffcf64;
+}
+div.panel-bus .panel-heading {
+    background-color: #ffcf64;
+    border-color: #ffcf64;
+}
+
+/* ui-bootstrap */
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+
+/* traffic info */
+th.station.station.station {
+    text-align: center;
+    vertical-align: middle;
+}
+tbody td.waiting {
+    font-size: xx-large;
+}

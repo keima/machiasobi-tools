@@ -1,0 +1,22 @@
+<div ng-controller="NewsListCtrl as ctrl">
+<table class="table">
+  <thead>
+  <tr>
+    <td>記事ID</td>
+    <td>投稿日</td>
+    <th>タイトル</th>
+    <td>編集</td>
+  </tr>
+  </thead>
+
+  <tbody>
+  <tr ng-repeat="item in ctrl.items">
+    <td> XXX </td>
+    <td>{{ item.Date }}</td>
+    <th>{{ item.Title }}</th>
+    <td> XXX </td>
+  </tr>
+  </tbody>
+
+</table>
+</div>
