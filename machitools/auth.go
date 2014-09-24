@@ -20,6 +20,7 @@ func Login(w rest.ResponseWriter, r *rest.Request) {
 		w.Header().Set("Location", url)
 		w.WriteHeader(http.StatusFound)
 	} else {
+		w.Header().Set("Location", "http://localhost:3000")
 		w.WriteHeader(http.StatusFound)
 	}
 }
@@ -37,6 +38,7 @@ func Logout(w rest.ResponseWriter, r *rest.Request) {
 		w.Header().Set("Location", url)
 		w.WriteHeader(http.StatusFound)
 	} else {
+		w.Header().Set("Location", "http://localhost:3000")
 		w.WriteHeader(http.StatusFound)
 	}
 }

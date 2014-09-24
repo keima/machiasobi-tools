@@ -23,18 +23,18 @@ func init() {
 
 	err := handler.SetRoutes(
 		// Traffic
-		rest.RouteObjectMethod("POST", "/#version/traffic/#traffic", &trafficItem, "PostTraffic"),
-		rest.RouteObjectMethod("GET",  "/#version/traffic/#traffic/#direction", &trafficItem, "GetTraffic"),
+		rest.RouteObjectMethod("POST", "/api/#version/traffic/#traffic", &trafficItem, "PostTraffic"),
+		rest.RouteObjectMethod("GET",  "/api/#version/traffic/#traffic/#direction", &trafficItem, "GetTraffic"),
 
 		// News
-		rest.RouteObjectMethod("GET", "/#version/news", &newsItem, "GetNewsList"),
-		rest.RouteObjectMethod("GET", "/#version/news/#id", &newsItem, "GetNews"),
-		rest.RouteObjectMethod("POST", "/#version/news/#id", &newsItem, "PostNews"),
+		rest.RouteObjectMethod("GET",  "/api/#version/news", &newsItem, "GetNewsList"),
+		rest.RouteObjectMethod("GET",  "/api/#version/news/#id", &newsItem, "GetNews"),
+		rest.RouteObjectMethod("POST", "/api/#version/news/#id", &newsItem, "PostNews"),
 
 		// Auth
-		&rest.Route{"GET", "/auth/check", CheckStatus},
-		&rest.Route{"GET", "/auth/login", Login},
-		&rest.Route{"GET", "/auth/logout", Logout},
+		&rest.Route{"GET", "/api/#version/auth/check", CheckStatus},
+		&rest.Route{"GET", "/api/#version/auth/login", Login},
+		&rest.Route{"GET", "/api/#version/auth/logout", Logout},
 	)
 
 	if err != nil {
