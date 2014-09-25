@@ -100,7 +100,7 @@ angular.module('myApp', ['ngRoute', 'restangular', 'ui.router', 'ui.bootstrap'])
   })
 
 
-  .controller('TrafficInputCtrl', function (Restangular) {
+  .controller('TrafficInputCtrl', function ($scope, Restangular) {
     var self = this;
 
     // form lock
@@ -129,7 +129,33 @@ angular.module('myApp', ['ngRoute', 'restangular', 'ui.router', 'ui.bootstrap'])
 
     this.closeAlert = function () {
       self.alert = null;
+    };
+
+    // メッセージを引き継ぐ
+    $scope.$watch(function () {
+      return self.traffic;
+    }, function (newVal, oldVal) {
+      getTrafficMessage();
+    });
+
+    $scope.$watch(function () {
+      return self.direction;
+    }, function (newVal, oldVal) {
+      getTrafficMessage();
+    });
+
+    function getTrafficMessage () {
+      if (!_.isUndefined(self.traffic) && !_.isUndefined(self.direction)) {
+        Restangular.all('traffic').all(self.traffic).get(self.direction)
+          .then(function (result) {
+            self.trafficItem.Message = result.Message;
+          }, function () {
+            self.trafficItem.Message = "";
+          });
+      }
     }
+
+
   })
 
 
