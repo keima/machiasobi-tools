@@ -27,3 +27,10 @@ indexes:
   - name: Direction
   - name: Date
     direction: desc
+
+- kind: Traffic-ropeway
+  properties:
+  - name: Direction
+  - name: Message
+  - name: Date
+    direction: desc

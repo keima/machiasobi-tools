@@ -11,25 +11,23 @@ const KindNamePrefix = "Traffic-"
 
 // Trafficのモデル
 type TrafficItem struct {
-	Waiting int
-	Message string
-	Author  string
+	Waiting   int
+	Message   string
+	Author    string
 	Direction int
-	Date    time.Time
+	Date      time.Time
 }
 
 // Directionの方向
 const (
 	DirectionError = -1
 
-	DirectionInbound = 0
+	DirectionInbound  = 0
 	DirectionOutbound = 1
 )
 
 // 見つからなかったよエラー
 var ErrItemNotFound = errors.New("Item is not found")
-
-
 
 func (item *TrafficItem) save(c appengine.Context, trafficName string) (*datastore.Key, error) {
 	key := datastore.NewIncompleteKey(c, KindName(trafficName), nil)
@@ -42,12 +40,12 @@ func (TrafficItem) loadLatest(c appengine.Context, trafficName string, direction
 	q := datastore.NewQuery(KindName(trafficName))
 	q = q.Filter("Direction = ", direction).Order("-Date").Limit(1)
 
-	if _,err := q.GetAll(c, &items); err != nil {
+	if _, err := q.GetAll(c, &items); err != nil {
 		return nil, err
 	}
 
 	if len(items) == 0 {
-		return nil ,ErrItemNotFound
+		return nil, ErrItemNotFound
 	}
 
 	return &items[0], nil
