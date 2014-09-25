@@ -14,6 +14,9 @@ angular.module('myApp', ['ngRoute', 'restangular', 'ui.router', 'ui.bootstrap'])
   .config(function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise("/");
 
+    $urlRouterProvider.when('/traffic', '/traffic/list');
+    $urlRouterProvider.when('/news', '/news/list');
+
     $stateProvider
       .state('root', {
         url: '/',
@@ -47,25 +50,95 @@ angular.module('myApp', ['ngRoute', 'restangular', 'ui.router', 'ui.bootstrap'])
       })
     ;
   })
-  .run(function ($rootScope, $state) {
+
+  .service('User', function ($rootScope) {
+    var user = {};
+    var BROADCAST_NAME_CHANGED = 'UserDataIsChanged';
+
+    function setUser(_user) {
+      user = _user;
+      $rootScope.$broadcast(BROADCAST_NAME_CHANGED);
+    }
+
+    function getUser() {
+      return user;
+    }
+
+    function isLogin() {
+      return !_.isEmpty(user)
+    }
+
+    function isAdmin() {
+      return isLogin() && user.Admin;
+    }
+
+    return {
+      BROADCAST_NAME_CHANGED: BROADCAST_NAME_CHANGED,
+
+      setUser: setUser,
+      getUser: getUser,
+      isLogin: isLogin,
+      isAdmin: isAdmin
+    }
+
+  })
+
+
+  .run(function ($rootScope, $state, Restangular, User) {
     // convenience state
     $rootScope.$state = $state;
-  })
-  // Header Controller
-  .controller('HeaderCtrl', function (Restangular, ApiUrl) {
-    var self = this;
 
-    this.apiUrl = ApiUrl;
-    this.loggedin = false;
-
+    // get user data
     Restangular.all('auth').get('check')
       .then(function (result) {
         console.log(result);
-        self.loggedin = true;
+        User.setUser(result);
       }, function (reason) {
         console.log(reason);
-        self.loggedin = false;
+        User.setUser({});
       });
+
+  })
+
+  .controller('RootCtrl', function ($scope, User) {
+    var self = this;
+    this.showError = false;
+
+    function renderAlertIfNeeded() {
+      if (User.isAdmin()) {
+        self.showError = false;
+      } else {
+        self.showError = User.isLogin();
+      }
+    }
+
+    renderAlertIfNeeded();
+
+    $scope.$on(User.BROADCAST_NAME_CHANGED, function () {
+      renderAlertIfNeeded();
+    })
+
+  })
+
+  // Header Controller
+  .controller('HeaderCtrl', function ($scope, ApiUrl, User) {
+    var self = this;
+    this.apiUrl = ApiUrl;
+    this.loggedin = User.isLogin();
+
+    $scope.$on(User.BROADCAST_NAME_CHANGED, function () {
+      self.loggedin = User.isLogin();
+    })
+  })
+
+  .controller('TabCtrl', function ($scope, User) {
+    var self = this;
+
+    self.isAdmin = User.isAdmin();
+
+    $scope.$on(User.BROADCAST_NAME_CHANGED, function () {
+      self.isAdmin = User.isAdmin();
+    })
   })
 
 
@@ -144,7 +217,7 @@ angular.module('myApp', ['ngRoute', 'restangular', 'ui.router', 'ui.bootstrap'])
       getTrafficMessage();
     });
 
-    function getTrafficMessage () {
+    function getTrafficMessage() {
       if (!_.isUndefined(self.traffic) && !_.isUndefined(self.direction)) {
         Restangular.all('traffic').all(self.traffic).get(self.direction)
           .then(function (result) {
