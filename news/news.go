@@ -1,98 +1,59 @@
-// Package news はnews(簡易ブログ)を提供するパッケージです
 package news
 
 import (
 	"appengine"
-	"appengine/user"
-	"github.com/ant0ine/go-json-rest/rest"
-	"net/http"
-	"strconv"
-	"time"
+	"appengine/datastore"
+	"github.com/knightso/base/gae/model"
 )
 
-// 登録されているニュースを指定件数取得します
-//
-// URL Parameter:
-// first DB登録されているリストのどの場所から取得開始するか(デフォルトは 0)
-//       (datastoreの都合、正確な場所を取れるかどうかは怪しい)
-// size  何件取得するか(デフォルトは10)
-// private Publicでないものも表示するか（ログインしていないと有効化できない）
-//
-// Response:
-// json: NewsItemのリスト
-func (item *NewsItem) GetNewsList(w rest.ResponseWriter, r *rest.Request) {
-	c := appengine.NewContext(r.Request)
+const (
+	KindName = "News"
+)
 
-	first, err := strconv.Atoi(r.FormValue("first"))
-	if err != nil {
-		first = 0
-	}
-
-	size, err := strconv.Atoi(r.FormValue("size"))
-	if err != nil {
-		size = 10
-	}
-
-	onlyPublic := true
-	if r.Request.FormValue("private") == "true" {
-		if u := user.Current(c); u != nil && user.IsAdmin(c) {
-			onlyPublic = false
-		}
-	}
-
-	itemList, err := item.loadAll(c, first, size, onlyPublic)
-	if err != nil {
-		rest.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	w.WriteJson(&itemList)
+// ニュースのモデル
+type NewsItem struct {
+	model.Meta
+	Id       string `datastore:"-"`
+	Author   string `json:"-"`
+	Title    string
+	Article  string
+	IsPublic bool
 }
 
-// ニュースを登録します。認証必須です。
-//
-// JSON Parameter:
-// Title
-// Article
-// IsPublic 公開するかどうか
-func (item *NewsItem) PostNews(w rest.ResponseWriter, r *rest.Request) {
-	c := appengine.NewContext(r.Request)
-	u := user.Current(c)
-	if u == nil || !user.IsAdmin(c) {
-		rest.Error(w, "Administrator login Required.", http.StatusUnauthorized)
-		return
-	}
-
-	news := NewsItem{}
-
-	if err := r.DecodeJsonPayload(&news); err != nil {
-		rest.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	news.Author = u.String()
-	news.Date = time.Now()
-
-	keyName := r.PathParam("id")
-
-	if _, err := news.save(c, keyName); err != nil {
-		rest.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	w.WriteJson(&news)
+func (item *NewsItem) Save(c appengine.Context, keyName string) error {
+	key := datastore.NewKey(c, KindName, keyName, 0, nil)
+	item.SetKey(key)
+	return model.Put(c, item)
 }
 
-func (item *NewsItem) GetNews(w rest.ResponseWriter, r *rest.Request) {
-	c := appengine.NewContext(r.Request)
+func (news *NewsItem) Load(c appengine.Context, keyName string) error {
+	key := datastore.NewKey(c, KindName, keyName, 0, nil)
 
-	keyName := r.PathParam("id")
-
-	news, err := item.load(c, keyName)
-	if err != nil {
-		rest.Error(w, err.Error(), http.StatusInternalServerError)
-		return
+	if err := model.Get(c, key, news); err != nil {
+		return err
 	}
 
-	w.WriteJson(&news)
+	// keyNameでもいいけれど。。。
+	news.Id = news.GetKey().StringID()
+
+	return nil
+}
+
+func LoadAll(c appengine.Context, first int, size int, publicOnly bool) (*[]NewsItem, error) {
+	items := make([]NewsItem, 0, size)
+	q := datastore.NewQuery(KindName).Order("-UpdatedAt").Offset(first).Limit(size)
+
+	if (publicOnly) {
+		q = q.Filter("IsPublic = ", true)
+	}
+
+	if err := model.ExecuteQuery(c, q, &items); err != nil {
+		return nil, err
+	}
+
+	for index, item := range items {
+		items[index].Id = item.GetKey().StringID();
+	}
+
+	return &items, nil
 }

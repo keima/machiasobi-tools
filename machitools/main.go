@@ -10,6 +10,8 @@ import (
 	"github.com/keima/machitools/traffic"
 )
 
+const PathPrefix = "/api/#version"
+
 func init() {
 	handler := rest.ResourceHandler{
 		EnableRelaxedContentType: true,
@@ -18,23 +20,29 @@ func init() {
 		},
 	}
 
-	trafficItem := traffic.TrafficItem{}
-	newsItem := news.NewsItem{}
-
 	err := handler.SetRoutes(
 		// Traffic
-		rest.RouteObjectMethod("POST", "/api/#version/traffic/#traffic/#direction", &trafficItem, "PostTraffic"),
-		rest.RouteObjectMethod("GET",  "/api/#version/traffic/#traffic/#direction", &trafficItem, "GetTraffic"),
+		&rest.Route{"POST", PathPrefix + "/traffic/:traffic/:direction", traffic.PostTraffic},
+		&rest.Route{"GET",  PathPrefix + "/traffic/:traffic/:direction", traffic.GetTraffic},
+
+		// Ticket
+		/*
+		&rest.Route{"GET",  PathPrefix + "/tickets/list",       &trafficItem, "GetTraffic"},
+		&rest.Route{"GET",  PathPrefix + "/tickets/:id",        &trafficItem, "GetTraffic"},
+		&rest.Route{"POST", PathPrefix + "/tickets/:id/update", &trafficItem, "GetTraffic"},
+		&rest.Route{"POST", PathPrefix + "/tickets/:id/done",   &trafficItem, "GetTraffic"},
+		&rest.Route{"POST", PathPrefix + "/tickets/:id/delete", &trafficItem, "GetTraffic"},
+		*/
 
 		// News
-		rest.RouteObjectMethod("GET",  "/api/#version/news", &newsItem, "GetNewsList"),
-		rest.RouteObjectMethod("GET",  "/api/#version/news/#id", &newsItem, "GetNews"),
-		rest.RouteObjectMethod("POST", "/api/#version/news/#id", &newsItem, "PostNews"),
+		&rest.Route{"GET",  PathPrefix + "/news",     news.GetNewsList},
+		&rest.Route{"GET",  PathPrefix + "/news/:id", news.GetNews},
+		&rest.Route{"POST", PathPrefix + "/news/:id", news.PostNews},
 
 		// Auth
-		&rest.Route{"GET", "/api/#version/auth/check", CheckStatus},
-		&rest.Route{"GET", "/api/#version/auth/login", Login},
-		&rest.Route{"GET", "/api/#version/auth/logout", Logout},
+		&rest.Route{"GET", PathPrefix + "/auth/check",  CheckStatus},
+		&rest.Route{"GET", PathPrefix + "/auth/login",  Login},
+		&rest.Route{"GET", PathPrefix + "/auth/logout", Logout},
 	)
 
 	if err != nil {

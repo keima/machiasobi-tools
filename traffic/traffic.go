@@ -3,19 +3,20 @@ package traffic
 import (
 	"appengine"
 	"appengine/datastore"
-	"time"
 	"errors"
+	"github.com/knightso/base/gae/model"
+	"strconv"
+	"log"
 )
-
-const KindNamePrefix = "Traffic-"
 
 // Trafficのモデル
 type TrafficItem struct {
+	model.Meta
+	Id        string `datastore:"-"`
 	Waiting   int
 	Message   string
-	Author    string
+	Author    string `json:"-"`
 	Direction int
-	Date      time.Time
 }
 
 // Directionの方向
@@ -29,18 +30,19 @@ const (
 // 見つからなかったよエラー
 var ErrItemNotFound = errors.New("Item is not found")
 
-func (item *TrafficItem) save(c appengine.Context, trafficName string) (*datastore.Key, error) {
-	key := datastore.NewIncompleteKey(c, KindName(trafficName), nil)
-	return datastore.Put(c, key, item)
+func (item *TrafficItem) Save(c appengine.Context, trafficName string) error {
+	key := datastore.NewIncompleteKey(c, kindName(trafficName), nil)
+	item.SetKey(key)
+	return model.Put(c, item)
 }
 
-func (TrafficItem) loadLatest(c appengine.Context, trafficName string, direction int) (*TrafficItem, error) {
+func LoadLatest(c appengine.Context, trafficName string, direction int) (*TrafficItem, error) {
 	items := make([]TrafficItem, 0, 1)
 
-	q := datastore.NewQuery(KindName(trafficName))
-	q = q.Filter("Direction = ", direction).Order("-Date").Limit(1)
+	q := datastore.NewQuery(kindName(trafficName))
+	q = q.Filter("Direction = ", direction).Order("-CreatedAt").Limit(1)
 
-	if _, err := q.GetAll(c, &items); err != nil {
+	if err := model.ExecuteQuery(c, q, &items); err != nil {
 		return nil, err
 	}
 
@@ -48,9 +50,17 @@ func (TrafficItem) loadLatest(c appengine.Context, trafficName string, direction
 		return nil, ErrItemNotFound
 	}
 
+	log.Println(items[0].GetKey().IntID())
+
+	for i, item := range items {
+		items[i].Id = strconv.FormatInt(item.GetKey().IntID(), 10)
+	}
+
 	return &items[0], nil
 }
 
-func KindName(trafficName string) string {
-	return KindNamePrefix + trafficName
+const kindNamePrefix = "Traffic-"
+
+func kindName(trafficName string) string {
+	return kindNamePrefix + trafficName
 }

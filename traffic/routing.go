@@ -5,35 +5,39 @@ import (
 	"appengine"
 	"net/http"
 	"appengine/user"
-	"time"
 )
 
-func (item *TrafficItem) GetTraffic(w rest.ResponseWriter, r *rest.Request) {
+func GetTraffic(w rest.ResponseWriter, r *rest.Request) {
 	c := appengine.NewContext(r.Request)
 
-	trafficName := TrafficName(r.PathParam("traffic"))
+	trafficName := trafficName(r.PathParam("traffic"))
 	if trafficName == "" {
 		rest.Error(w, "Traffic is allowed bus or ropeway.", http.StatusBadRequest)
 		return
 	}
 
-	direction := Direction(r.PathParam("direction"))
+	direction := direction(r.PathParam("direction"))
 	if direction == DirectionError {
 		rest.Error(w, "Direction is allowed inbound or outbound.", http.StatusBadRequest)
 		return
 	}
 
-	i, err := item.loadLatest(c, trafficName, direction)
+	item, err := LoadLatest(c, trafficName, direction)
 	if err != nil {
-		rest.Error(w, err.Error(), http.StatusInternalServerError)
+		if err == ErrItemNotFound {
+			rest.Error(w, err.Error(), http.StatusNotFound)
+		} else {
+			rest.Error(w, err.Error(), http.StatusInternalServerError)
+		}
 		return
 	}
 
-	w.WriteJson(i)
+	w.WriteJson(item)
 }
 
-func (item *TrafficItem) PostTraffic(w rest.ResponseWriter, r *rest.Request) {
+func PostTraffic(w rest.ResponseWriter, r *rest.Request) {
 	c := appengine.NewContext(r.Request)
+
 	u := user.Current(c)
 	if u == nil || !user.IsAdmin(c) {
 		rest.Error(w, "Administrator login Required.", http.StatusUnauthorized)
@@ -41,7 +45,7 @@ func (item *TrafficItem) PostTraffic(w rest.ResponseWriter, r *rest.Request) {
 	}
 
 	// check pathParam
-	if TrafficName(r.PathParam("traffic")) == "" || Direction(r.PathParam("direction")) == DirectionError {
+	if trafficName(r.PathParam("traffic")) == "" || direction(r.PathParam("direction")) == DirectionError {
 		rest.Error(w, "PathParam Error.", http.StatusBadRequest)
 		return
 	}
@@ -53,27 +57,26 @@ func (item *TrafficItem) PostTraffic(w rest.ResponseWriter, r *rest.Request) {
 		return
 	}
 
-	traffic.Direction = Direction(r.PathParam("direction"))
+	traffic.Direction = direction(r.PathParam("direction"))
 	traffic.Author = u.String()
-	traffic.Date = time.Now()
 
-	if _,err := traffic.save(c, TrafficName(r.PathParam("traffic"))); err != nil {
+	if err := traffic.Save(c, trafficName(r.PathParam("traffic"))); err != nil {
 		rest.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 	w.WriteJson(&traffic)
 }
 
-func TrafficName(trafficName string) string{
-	switch trafficName {
+func trafficName(name string) string{
+	switch name {
 	case "bus", "ropeway":
-		return trafficName
+		return name
 	default:
 		return ""
 	}
 }
 
-func Direction(directionName string) int {
+func direction(directionName string) int {
 	switch directionName {
 	case "inbound":
 		return DirectionInbound
