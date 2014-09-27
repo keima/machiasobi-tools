@@ -19,7 +19,19 @@ indexes:
 - kind: Traffic-bus
   properties:
   - name: Direction
+  - name: CreatedAt
+    direction: desc
+
+- kind: Traffic-bus
+  properties:
+  - name: Direction
   - name: Date
+    direction: desc
+
+- kind: Traffic-ropeway
+  properties:
+  - name: Direction
+  - name: CreatedAt
     direction: desc
 
 - kind: Traffic-ropeway

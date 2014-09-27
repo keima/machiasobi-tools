@@ -48,6 +48,10 @@ angular.module('myApp', ['ngRoute', 'restangular', 'ui.router', 'ui.bootstrap'])
         url: '/input',
         templateUrl: 'partials/news-input.html'
       })
+      .state('news.edit', {
+        url: '/input/:id',
+        templateUrl: 'partials/news-input.html'
+      })
     ;
   })
 
@@ -232,8 +236,10 @@ angular.module('myApp', ['ngRoute', 'restangular', 'ui.router', 'ui.bootstrap'])
   })
 
 
-  .controller('NewsInputCtrl', function (Restangular) {
+  .controller('NewsInputCtrl', function ($stateParams, Restangular) {
     var self = this;
+
+    this.itemIdParam = $stateParams.id || null;
 
     this.lock = false;    // form lock
     this.alert = null;
@@ -244,6 +250,18 @@ angular.module('myApp', ['ngRoute', 'restangular', 'ui.router', 'ui.bootstrap'])
       'Article': null,
       'IsPublic': false
     };
+
+    if (!_.isNull(this.itemIdParam)) {
+      Restangular.all('news').get(self.itemIdParam)
+        .then(function (result) {
+          self.newsId = result.Id;
+          self.newsItem = {
+            'Title': result.Title,
+            'Article': result.Article,
+            'IsPublic': result.IsPublic
+          }
+        });
+    }
 
     this.click = function () {
       self.lock = true;
@@ -268,7 +286,6 @@ angular.module('myApp', ['ngRoute', 'restangular', 'ui.router', 'ui.bootstrap'])
       private: true
     })
       .then(function (results) {
-        console.log(results)
         self.items = results;
       }, function (reason) {
         console.log(reason);
