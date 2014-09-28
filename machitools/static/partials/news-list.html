@@ -2,6 +2,7 @@
   <table class="table table-hover">
     <thead>
     <tr>
+      <td></td>
       <td>記事ID</td>
       <td>投稿日</td>
       <th>タイトル</th>
@@ -11,6 +12,10 @@
 
     <tbody>
     <tr ng-repeat="item in ctrl.items">
+      <td>
+        <span class="text-info glyphicon glyphicon-eye-open" ng-show="item.IsPublic"></span>
+        <span class="text-warning glyphicon glyphicon-eye-close" ng-hide="item.IsPublic"></span>
+      </td>
       <td>{{ item.Id }}</td>
       <td>{{ item.createdAt | date:"yyyy/MM/dd HH:mm" }}</td>
       <th>{{ item.Title }}</th>

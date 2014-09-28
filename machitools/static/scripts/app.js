@@ -1,14 +1,10 @@
 'use strict';
 
-angular.module('myApp', ['ngRoute', 'restangular', 'ui.router', 'ui.bootstrap'])
+angular.module('myApp', ['restangular', 'ui.router', 'ui.bootstrap'])
   .constant('ApiUrl', '/api/v1')
   // Restangular config
   .config(function (RestangularProvider, ApiUrl) {
     RestangularProvider.setBaseUrl(ApiUrl);
-  })
-  // RouteProvider config
-  .config(function ($routeProvider) {
-
   })
   // AngularUI Router
   .config(function ($stateProvider, $urlRouterProvider) {
@@ -59,20 +55,20 @@ angular.module('myApp', ['ngRoute', 'restangular', 'ui.router', 'ui.bootstrap'])
     var user = {};
     var BROADCAST_NAME_CHANGED = 'UserDataIsChanged';
 
-    function setUser(_user) {
+    function setUser (_user) {
       user = _user;
       $rootScope.$broadcast(BROADCAST_NAME_CHANGED);
     }
 
-    function getUser() {
+    function getUser () {
       return user;
     }
 
-    function isLogin() {
+    function isLogin () {
       return !_.isEmpty(user)
     }
 
-    function isAdmin() {
+    function isAdmin () {
       return isLogin() && user.Admin;
     }
 
@@ -108,7 +104,7 @@ angular.module('myApp', ['ngRoute', 'restangular', 'ui.router', 'ui.bootstrap'])
     var self = this;
     this.showError = false;
 
-    function renderAlertIfNeeded() {
+    function renderAlertIfNeeded () {
       if (User.isAdmin()) {
         self.showError = false;
       } else {
@@ -221,7 +217,7 @@ angular.module('myApp', ['ngRoute', 'restangular', 'ui.router', 'ui.bootstrap'])
       getTrafficMessage();
     });
 
-    function getTrafficMessage() {
+    function getTrafficMessage () {
       if (!_.isUndefined(self.traffic) && !_.isUndefined(self.direction)) {
         Restangular.all('traffic').all(self.traffic).get(self.direction)
           .then(function (result) {
