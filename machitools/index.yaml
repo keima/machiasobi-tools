@@ -13,12 +13,6 @@ indexes:
 - kind: News
   properties:
   - name: IsPublic
-  - name: Date
-    direction: desc
-
-- kind: News
-  properties:
-  - name: IsPublic
   - name: UpdatedAt
     direction: desc
 

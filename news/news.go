@@ -16,7 +16,7 @@ type NewsItem struct {
 	Id       string `datastore:"-"`
 	Author   string `json:"-"`
 	Title    string
-	Article  string
+	Article  string `datastore:",noindex"`
 	IsPublic bool
 }
 
