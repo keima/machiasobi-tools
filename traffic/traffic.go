@@ -6,7 +6,6 @@ import (
 	"errors"
 	"github.com/knightso/base/gae/model"
 	"strconv"
-	"log"
 )
 
 // Trafficのモデル
@@ -49,8 +48,6 @@ func LoadLatest(c appengine.Context, trafficName string, direction int) (*Traffi
 	if len(items) == 0 {
 		return nil, ErrItemNotFound
 	}
-
-	log.Println(items[0].GetKey().IntID())
 
 	for i, item := range items {
 		items[i].Id = strconv.FormatInt(item.GetKey().IntID(), 10)
