@@ -9,7 +9,7 @@
                class="form-control"
                ng-model="ctrl.newsId"
                placeholder="ニュースIDを入力(英数字のみ)"
-               ng-pattern="/^[a-zA-Z0-9]*$/"
+               ng-pattern="/^[a-zA-Z0-9-_]*$/"
                ng-disabled="ctrl.itemIdParam"
                required>
       </div>
