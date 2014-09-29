@@ -16,6 +16,12 @@ indexes:
   - name: Date
     direction: desc
 
+- kind: News
+  properties:
+  - name: IsPublic
+  - name: UpdatedAt
+    direction: desc
+
 - kind: Traffic-bus
   properties:
   - name: Direction
