@@ -1,0 +1,15 @@
+language: go
+go:
+- "1.2"
+
+env:
+- secure: "P8lt9Gncz4wvDWvdRY6QistQX1GCuV3hfzf4Ha7yVGM6PQdGDvN7AcDcpMnVb7L5jI1gfbdICY3b+nXKcLfGEOZHw2TKXoQ+WbskKKHvvY0XH5Aow4qGYnyb8TFxAsRBzqm9CojGbqFqCyoWW3AwJD5sGms+sH1Gz8t0Ddy8MLU="
+
+branches:
+  only:
+    - release
+
+install: ./script/ci/install.sh
+before_script: ./script/ci/before_script.sh
+script: ./script/ci/script.sh
+after_success: ./script/ci/after_success.sh
