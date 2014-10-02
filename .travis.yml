@@ -3,13 +3,18 @@ go:
 - "1.2"
 
 env:
-- secure: "P8lt9Gncz4wvDWvdRY6QistQX1GCuV3hfzf4Ha7yVGM6PQdGDvN7AcDcpMnVb7L5jI1gfbdICY3b+nXKcLfGEOZHw2TKXoQ+WbskKKHvvY0XH5Aow4qGYnyb8TFxAsRBzqm9CojGbqFqCyoWW3AwJD5sGms+sH1Gz8t0Ddy8MLU="
+- secure: "gAxbyH3SKSDwNZXTZGeLrDTXiF8LBqLe/s/2I2v3hWftIAAr8r+ajBKMo3qg5MWWpOzJ2KIiwkyKP54V4aPRxn4qCtplTMBRdDu6bEwD6LyPmaT7ISGtv3RW6ePhIQiut4B2p1T7zrZNauneUgns2O7xkwtViPlXcPwTB5HcDd8="
 
 branches:
   only:
     - release
 
 install: ./script/ci/install.sh
-before_script: ./script/ci/before_script.sh
+
+before_script:
+- export GO_APPENGINE_PATH=~/go_appengine
+- ./script/ci/before_script.sh
+
 script: ./script/ci/script.sh
+
 after_success: ./script/ci/after_success.sh

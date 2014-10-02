@@ -1,7 +1,12 @@
 #!/bin/sh
 
 echo "running goapp get to fetch dependencies..."
-cd ./github.com/keima/machitools/machitools
-../../../../../go_appengine/goapp get
+
+cd $TRAVIS_BUILD_DIR/machitools
+
+echo $GO_APPENGINE_PATH
+
+"$GO_APPENGINE_PATH/goapp" get
+
 echo "dependencies fetched."
 exit 0
