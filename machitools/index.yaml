@@ -10,6 +10,27 @@ indexes:
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
 
+- kind: Event
+  properties:
+  - name: IsPublic
+  - name: StartAt
+    direction: desc
+  - name: UpdatedAt
+    direction: desc
+
+- kind: Event
+  properties:
+  - name: IsPublic
+  - name: UpdatedAt
+    direction: desc
+
+- kind: Event
+  properties:
+  - name: StartAt
+    direction: desc
+  - name: UpdatedAt
+    direction: desc
+
 - kind: News
   properties:
   - name: IsPublic
