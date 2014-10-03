@@ -144,28 +144,52 @@ angular.module('myApp', ['ngCookies', 'restangular', 'ui.router', 'ui.bootstrap'
 
   .controller('TrafficViewCtrl', function (Restangular) {
     var self = this;
-    var traffics = ['ropeway', 'bus'];
-    var directions = ['inbound', 'outbound'];
 
-    this.ropeway = {
-      inbound: {}, outbound: {}
-    };
-    this.bus = {
-      inbound: {}, outbound: {}
-    };
+    this.transits = [
+      {
+        name: 'ロープウェイ乗り場',
+        id: 'ropeway',
+        places: [
+          {
+            name: '山麓駅(阿波おどり会)',
+            direction: 'inbound'
+          },
+          {
+            name: '山頂駅',
+            direction: 'outbound'
+          }
+        ]
+      },
+      {
+        name: 'シャトルバス乗り場',
+        id: 'bus',
+        places: [
+          {
+            name: '山麓駅(阿波踊り会館 前)',
+            direction: 'inbound'
+          },
+          {
+            name: '山頂駅(かんぽの宿 前)',
+            direction: 'outbound'
+          }
+        ]
+      }
+    ];
 
-    traffics.forEach(function (traffic) {
-      directions.forEach(function (direction) {
+    this.transits.forEach(function (transit) {
+      var traffic = transit.id;
+
+      transit.places.forEach(function (place) {
+        var direction = place.direction;
+
         Restangular.all('traffic').all(traffic).get(direction)
           .then(function (result) {
-            self[traffic][direction] = {
-              'Waiting': result.Waiting,
-              'Message': result.Message
-            }
+            place.item = result;
           }, function () {
-            self[traffic][direction] = {
+            place.item = {
               'Waiting': '---',
-              'Message': 'SYSTEM: 取得に失敗しました'
+              'Message': 'SYSTEM: 取得に失敗しました',
+              updatedAt: '---'
             }
           });
       });
