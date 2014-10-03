@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp', ['restangular', 'ui.router', 'ui.bootstrap'])
+angular.module('myApp', ['ngCookies', 'restangular', 'ui.router', 'ui.bootstrap'])
   .constant('ApiUrl', '/api/v1')
   // Restangular config
   .config(function (RestangularProvider, ApiUrl) {
@@ -173,7 +173,7 @@ angular.module('myApp', ['restangular', 'ui.router', 'ui.bootstrap'])
   })
 
 
-  .controller('TrafficInputCtrl', function ($scope, Restangular) {
+  .controller('TrafficInputCtrl', function ($scope, $cookies, Restangular) {
     var self = this;
 
     // form lock
@@ -185,8 +185,9 @@ angular.module('myApp', ['restangular', 'ui.router', 'ui.bootstrap'])
       'Waiting': null,
       'Message': null
     };
-    this.traffic;
-    this.direction;
+
+    this.traffic = $cookies.traffic;
+    this.direction = $cookies.direction;
 
     this.click = function () {
       self.lock = true;
@@ -208,12 +209,14 @@ angular.module('myApp', ['restangular', 'ui.router', 'ui.bootstrap'])
     $scope.$watch(function () {
       return self.traffic;
     }, function (newVal, oldVal) {
+      $cookies.traffic = newVal;
       getTrafficMessage();
     });
 
     $scope.$watch(function () {
       return self.direction;
     }, function (newVal, oldVal) {
+      $cookies.direction = newVal;
       getTrafficMessage();
     });
 
