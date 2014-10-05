@@ -8,6 +8,11 @@ body {
     margin-bottom: 20px;
 }
 
+/* ui-bootstrap */
+.nav, .pagination, .carousel, .panel-title a {
+    cursor: pointer;
+}
+
 /* panel */
 div.panel-ropeway {
     border-color: #62ff9e;
@@ -27,10 +32,18 @@ div.panel-bus .panel-heading {
     border-color: #ffcf64;
 }
 
-/* ui-bootstrap */
-.nav, .pagination, .carousel, .panel-title a {
-    cursor: pointer;
+
+/* table globals */
+tbody td,
+tbody th {
+    vertical-align: middle !important;
 }
+
+table tr td:last-child {
+    white-space: nowrap;
+    width: 1px;
+}
+
 
 /* traffic info */
 th.station.station.station {
@@ -42,8 +55,11 @@ tbody td.waiting {
     font-size: xx-large;
 }
 
-/* table last cell */
-table tr td:last-child {
-    white-space: nowrap;
-    width: 1px;
+/* event info */
+.event-nav {
+    font-size: x-large;
+}
+
+.table-event tbody tr {
+    height: 50px !important;
 }
