@@ -300,8 +300,10 @@ angular.module('myApp', ['ngCookies', 'restangular', 'ui.router', 'ui.bootstrap'
   })
 
 
-  .controller('NewsListCtrl', function (Restangular) {
+  .controller('NewsListCtrl', function (Restangular, User) {
     var self = this;
+
+    this.isAdmin = User.isAdmin();
 
     Restangular.all('news').getList({
       first: 0,
