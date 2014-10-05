@@ -1,10 +1,10 @@
 package traffic
 
 import (
-	"github.com/ant0ine/go-json-rest/rest"
 	"appengine"
-	"net/http"
 	"appengine/user"
+	"github.com/ant0ine/go-json-rest/rest"
+	"net/http"
 )
 
 func GetTraffic(w rest.ResponseWriter, r *rest.Request) {
@@ -67,7 +67,7 @@ func PostTraffic(w rest.ResponseWriter, r *rest.Request) {
 	w.WriteJson(&traffic)
 }
 
-func trafficName(name string) string{
+func trafficName(name string) string {
 	switch name {
 	case "bus", "ropeway":
 		return name

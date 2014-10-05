@@ -1,0 +1,10 @@
+<div ng-controller="EventListCtrl as ctrl">
+
+  <ul class="nav nav-pills nav-justified">
+    <li ng-repeat="(key, period) in ctrl.periods" ui-sref-active="active" class="event-nav">
+      <a ui-sref="event.list.day({id:key})">{{ period.name }}</a>
+    </li>
+  </ul>
+
+  <ui-view></ui-view>
+</div>

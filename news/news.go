@@ -43,7 +43,7 @@ func LoadAll(c appengine.Context, first int, size int, publicOnly bool) (*[]News
 	items := make([]NewsItem, 0, size)
 	q := datastore.NewQuery(KindName).Order("-UpdatedAt").Offset(first).Limit(size)
 
-	if (publicOnly) {
+	if publicOnly {
 		q = q.Filter("IsPublic = ", true)
 	}
 
@@ -52,7 +52,7 @@ func LoadAll(c appengine.Context, first int, size int, publicOnly bool) (*[]News
 	}
 
 	for index, item := range items {
-		items[index].Id = item.GetKey().StringID();
+		items[index].Id = item.GetKey().StringID()
 	}
 
 	return &items, nil
