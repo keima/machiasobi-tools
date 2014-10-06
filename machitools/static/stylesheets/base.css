@@ -17,7 +17,6 @@ body {
 div.panel-ropeway {
     border-color: #62ff9e;
 }
-
 div.panel-ropeway .panel-heading {
     background-color: #62ff9e;
     border-color: #62ff9e;
@@ -26,10 +25,27 @@ div.panel-ropeway .panel-heading {
 div.panel-bus {
     border-color: #ffcf64;
 }
-
 div.panel-bus .panel-heading {
     background-color: #ffcf64;
     border-color: #ffcf64;
+}
+
+div.panel-bizan {
+    border-color: #a0de14;
+}
+
+div.panel-bizan .panel-heading {
+    background-color: #a0de14;
+    border-color: #a0de14;
+}
+
+div.panel-shinmachi {
+    border-color: #a0ceff;
+}
+
+div.panel-shinmachi .panel-heading {
+    background-color: #a0ceff;
+    border-color: #a0ceff;
 }
 
 
@@ -63,3 +79,55 @@ tbody td.waiting {
 .table-event tbody tr {
     height: 50px !important;
 }
+
+/* delay info */
+.delay {
+    text-align: center;
+}
+.delay .time {
+    font-size: 60pt;
+    font-weight: bold;
+}
+.delay .time span {
+    font-size: 0.8em;
+}
+.delay .status {
+    font-size: 20pt;
+}
+.delay .alert {
+    font-size: 16pt;
+    margin-top: 15px;
+}
+
+table.table-delay {
+    width: 100%;
+    table-layout: fixed;
+    /*word-wrap: break-word;*/
+}
+tr.delay-table-row th {
+    width: 30%;
+    text-align: right;
+}
+tr.delay-table-row td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    width: 70%;
+    max-width: 70%;
+}
+
+tr.delay-table-row.index-0 td {
+    font-size: xx-large;
+}
+tr.delay-table-row.index-1 td {
+    font-size: large;
+}
+tr.delay-table-row.index-2 td {
+    font-size: large;
+}
+.delay-item-is-empty {
+    text-align: center;
+    font-size: x-large;
+}
+

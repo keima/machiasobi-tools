@@ -9,6 +9,7 @@ import (
 	"github.com/keima/machitools/news"
 	"github.com/keima/machitools/traffic"
 	"log"
+	"github.com/keima/machitools/delay"
 )
 
 const PathPrefix = "/api/#version"
@@ -34,6 +35,10 @@ func init() {
 		&rest.Route{"POST", PathPrefix + "/events/:id",  event.PostEvent},
 		//		&rest.Route{"POST", PathPrefix + "/events/:id/done",   event.GetEvent},
 		//		&rest.Route{"POST", PathPrefix + "/events/:id/delete", event.GetEvent},
+
+		// Delay
+		&rest.Route{"GET",  PathPrefix + "/delay/:place", delay.GetDelay},
+		&rest.Route{"POST", PathPrefix + "/delay/:place", delay.PostDelay},
 
 		// News
 		&rest.Route{"GET",  PathPrefix + "/news",        news.GetNewsList},
