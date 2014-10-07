@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp', ['ngCookies', 'restangular', 'ui.router', 'ui.bootstrap'])
+angular.module('myApp', ['ngCookies', 'restangular', 'ui.router', 'ui.bootstrap', 'myApp.calendar'])
   .constant('ApiUrl', '/api/v1')
   // Restangular config
   .config(function (RestangularProvider, ApiUrl) {
@@ -11,6 +11,7 @@ angular.module('myApp', ['ngCookies', 'restangular', 'ui.router', 'ui.bootstrap'
     $urlRouterProvider.otherwise("/");
 
     $urlRouterProvider.when('/traffic', '/traffic/list');
+    $urlRouterProvider.when('/delay', '/delay/list');
     $urlRouterProvider.when('/event', '/event/list/day1');
     $urlRouterProvider.when('/event/list', '/event/list/day1');
     $urlRouterProvider.when('/news', '/news/list');
@@ -32,6 +33,19 @@ angular.module('myApp', ['ngCookies', 'restangular', 'ui.router', 'ui.bootstrap'
       .state('traffic.input', {
         url: '/input',
         templateUrl: "partials/traffic-input.html"
+      })
+
+      .state('delay', {
+        url: '/delay',
+        templateUrl: "partials/delay.html"
+      })
+      .state('delay.list', {
+        url: '/list',
+        templateUrl: "partials/delay-list.html"
+      })
+      .state('delay.input', {
+        url: '/input',
+        templateUrl: "partials/delay-input.html"
       })
 
       .state('event', {
@@ -290,7 +304,89 @@ angular.module('myApp', ['ngCookies', 'restangular', 'ui.router', 'ui.bootstrap'
           });
       }
     }
+  })
 
+  .controller('DelayViewCtrl', function (Restangular, Calendar) {
+    var self = this;
+
+    this.abs = function (value) {
+      return Math.abs(value);
+    };
+
+    this.places = {
+      bizan: {
+        id: "bizan",
+        name: "眉山林間ステージ",
+        calendarId: "p-side.net_m9s9a5ut02n6ap1s6prdj92ss4@group.calendar.google.com"
+//        calendarId: "p-side.net_cbtlph70nn0hdpm7u58v4rjp8g@group.calendar.google.com"
+      },
+      shinmachi: {
+        id: "shinmachi",
+        name: "新町橋東公園",
+        calendarId: "p-side.net_ctrq60t4vsvfavejbkdmbhv3k4@group.calendar.google.com"
+//        calendarId: "p-side.net_cbtlph70nn0hdpm7u58v4rjp8g@group.calendar.google.com"
+      }
+    };
+
+    this.calendarData = {
+      bizan: [],
+      shinmachi: []
+    };
+
+    angular.forEach(this.places, function (value, key) {
+      Restangular.all('delay').get(key)
+        .then(function (result) {
+          value.item = result;
+          return value;
+        }, function () {
+          value.item = {
+            delay: 0,
+            message: 'SYSTEM: 取得に失敗しました',
+            updatedAt: '---'
+          }
+        })
+        .then(function (result) {
+          var place = result;
+          // 遅れている＝現在時刻から遅れ分引いたものが今やってるイベント
+          // ということで -1 を掛け算している(delayは遅れが＋で進みがー)
+          var time = moment().add(-1 * place.item.delay, "minutes");
+
+          Calendar.getTodayData(result.calendarId, time)
+            .then(function (result) {
+              self.calendarData[place.id] = result;
+            });
+        })
+    });
+
+  })
+  .controller('DelayInputCtrl', function (Restangular) {
+    var self = this;
+
+    // form lock
+    this.lock = false;
+    this.alert = null;
+
+    this.place = null;
+    this.item = {
+      delay: 0,
+      message: ""
+    };
+
+    this.click = function () {
+      self.lock = true;
+      Restangular.all('delay').all(self.place).post(self.item)
+        .then(function () {
+          self.lock = false;
+          self.alert = {type: 'success', msg: '登録に成功しました'}
+        }, function (reason) {
+          self.lock = false;
+          self.alert = {type: 'danger', msg: '登録に失敗しました:' + reason.Error}
+        })
+    };
+
+    this.closeAlert = function () {
+      self.alert = null;
+    };
 
   })
 

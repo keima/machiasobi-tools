@@ -22,14 +22,12 @@
         <li ng-class="{ active: $state.includes('traffic') }">
           <a ui-sref="traffic">運行情報</a>
         </li>
+        <li ng-class="{ active: $state.includes('delay') }">
+          <a ui-sref="delay">イベント進行情報</a>
+        </li>
         <li ng-class="{ active: $state.includes('event') }">
           <a ui-sref="event">整理券情報</a>
         </li>
-        <!-- probably release next version... may be...
-        <li ng-class="{ active: $state.includes('ticket') }">
-          <a ui-sref="ticket">整理券情報</a>
-        </li>
-        -->
         <li ng-class="{ active: $state.includes('news') }">
           <a ui-sref="news">ニュース</a>
         </li>

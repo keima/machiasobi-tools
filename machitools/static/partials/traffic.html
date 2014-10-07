@@ -1,11 +1,10 @@
 <ul class="nav nav-tabs nav-justified" role="tablist" ng-controller="TabCtrl as ctrl">
-  <li ui-sref-active="active">
+  <li ng-class="{ active: $state.includes('traffic.list') }">
     <a ui-sref="traffic.list">登録一覧</a>
   </li>
-  <li ui-sref-active="active" ng-show="ctrl.isAdmin">
+  <li ng-class="{ active: $state.includes('traffic.input') }" ng-show="ctrl.isAdmin">
     <a ui-sref="traffic.input">入力</a>
   </li>
 </ul>
 
-<div ui-view>
-</div>
+<ui-view></ui-view>

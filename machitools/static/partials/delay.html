@@ -1,0 +1,10 @@
+<ul class="nav nav-tabs nav-justified" role="tablist" ng-controller="TabCtrl as ctrl">
+  <li ng-class="{ active: $state.includes('delay.list') }">
+    <a ui-sref="delay.list">イベント進行状況一覧</a>
+  </li>
+  <li ng-class="{ active: $state.includes('delay.input') }" ng-show="ctrl.isAdmin">
+    <a ui-sref="delay.input">進行状況を入力する</a>
+  </li>
+</ul>
+
+<ui-view></ui-view>
