@@ -39,7 +39,7 @@ tbody th {
     vertical-align: middle !important;
 }
 
-table tr td:last-child {
+table tr td.button {
     white-space: nowrap;
     width: 1px;
 }
