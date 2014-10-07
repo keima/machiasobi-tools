@@ -18,7 +18,8 @@
 <div ng-controller="RootCtrl as root">
   <ng-include src="'partials/header.html'"></ng-include>
 
-  <div ui-view class="container" ng-class="{showHeader: !root.hideHeader, hideHeader: root.hideHeader}"></div>
+  <div ui-view class="container"
+       ng-class="{showHeader: !root.hideHeader, hideHeader: root.hideHeader}"></div>
 </div>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
