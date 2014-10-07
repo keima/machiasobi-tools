@@ -1,7 +1,12 @@
 /* Base CSS */
 body {
-    padding-top: 70px;
     padding-bottom: 20px;
+}
+.showHeader {
+    padding-top: 70px;
+}
+.hideHeader {
+    padding-top: 20px;
 }
 
 .nav-tabs {
@@ -11,6 +16,14 @@ body {
 /* ui-bootstrap */
 .nav, .pagination, .carousel, .panel-title a {
     cursor: pointer;
+}
+
+/* header refresh */
+div.toggle-header {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    padding: 3px;
 }
 
 /* panel */

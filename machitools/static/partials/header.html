@@ -1,6 +1,7 @@
 <nav class="navbar navbar-default navbar-fixed-top"
      role="navigation"
-     ng-controller="HeaderCtrl as header">
+     ng-controller="HeaderCtrl as header"
+     ng-hide="root.hideHeader">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button"
@@ -41,3 +42,11 @@
     </div>
   </div>
 </nav>
+
+<div class="toggle-header hidden-xs" ng-click="root.hideHeader = !root.hideHeader">
+  <span class="glyphicon"
+        ng-class="{
+      'glyphicon-folder-open':  !root.hideHeader,
+      'glyphicon-folder-close':  root.hideHeader,
+      }"></span>
+</div>

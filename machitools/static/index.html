@@ -15,9 +15,11 @@
 </head>
 <body ng-app="myApp">
 
-<ng-include src="'partials/header.html'"></ng-include>
+<div ng-controller="RootCtrl as root">
+  <ng-include src="'partials/header.html'"></ng-include>
 
-<div ui-view class="container"></div>
+  <div ui-view class="container" ng-class="{showHeader: !root.hideHeader, hideHeader: root.hideHeader}"></div>
+</div>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>

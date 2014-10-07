@@ -123,7 +123,20 @@ angular.module('myApp', ['ngCookies', 'restangular', 'ui.router', 'ui.bootstrap'
 
   })
 
-  .controller('RootCtrl', function ($scope, User) {
+  // ヘッダの折りたたみに特化したCtrl
+  .controller('RootCtrl', function($scope, $cookies) {
+    var self = this;
+    this.hideHeader = $cookies.hideHeader || false;
+
+    $scope.$watch(function () {
+      return self.hideHeader;
+    }, function (newVal) {
+      $cookies.hideHeader = newVal;
+    });
+
+  })
+
+  .controller('TopPageCtrl', function ($scope, User) {
     var self = this;
     this.showError = false;
 
