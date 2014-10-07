@@ -12,6 +12,7 @@ angular.module('myApp', ['ngCookies', 'restangular', 'ui.router', 'ui.bootstrap'
 
     $urlRouterProvider.when('/traffic', '/traffic/list');
     $urlRouterProvider.when('/event', '/event/list/day1');
+    $urlRouterProvider.when('/event/list', '/event/list/day1');
     $urlRouterProvider.when('/news', '/news/list');
 
     $stateProvider
