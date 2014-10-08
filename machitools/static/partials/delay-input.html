@@ -49,6 +49,19 @@
              placeholder="メッセージを入力(任意)...">
     </div>
 
+    <accordion>
+      <accordion-group heading="高度な設定">
+        <div class="form-group">
+          <div class="checkbox text-danger">
+            <label>
+              <input type="checkbox" ng-model="ctrl.item.isPostponed">
+              この会場のイベントに中止フラグを立てる（目立つ色で中止をアピールします！）
+            </label>
+          </div>
+        </div>
+      </accordion-group>
+    </accordion>
+
     <p class="bg-danger">
       この情報は登録後直ちに公開されます。内容を削除することは出来ません。<br>
       もし誤った情報を入力した場合は、【新しい情報を登録】してください。

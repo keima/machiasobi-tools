@@ -10,14 +10,14 @@ import (
 
 type DelayItem struct {
 	model.Meta
-	Id      string `datastore:"-" json:"id"`
-	Delay   int `json:"delay"`
-	Message string `json:"message"`
-	Author  string `json:"-"`
+	Id          string `datastore:"-" json:"id"`
+	Delay       int `json:"delay"`
+	Message     string `json:"message"`
+	Author      string `json:"-"`
+	IsPostponed bool `json:"isPostponed"`
 }
 
 var ErrItemNotFound = errors.New("Item is not found")
-
 
 func (item *DelayItem) Save(c appengine.Context, placeName string) error {
 	key := datastore.NewIncompleteKey(c, kindName(placeName), nil)
@@ -45,7 +45,6 @@ func LoadLatest(c appengine.Context, placeName string) (*DelayItem, error) {
 
 	return &items[0], nil
 }
-
 
 const kindNamePrefix = "Delay-"
 

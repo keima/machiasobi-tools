@@ -16,7 +16,7 @@
         </div>
 
         <div class="panel-body">
-          <div class="delay">
+          <div class="delay" ng-hide="place.item.isPostponed">
             <div class="time">
               {{ ctrl.abs(place.item.delay) }} <span>分</span>
             </div>
@@ -32,9 +32,12 @@
             </div>
 
           </div>
+          <div class="postponed" ng-show="place.item.isPostponed">
+            本日開催のイベントは <span>中止</span> となりました。
+          </div>
         </div>
 
-        <table class="table table-delay">
+        <table class="table table-delay" ng-hide="place.item.error || place.item.isPostponed">
           <tbody>
           <tr ng-repeat="calendar in ctrl.calendarData[key]" class="delay-table-row index-{{ $index }}">
             <th ng-switch on="$index">
@@ -55,6 +58,10 @@
 
           </tbody>
         </table>
+
+        <div class="panel-footer text-right">
+          更新日時： {{ place.item.updatedAt | date:"MM月dd日 HH時mm分ss秒" }}
+        </div>
 
       </div>
 

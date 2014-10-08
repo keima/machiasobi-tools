@@ -367,7 +367,8 @@ angular.module('myApp', ['ngCookies', 'restangular', 'ui.router', 'ui.bootstrap'
     this.place = null;
     this.item = {
       delay: 0,
-      message: ""
+      message: "",
+      isPostponed: false
     };
 
     this.click = function () {
