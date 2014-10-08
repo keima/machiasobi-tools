@@ -337,25 +337,23 @@ angular.module('myApp', ['ngCookies', 'restangular', 'ui.router', 'ui.bootstrap'
       Restangular.all('delay').get(key)
         .then(function (result) {
           value.item = result;
-          return value;
+
+          // 遅れている＝現在時刻から遅れ分引いたものが今やってるイベント
+          // ということで -1 を掛け算している(delayは遅れが＋で進みがー)
+          var time = moment().add(-1 * result.delay, "minutes");
+
+          Calendar.getTodayData(value.calendarId, time)
+            .then(function (_result) {
+              self.calendarData[value.id] = _result;
+            });
         }, function () {
           value.item = {
+            error: true,
             delay: 0,
             message: 'SYSTEM: 取得に失敗しました',
             updatedAt: '---'
           }
-        })
-        .then(function (result) {
-          var place = result;
-          // 遅れている＝現在時刻から遅れ分引いたものが今やってるイベント
-          // ということで -1 を掛け算している(delayは遅れが＋で進みがー)
-          var time = moment().add(-1 * place.item.delay, "minutes");
-
-          Calendar.getTodayData(result.calendarId, time)
-            .then(function (result) {
-              self.calendarData[place.id] = result;
-            });
-        })
+        });
     });
 
   })
@@ -500,7 +498,7 @@ angular.module('myApp', ['ngCookies', 'restangular', 'ui.router', 'ui.bootstrap'
 
     this.isAdmin = User.isAdmin();
 
-    var startAt = Periods[$stateParams.id].date;
+    var startAt = moment(Periods[$stateParams.id].date);
     var endAt = startAt.clone().endOf('days');
 
     Restangular.all('events').getList({
