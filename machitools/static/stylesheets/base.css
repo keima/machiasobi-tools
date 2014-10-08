@@ -110,7 +110,7 @@ tbody td.waiting span {
 .delay .status {
     font-size: 20pt;
 }
-.delay .alert {
+.panel-body .alert {
     font-size: 16pt;
     margin-top: 15px;
 }

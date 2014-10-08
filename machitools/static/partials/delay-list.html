@@ -29,15 +29,14 @@
               <span ng-show="place.item.delay < 0">早く進んでいます</span>
               <span ng-show="place.item.delay === 0">定刻通りです</span>
             </div>
-
-            <div class="alert alert-info" role="alert"
-                 ng-show="place.item.message">
-              {{ place.item.message }}
-            </div>
-
           </div>
           <div class="postponed" ng-show="place.item.isPostponed">
             本日開催のイベントは <span>中止</span> となりました。
+          </div>
+
+          <div class="alert alert-info" role="alert"
+               ng-show="place.item.message">
+            {{ place.item.message }}
           </div>
         </div>
 
