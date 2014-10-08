@@ -501,15 +501,14 @@ angular.module('myApp', ['ngCookies', 'restangular', 'ui.router', 'ui.bootstrap'
     this.isAdmin = User.isAdmin();
 
     var startAt = Periods[$stateParams.id].date;
-    var endAt = new Date(startAt.getTime());
-    endAt.setDate(startAt.getDate() + 1);
+    var endAt = startAt.clone().endOf('days');
 
     Restangular.all('events').getList({
       first: 0,
       size: 100,
       private: true,
-      startAt: startAt,
-      endAt: endAt
+      startAt: startAt.toJSON(),
+      endAt: endAt.toJSON()
     }).then(function (results) {
       self.items = results;
     }, function (reason) {
