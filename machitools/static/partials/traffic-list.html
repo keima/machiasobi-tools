@@ -6,6 +6,11 @@
     <strong>待ち時間は目安です。</strong>道路事情と運行状況により、実際と異なる場合があります。
   </div>
 
+  <div class="alert alert-info text-center" role="alert"
+       style="font-size: larger">
+    {{ ctrl.now | date:"MM月dd日 HH時mm分ss秒" }} 現在の情報です。
+  </div>
+
   <div class="row">
     <div class="col-sm-6" ng-repeat="transit in ctrl.transits">
       <div class="panel panel-{{ transit.id }}">

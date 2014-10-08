@@ -194,6 +194,7 @@ angular.module('myApp', ['ngCookies', 'restangular', 'ui.router', 'ui.bootstrap'
 
   .controller('TrafficViewCtrl', function (Restangular) {
     var self = this;
+    this.now = new Date();
 
     this.transits = [
       {
@@ -308,6 +309,7 @@ angular.module('myApp', ['ngCookies', 'restangular', 'ui.router', 'ui.bootstrap'
 
   .controller('DelayViewCtrl', function (Restangular, Calendar) {
     var self = this;
+    this.now = new Date();
 
     this.abs = function (value) {
       return Math.abs(value);
@@ -493,6 +495,7 @@ angular.module('myApp', ['ngCookies', 'restangular', 'ui.router', 'ui.bootstrap'
 
   .controller('EventListCtrl', function (Restangular, User, Periods) {
     this.periods = Periods;
+    this.now = new Date();
   })
   .controller('EventListDayCtrl', function ($stateParams, Restangular, User, Periods) {
     var self = this;

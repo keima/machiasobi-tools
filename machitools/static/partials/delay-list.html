@@ -1,9 +1,13 @@
 <div ng-controller="DelayViewCtrl as ctrl">
 
-  <div class="alert alert-danger text-center"
-       role="alert"
+  <div class="alert alert-danger text-center" role="alert"
        style="font-size: larger">
     <strong>遅延の時間は目安です。</strong>遅れ(進み)が突然解消される場合もあります。
+  </div>
+
+  <div class="alert alert-info text-center" role="alert"
+       style="font-size: larger">
+    {{ ctrl.now | date:"MM月dd日 HH時mm分ss秒" }} 現在の情報です。
   </div>
 
   <div class="row">
@@ -27,7 +31,7 @@
             </div>
 
             <div class="alert alert-info" role="alert"
-                ng-show="place.item.message">
+                 ng-show="place.item.message">
               {{ place.item.message }}
             </div>
 
