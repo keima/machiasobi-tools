@@ -43,6 +43,10 @@ angular.module('myApp', ['ngCookies', 'restangular', 'ui.router', 'ui.bootstrap'
         url: '/list',
         templateUrl: "partials/delay-list.html"
       })
+      .state('delay.list.page', {
+        url: '/:page',
+        templateUrl: "partials/delay-list-page.html"
+      })
       .state('delay.input', {
         url: '/input',
         templateUrl: "partials/delay-input.html"
@@ -92,20 +96,20 @@ angular.module('myApp', ['ngCookies', 'restangular', 'ui.router', 'ui.bootstrap'
     var user = {};
     var BROADCAST_NAME_CHANGED = 'UserDataIsChanged';
 
-    function setUser (_user) {
+    function setUser(_user) {
       user = _user;
       $rootScope.$broadcast(BROADCAST_NAME_CHANGED);
     }
 
-    function getUser () {
+    function getUser() {
       return user;
     }
 
-    function isLogin () {
+    function isLogin() {
       return !_.isEmpty(user)
     }
 
-    function isAdmin () {
+    function isAdmin() {
       return isLogin() && user.Admin;
     }
 
@@ -138,7 +142,7 @@ angular.module('myApp', ['ngCookies', 'restangular', 'ui.router', 'ui.bootstrap'
   })
 
   // ヘッダの折りたたみに特化したCtrl
-  .controller('RootCtrl', function($scope, $cookies) {
+  .controller('RootCtrl', function ($scope, $cookies) {
     var self = this;
     this.hideHeader = ($cookies.hideHeader === 'true');
 
@@ -154,7 +158,7 @@ angular.module('myApp', ['ngCookies', 'restangular', 'ui.router', 'ui.bootstrap'
     var self = this;
     this.showError = false;
 
-    function renderAlertIfNeeded () {
+    function renderAlertIfNeeded() {
       if (User.isAdmin()) {
         self.showError = false;
       } else {
@@ -295,7 +299,7 @@ angular.module('myApp', ['ngCookies', 'restangular', 'ui.router', 'ui.bootstrap'
       getTrafficMessage();
     });
 
-    function getTrafficMessage () {
+    function getTrafficMessage() {
       if (!_.isUndefined(self.traffic) && !_.isUndefined(self.direction)) {
         Restangular.all('traffic').all(self.traffic).get(self.direction)
           .then(function (result) {
@@ -307,7 +311,7 @@ angular.module('myApp', ['ngCookies', 'restangular', 'ui.router', 'ui.bootstrap'
     }
   })
 
-  .controller('DelayViewCtrl', function (Restangular, Calendar) {
+  .controller('DelayViewCtrl', function ($stateParams, Restangular, Calendar) {
     var self = this;
     this.now = new Date();
 
@@ -315,24 +319,53 @@ angular.module('myApp', ['ngCookies', 'restangular', 'ui.router', 'ui.bootstrap'
       return Math.abs(value);
     };
 
-    this.places = {
-      bizan: {
-        id: "bizan",
-        name: "眉山林間ステージ",
-        calendarId: "p-side.net_m9s9a5ut02n6ap1s6prdj92ss4@group.calendar.google.com"
-//        calendarId: "p-side.net_cbtlph70nn0hdpm7u58v4rjp8g@group.calendar.google.com"
+    var placeList = [
+      {
+        bizan: {
+          id: "bizan",
+          name: "眉山林間ステージ",
+          calendarId: "p-side.net_m9s9a5ut02n6ap1s6prdj92ss4@group.calendar.google.com"
+        },
+        shinmachi: {
+          id: "shinmachi",
+          name: "新町橋東公園",
+          calendarId: "p-side.net_ctrq60t4vsvfavejbkdmbhv3k4@group.calendar.google.com"
+        },
+        corne: {
+          id: "corne",
+          name: "コルネの泉",
+          calendarId: "p-side.net_jo112m9l36p6nlkrv939sb9kr0@group.calendar.google.com"
+        }
       },
-      shinmachi: {
-        id: "shinmachi",
-        name: "新町橋東公園",
-        calendarId: "p-side.net_ctrq60t4vsvfavejbkdmbhv3k4@group.calendar.google.com"
-//        calendarId: "p-side.net_cbtlph70nn0hdpm7u58v4rjp8g@group.calendar.google.com"
+      {
+        cinema_entry: {
+          id: "cinema_entry",
+          name: "CINEMA前(入り口)",
+          calendarId: 'p-side.net_j3mtcq3ejulrovek8kru6vgoe8@group.calendar.google.com'
+        },
+        awagin: {
+          id: "awagin",
+          name: "あわぎんホール小ホール",
+          calendarId: 'p-side.net_oa45stb6g4h9lqiq5vd1ov844s@group.calendar.google.com'
+        },
+        bunka: {
+          id: "bunka",
+          name: "徳島市立文化センター",
+          calendarId: 'p-side.net_gocec2ij5sqho46oial3jusn1o@group.calendar.google.com'
+        }
       }
-    };
+    ];
+
+    var page = $stateParams.page || 0;
+    this.places = placeList[page];
 
     this.calendarData = {
       bizan: [],
-      shinmachi: []
+      shinmachi: [],
+      corne: [],
+      cinema_entry: [],
+      awagin: [],
+      bunka: []
     };
 
     angular.forEach(this.places, function (value, key) {

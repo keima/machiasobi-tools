@@ -61,6 +61,43 @@ div.panel-shinmachi .panel-heading {
     border-color: #a0ceff;
 }
 
+div.panel-corne{
+    border-color: #ffc67b;
+}
+
+div.panel-corne .panel-heading {
+    background-color: #ffc67b;
+    border-color: #ffc67b;
+}
+
+div.panel-cinema_entry{
+    border-color: #ff8b87;
+}
+
+div.panel-cinema_entry .panel-heading {
+    background-color: #ff8b87;
+    border-color: #ff8b87;
+}
+
+
+
+div.panel-awagin{
+    border-color: #3ffdff;
+}
+
+div.panel-awagin .panel-heading {
+    background-color: #3ffdff;
+    border-color: #3ffdff;
+}
+
+div.panel-bunka{
+    border-color: #ffa8b5;
+}
+
+div.panel-bunka .panel-heading {
+    background-color: #ffa8b5;
+    border-color: #ffa8b5;
+}
 
 /* table globals */
 tbody td,
