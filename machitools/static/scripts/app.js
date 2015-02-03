@@ -1,97 +1,39 @@
 'use strict';
 
-angular.module('myApp', ['ngCookies', 'restangular', 'ui.router', 'ui.bootstrap', 'myApp.calendar'])
+angular.module('myApp', [
+  // 3rd party plugins
+  'ngCookies',
+  'restangular',
+  'uiGmapgoogle-maps',
+  'ui.router',
+  'ui.bootstrap',
+  'ncy-angular-breadcrumb',
+  'wu.staticGmap',
+
+  // app component
+  //'myApp.routing',
+  'myApp.calendar',
+  'myApp.controller'
+])
   .constant('ApiUrl', '/api/v1')
+  // AngularGoogleMaps
+  .config(function (uiGmapGoogleMapApiProvider) {
+    uiGmapGoogleMapApiProvider.configure({
+      //    key: 'your api key',
+      //v: '3.17',
+      //libraries: 'weather,geometry,visualization'
+    });
+  })
   // Restangular config
   .config(function (RestangularProvider, ApiUrl) {
     RestangularProvider.setBaseUrl(ApiUrl);
+    RestangularProvider.setRequestInterceptor(function(elem, operation) {
+      if (operation === "remove") {
+        return undefined;
+      }
+      return elem;
+    })
   })
-  // AngularUI Router
-  .config(function ($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider.otherwise("/");
-
-    $urlRouterProvider.when('/traffic', '/traffic/list');
-    $urlRouterProvider.when('/delay', '/delay/list');
-    $urlRouterProvider.when('/event', '/event/list/day1');
-    $urlRouterProvider.when('/event/list', '/event/list/day1');
-    $urlRouterProvider.when('/news', '/news/list');
-
-    $stateProvider
-      .state('root', {
-        url: '/',
-        templateUrl: "partials/root.html"
-      })
-
-      .state('traffic', {
-        url: '/traffic',
-        templateUrl: "partials/traffic.html"
-      })
-      .state('traffic.list', {
-        url: '/list',
-        templateUrl: "partials/traffic-list.html"
-      })
-      .state('traffic.input', {
-        url: '/input',
-        templateUrl: "partials/traffic-input.html"
-      })
-
-      .state('delay', {
-        url: '/delay',
-        templateUrl: "partials/delay.html"
-      })
-      .state('delay.list', {
-        url: '/list',
-        templateUrl: "partials/delay-list.html"
-      })
-      .state('delay.list.page', {
-        url: '/:page',
-        templateUrl: "partials/delay-list-page.html"
-      })
-      .state('delay.input', {
-        url: '/input',
-        templateUrl: "partials/delay-input.html"
-      })
-
-      .state('event', {
-        url: '/event',
-        templateUrl: "partials/event.html"
-      })
-      .state('event.list', {
-        url: '/list',
-        templateUrl: "partials/event-list.html"
-      })
-      .state('event.list.day', {
-        url: '/:id',
-        templateUrl: "partials/event-list-day.html"
-      })
-      .state('event.input', {
-        url: '/input',
-        templateUrl: "partials/event-input.html"
-      })
-      .state('event.edit', {
-        url: '/input/:id',
-        templateUrl: "partials/event-input.html"
-      })
-
-      .state('news', {
-        url: '/news',
-        templateUrl: "partials/news.html"
-      })
-      .state('news.list', {
-        url: '/list',
-        templateUrl: "partials/news-list.html"
-      })
-      .state('news.input', {
-        url: '/input',
-        templateUrl: 'partials/news-input.html'
-      })
-      .state('news.edit', {
-        url: '/input/:id',
-        templateUrl: 'partials/news-input.html'
-      })
-    ;
-  })
-
   .service('User', function ($rootScope) {
     var user = {};
     var BROADCAST_NAME_CHANGED = 'UserDataIsChanged';
@@ -128,12 +70,13 @@ angular.module('myApp', ['ngCookies', 'restangular', 'ui.router', 'ui.bootstrap'
   .run(function ($rootScope, $state, Restangular, User) {
     // convenience state
     $rootScope.$state = $state;
+    $rootScope.isAdmin = false;
 
     // get user data
     Restangular.all('auth').get('check')
       .then(function (result) {
-        console.log(result);
         User.setUser(result);
+        $rootScope.isAdmin = User.isAdmin();
       }, function (reason) {
         console.log(reason);
         User.setUser({});
@@ -463,8 +406,8 @@ angular.module('myApp', ['ngCookies', 'restangular', 'ui.router', 'ui.bootstrap'
 
         this.date = new Date(y + "/" + m + "/" + d);
         this.time = toDoubleDigits(dateObj.getHours()) +
-          ":" +
-          toDoubleDigits(dateObj.getMinutes());
+        ":" +
+        toDoubleDigits(dateObj.getMinutes());
       },
       getDate: function () {
         var date = this.date;

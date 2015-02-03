@@ -20,16 +20,19 @@
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
         <li ng-class="{ active: $state.includes('traffic') }">
-          <a ui-sref="traffic">運行情報</a>
+          <a ui-sref="traffic.list">運行情報</a>
         </li>
         <li ng-class="{ active: $state.includes('delay') }">
-          <a ui-sref="delay">イベント進行情報</a>
+          <a ui-sref="delay.list">イベント進行情報</a>
         </li>
         <li ng-class="{ active: $state.includes('event') }">
           <a ui-sref="event">整理券情報</a>
         </li>
         <li ng-class="{ active: $state.includes('news') }">
           <a ui-sref="news">ニュース</a>
+        </li>
+        <li ng-class="{ active: $state.includes('maps') }">
+          <a ui-sref="maps.list">マップ</a>
         </li>
       </ul>
 
