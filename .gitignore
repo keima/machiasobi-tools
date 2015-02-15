@@ -1,2 +1,4 @@
 *.iml
 .idea/
+machitools/static/bower_components
+machitools/static/node_modules

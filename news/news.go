@@ -1,9 +1,10 @@
 package news
 
 import (
+	"github.com/knightso/base/gae/model"
+
 	"appengine"
 	"appengine/datastore"
-	"github.com/knightso/base/gae/model"
 )
 
 const (
@@ -26,15 +27,15 @@ func (item *NewsItem) Save(c appengine.Context, keyName string) error {
 	return model.Put(c, item)
 }
 
-func (news *NewsItem) Load(c appengine.Context, keyName string) error {
+func (item *NewsItem) Load(c appengine.Context, keyName string) error {
 	key := datastore.NewKey(c, KindName, keyName, 0, nil)
 
-	if err := model.Get(c, key, news); err != nil {
+	if err := model.Get(c, key, item); err != nil {
 		return err
 	}
 
 	// keyNameでもいいけれど。。。
-	news.Id = news.GetKey().StringID()
+	item.Id = item.GetKey().StringID()
 
 	return nil
 }

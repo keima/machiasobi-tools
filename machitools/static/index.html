@@ -9,7 +9,10 @@
 
   <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/cerulean/bootstrap.min.css" rel="stylesheet">
 
-  <link href="stylesheets/base.css" rel="stylesheet">
+  <!-- inject:css -->
+  <link rel="stylesheet" href="/stylesheets/base.css">
+  <link rel="stylesheet" href="/stylesheets/maps.css">
+  <!-- endinject -->
 
   <title>まち☆つーるず</title>
 </head>
@@ -28,12 +31,20 @@
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-cookies.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.compat.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/restangular/1.4.0/restangular.min.js"></script>
-<script src="scripts/ui-bootstrap-tpls-0.11.2.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.0/ui-bootstrap-tpls.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular-google-maps/2.0.12/angular-google-maps.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.3/moment.min.js"></script>
+<script src="./bower_components/angular-breadcrumb/release/angular-breadcrumb.min.js"></script>
+<script src="./bower_components/angular-google-staticmaps/angular-google-staticmaps.js"></script>
 
-<script src="scripts/calendar.js"></script>
-<script src="scripts/app.js"></script>
+<!-- inject:js -->
+<script src="/scripts/app.js"></script>
+<script src="/scripts/calendar.js"></script>
+<script src="/scripts/controller.js"></script>
+<script src="/scripts/routing.js"></script>
+<script src="/scripts/controller/maps.js"></script>
+<!-- endinject -->
 
 </body>
 </html>

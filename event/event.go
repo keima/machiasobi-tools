@@ -1,21 +1,23 @@
 package event
 
 import (
-	"appengine"
-	"appengine/datastore"
-	"github.com/knightso/base/gae/model"
+	"log"
 	"strconv"
 	"time"
-	"log"
+
+	"github.com/knightso/base/gae/model"
+
+	"appengine"
+	"appengine/datastore"
 )
 
 type EventItem struct {
 	model.Meta
-	Id       string `datastore:"-"`
-	Title    string `json:"title"`
-	Place    string `json:"place"`
-	Message  string `json:"message" datastore:",noindex"`
-	StartAt  time.Time `json:"startAt"`
+	Id      string    `datastore:"-"`
+	Title   string    `json:"title"`
+	Place   string    `json:"place"`
+	Message string    `json:"message" datastore:",noindex"`
+	StartAt time.Time `json:"startAt"`
 
 	Author string `json:"-"`
 
@@ -33,7 +35,7 @@ func (item *EventItem) Save(c appengine.Context) error {
 }
 
 func (item *EventItem) SaveUpdate(c appengine.Context, intID int64) error {
-	key := datastore.NewKey(c, kindName, "", intID, nil);
+	key := datastore.NewKey(c, kindName, "", intID, nil)
 	item.SetKey(key)
 	return model.Put(c, item)
 }
@@ -57,7 +59,7 @@ func (item *EventItem) Load(c appengine.Context, keyName string) error {
 
 func LoadAll(c appengine.Context, first int, size int, rangeStart time.Time, rangeEnd time.Time, publicOnly bool) (*[]EventItem, error) {
 	items := make([]EventItem, 0, size)
-	q := datastore.NewQuery(kindName);
+	q := datastore.NewQuery(kindName)
 
 	log.Println("hoge")
 
