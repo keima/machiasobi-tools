@@ -19,6 +19,8 @@ angular.module('myApp.controller.maps', [])
   })
   .controller('MapsDetailCtrl', function ($stateParams, Restangular, $timeout, $window) {
     var self = this;
+    this.itemId = $stateParams.id;
+    this.lockItemId = true;
 
     function init () {
       Restangular.all('maps').get($stateParams.id)
@@ -40,6 +42,22 @@ angular.module('myApp.controller.maps', [])
             }, 1000);
           });
       }
+    };
+
+    // updateMap
+    this.click = function () {
+      self.lock = true;
+//      Restangular.all('maps').all(self.itemId).post(self.item)
+
+      self.item.put()
+        .then(function (result) {
+          self.lock = false;
+          self.alert = {type: 'success', msg: '編集に成功しました'};
+          $timeout(init, 1000);
+        }, function (reason) {
+          self.lock = false;
+          self.alert = {type: 'danger', msg: '登録に失敗しました:' + reason.Error}
+        });
     };
 
   })

@@ -19,6 +19,8 @@ angular.module('myApp', [
   .constant('ApiUrl', '/api/v1')
   .config(function (uiGmapGoogleMapApiProvider) {
     uiGmapGoogleMapApiProvider.configure({
+      language: 'ja',
+      sensor: 'true',
       key: 'AIzaSyAxOlm0zuaBtM7D4dPcOTrUdPrzu4va1cs'
     });
   })

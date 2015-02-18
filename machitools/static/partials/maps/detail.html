@@ -35,9 +35,12 @@
 
     </table>
   </tab>
-  <tab heading="マーカー入力" select="show = true" deselect="show = false">
+  <tab heading="マーカー入力" select="show = true" deselect="show = false" ng-show="isAdmin">
     <ng-include
         ng-if="show"
         src="'partials/maps/input-marker.html'"></ng-include>
+  </tab>
+  <tab heading="マップ情報編集" ng-show="isAdmin">
+    <ng-include src="'partials/maps/input-map-form.html'"></ng-include>
   </tab>
 </tabset>
