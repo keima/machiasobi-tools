@@ -11,7 +11,6 @@ angular.module('myApp')
     $urlRouterProvider.when('/event', '/event/list/day1');
     $urlRouterProvider.when('/event/list', '/event/list/day1');
 
-
     $stateProvider
       .state('root', {
         url: '/',
@@ -114,6 +113,21 @@ angular.module('myApp')
           parent: "maps.list",
           label: '詳細'
         }
+      })
+      .state('maps.detail.markers', {
+        templateUrl: 'partials/maps/list-marker.html',
+        controller: 'MapMarkerListCtrl as ctrl',
+        ncyBreadcrumb: {skip: true}
+      })
+      .state('maps.detail.input-marker', {
+        templateUrl: 'partials/maps/input-marker.html',
+        controller: 'MapMarkerInputCtrl as ctrl',
+        ncyBreadcrumb: {skip: true}
+      })
+      .state('maps.detail.edit', {
+        templateUrl: 'partials/maps/input-map-form.html',
+        controller: 'MapsEditCtrl as ctrl',
+        ncyBreadcrumb: {skip: true}
       })
 
       //.state('maps.edit', {

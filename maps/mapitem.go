@@ -51,6 +51,7 @@ func (item *MapItem) Load(c appengine.Context, parent *datastore.Key, keyName st
 func LoadAllMapItem(c appengine.Context, parent *datastore.Key) (*[]MapItem, error) {
 	items := make([]MapItem, 0, 20) // TODO: magic number...
 	q := datastore.NewQuery(kindNameMapItem).Ancestor(parent)
+	q = q.Order("CreatedAt")
 
 	if err := ds.ExecuteQuery(c, q, &items); err != nil {
 		return nil, err

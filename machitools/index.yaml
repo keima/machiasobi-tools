@@ -37,6 +37,11 @@ indexes:
   - name: UpdatedAt
     direction: desc
 
+- kind: MapItem
+  ancestor: yes
+  properties:
+  - name: CreatedAt
+
 - kind: News
   properties:
   - name: IsPublic
