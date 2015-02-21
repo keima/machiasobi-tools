@@ -1,10 +1,12 @@
 package delay
 
 import (
-	"github.com/ant0ine/go-json-rest/rest"
-	"appengine"
 	"errors"
 	"net/http"
+
+	"github.com/ant0ine/go-json-rest/rest"
+
+	"appengine"
 	"appengine/user"
 )
 
@@ -60,7 +62,6 @@ func PostDelay(w rest.ResponseWriter, r *rest.Request) {
 
 	w.WriteJson(&item)
 }
-
 
 func checkPlaceName(placeName string) (string, error) {
 	switch placeName {

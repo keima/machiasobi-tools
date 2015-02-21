@@ -1,10 +1,12 @@
 package machitools
 
 import (
+	"net/http"
+
+	"github.com/ant0ine/go-json-rest/rest"
+
 	"appengine"
 	"appengine/user"
-	"github.com/ant0ine/go-json-rest/rest"
-	"net/http"
 )
 
 func Login(w rest.ResponseWriter, r *rest.Request) {

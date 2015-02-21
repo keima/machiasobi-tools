@@ -1,10 +1,12 @@
 package traffic
 
 import (
+	"net/http"
+
+	"github.com/ant0ine/go-json-rest/rest"
+
 	"appengine"
 	"appengine/user"
-	"github.com/ant0ine/go-json-rest/rest"
-	"net/http"
 )
 
 func GetTraffic(w rest.ResponseWriter, r *rest.Request) {
