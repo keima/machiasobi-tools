@@ -1,6 +1,6 @@
 #!/bin/sh
-SDK_URL=https://storage.googleapis.com/appengine-sdks/featured/go_appengine_sdk_linux_amd64-1.9.12.zip
-FILENAME=go_appengine_sdk_linux_amd64-1.9.12.zip
+FILENAME=go_appengine_sdk_linux_amd64-1.9.18.zip
+SDK_URL=https://storage.googleapis.com/appengine-sdks/featured/${FILENAME}
 
 echo "installing libs..."
 
