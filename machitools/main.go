@@ -51,6 +51,7 @@ func init() {
 		&rest.Route{"GET", PathPrefix + "/maps", maps.GetMapList},
 		&rest.Route{"GET", PathPrefix + "/maps/:id", maps.GetMap},
 		&rest.Route{"POST", PathPrefix + "/maps/:id", maps.PostMap},
+		&rest.Route{"PUT", PathPrefix + "/maps/:id", maps.PutMap},
 		&rest.Route{"POST", PathPrefix + "/maps/:id/markers", maps.PostMarker},
 		&rest.Route{"DELETE", PathPrefix + "/maps/:id/markers/:key", maps.DeleteMarker},
 

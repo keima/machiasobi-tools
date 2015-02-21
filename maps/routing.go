@@ -81,7 +81,29 @@ func PostMap(w rest.ResponseWriter, r *rest.Request) {
 	}
 
 	item := Map{}
+	if err := r.DecodeJsonPayload(&item); err != nil {
+		rest.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 
+	if err := item.Save(c, r.PathParam("id")); err != nil {
+		rest.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteJson(&item)
+}
+
+// Mapを更新します。管理者権限必須です。
+func PutMap(w rest.ResponseWriter, r *rest.Request) {
+	c := appengine.NewContext(r.Request)
+	u := user.Current(c)
+	if u == nil || !user.IsAdmin(c) {
+		rest.Error(w, "Administrator login Required.", http.StatusUnauthorized)
+		return
+	}
+
+	item := Map{}
 	if err := r.DecodeJsonPayload(&item); err != nil {
 		rest.Error(w, err.Error(), http.StatusInternalServerError)
 		return
