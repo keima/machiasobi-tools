@@ -3,7 +3,7 @@ package maps
 import (
 	"strconv"
 
-	"github.com/knightso/base/gae/model"
+	"github.com/knightso/base/gae/ds"
 
 	"appengine"
 	"appengine/datastore"
@@ -12,7 +12,7 @@ import (
 const kindNameMapItem = "MapItem"
 
 type MapItem struct {
-	model.Meta
+	ds.Meta
 	Id          string       `json:"id" datastore:"-"`
 	Name        string       `json:"name"`
 	Description string       `json:"description"`
@@ -23,13 +23,13 @@ type MapItem struct {
 func (item *MapItem) Save(c appengine.Context, parent *datastore.Key) error {
 	key := datastore.NewIncompleteKey(c, kindNameMapItem, parent)
 	item.SetKey(key)
-	return model.Put(c, item)
+	return ds.Put(c, item)
 }
 
 func (item *MapItem) Update(c appengine.Context, parent *datastore.Key, keyId int64) error {
 	key := datastore.NewKey(c, kindNameMapItem, "", keyId, parent)
 	item.SetKey(key)
-	return model.Put(c, item)
+	return ds.Put(c, item)
 }
 
 func (item *MapItem) Load(c appengine.Context, parent *datastore.Key, keyName string) error {
@@ -39,7 +39,7 @@ func (item *MapItem) Load(c appengine.Context, parent *datastore.Key, keyName st
 	}
 
 	key := datastore.NewKey(c, kindNameMapItem, "", keyId, parent)
-	if err := model.Get(c, key, item); err != nil {
+	if err := ds.Get(c, key, item); err != nil {
 		return err
 	}
 
@@ -52,7 +52,7 @@ func LoadAllMapItem(c appengine.Context, parent *datastore.Key) (*[]MapItem, err
 	items := make([]MapItem, 0, 20) // TODO: magic number...
 	q := datastore.NewQuery(kindNameMapItem).Ancestor(parent)
 
-	if err := model.ExecuteQuery(c, q, &items); err != nil {
+	if err := ds.ExecuteQuery(c, q, &items); err != nil {
 		return nil, err
 	}
 

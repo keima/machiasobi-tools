@@ -1,7 +1,7 @@
 package maps
 
 import (
-	"github.com/knightso/base/gae/model"
+	"github.com/knightso/base/gae/ds"
 
 	"appengine"
 	"appengine/datastore"
@@ -10,7 +10,7 @@ import (
 const kindNameMap = "Map"
 
 type Map struct {
-	model.Meta
+	ds.Meta
 	Id       string    `json:"id" datastore:"-"`
 	Name     string    `json:"name"`
 	IsPublic bool      `json:"isPublic"`
@@ -20,13 +20,13 @@ type Map struct {
 func (item *Map) Save(c appengine.Context, keyName string) error {
 	key := datastore.NewKey(c, kindNameMap, keyName, 0, nil)
 	item.SetKey(key)
-	return model.Put(c, item)
+	return ds.Put(c, item)
 }
 
 func (item *Map) Load(c appengine.Context, keyName string) error {
 	key := datastore.NewKey(c, kindNameMap, keyName, 0, nil)
 
-	if err := model.Get(c, key, item); err != nil {
+	if err := ds.Get(c, key, item); err != nil {
 		return err
 	}
 
@@ -43,7 +43,7 @@ func LoadAll(c appengine.Context, first, size int, publicOnly bool) (*[]Map, err
 		q = q.Filter("IsPublic = ", true)
 	}
 
-	if err := model.ExecuteQuery(c, q, &items); err != nil {
+	if err := ds.ExecuteQuery(c, q, &items); err != nil {
 		return nil, err
 	}
 

@@ -1,12 +1,14 @@
 package event
 
 import (
-	"appengine"
-	"appengine/user"
-	"github.com/ant0ine/go-json-rest/rest"
 	"net/http"
 	"strconv"
 	"time"
+
+	"github.com/ant0ine/go-json-rest/rest"
+
+	"appengine"
+	"appengine/user"
 )
 
 func GetEventList(w rest.ResponseWriter, r *rest.Request) {
@@ -73,7 +75,7 @@ func PostEvent(w rest.ResponseWriter, r *rest.Request) {
 
 	item := EventItem{}
 
-	if err:= r.DecodeJsonPayload(&item); err != nil {
+	if err := r.DecodeJsonPayload(&item); err != nil {
 		rest.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -81,7 +83,7 @@ func PostEvent(w rest.ResponseWriter, r *rest.Request) {
 	item.Author = u.String()
 
 	var intId int64
-  	var err error
+	var err error
 
 	if id := r.PathParam("id"); id != "" {
 		intId, err = strconv.ParseInt(id, 10, 64)

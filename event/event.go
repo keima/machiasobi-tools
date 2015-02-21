@@ -5,14 +5,14 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/knightso/base/gae/model"
+	"github.com/knightso/base/gae/ds"
 
 	"appengine"
 	"appengine/datastore"
 )
 
 type EventItem struct {
-	model.Meta
+	ds.Meta
 	Id      string    `datastore:"-"`
 	Title   string    `json:"title"`
 	Place   string    `json:"place"`
@@ -31,13 +31,13 @@ const kindName = "Event"
 func (item *EventItem) Save(c appengine.Context) error {
 	key := datastore.NewIncompleteKey(c, kindName, nil)
 	item.SetKey(key)
-	return model.Put(c, item)
+	return ds.Put(c, item)
 }
 
 func (item *EventItem) SaveUpdate(c appengine.Context, intID int64) error {
 	key := datastore.NewKey(c, kindName, "", intID, nil)
 	item.SetKey(key)
-	return model.Put(c, item)
+	return ds.Put(c, item)
 }
 
 func (item *EventItem) Load(c appengine.Context, keyName string) error {
@@ -48,7 +48,7 @@ func (item *EventItem) Load(c appengine.Context, keyName string) error {
 
 	key := datastore.NewKey(c, kindName, "", keyId, nil)
 
-	if err := model.Get(c, key, item); err != nil {
+	if err := ds.Get(c, key, item); err != nil {
 		return err
 	}
 
@@ -84,7 +84,7 @@ func LoadAll(c appengine.Context, first int, size int, rangeStart time.Time, ran
 
 	q = q.Order("-UpdatedAt").Offset(first).Limit(size)
 
-	if err := model.ExecuteQuery(c, q, &items); err != nil {
+	if err := ds.ExecuteQuery(c, q, &items); err != nil {
 		return nil, err
 	}
 

@@ -2,11 +2,13 @@
 package news
 
 import (
-	"appengine"
-	"appengine/user"
-	"github.com/ant0ine/go-json-rest/rest"
 	"net/http"
 	"strconv"
+
+	"github.com/ant0ine/go-json-rest/rest"
+
+	"appengine"
+	"appengine/user"
 )
 
 // 登録されているニュースを指定件数取得します

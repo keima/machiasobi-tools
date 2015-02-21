@@ -1,20 +1,22 @@
 package delay
 
 import (
-	"github.com/knightso/base/gae/model"
+	"errors"
+	"strconv"
+
+	"github.com/knightso/base/gae/ds"
+
 	"appengine"
 	"appengine/datastore"
-	"strconv"
-	"errors"
 )
 
 type DelayItem struct {
-	model.Meta
+	ds.Meta
 	Id          string `datastore:"-" json:"id"`
-	Delay       int `json:"delay"`
+	Delay       int    `json:"delay"`
 	Message     string `json:"message"`
 	Author      string `json:"-"`
-	IsPostponed bool `json:"isPostponed"`
+	IsPostponed bool   `json:"isPostponed"`
 }
 
 var ErrItemNotFound = errors.New("Item is not found")
@@ -22,7 +24,7 @@ var ErrItemNotFound = errors.New("Item is not found")
 func (item *DelayItem) Save(c appengine.Context, placeName string) error {
 	key := datastore.NewIncompleteKey(c, kindName(placeName), nil)
 	item.SetKey(key)
-	return model.Put(c, item)
+	return ds.Put(c, item)
 }
 
 func LoadLatest(c appengine.Context, placeName string) (*DelayItem, error) {
@@ -31,7 +33,7 @@ func LoadLatest(c appengine.Context, placeName string) (*DelayItem, error) {
 	q := datastore.NewQuery(kindName(placeName))
 	q = q.Order("-CreatedAt").Limit(1)
 
-	if err := model.ExecuteQuery(c, q, &items); err != nil {
+	if err := ds.ExecuteQuery(c, q, &items); err != nil {
 		return nil, err
 	}
 
