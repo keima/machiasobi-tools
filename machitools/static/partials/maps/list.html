@@ -17,7 +17,7 @@
   <tbody>
   <tr ng-repeat="item in ctrl.items"
       ui-sref="maps.detail({id:item.id})">
-    <td ng-show="ctrl.isAdmin">
+    <td ng-show="isAdmin">
       <span class="text-info glyphicon glyphicon-eye-open" ng-show="item.isPublic"></span>
       <span class="text-warning glyphicon glyphicon-eye-close" ng-hide="item.isPublic"></span>
     </td>
