@@ -1,16 +1,18 @@
 package traffic
 
 import (
+	"errors"
+	"strconv"
+
+	"github.com/knightso/base/gae/ds"
+
 	"appengine"
 	"appengine/datastore"
-	"errors"
-	"github.com/knightso/base/gae/model"
-	"strconv"
 )
 
 // Trafficのモデル
 type TrafficItem struct {
-	model.Meta
+	ds.Meta
 	Id        string `datastore:"-"`
 	Waiting   int
 	Message   string
@@ -32,7 +34,7 @@ var ErrItemNotFound = errors.New("Item is not found")
 func (item *TrafficItem) Save(c appengine.Context, trafficName string) error {
 	key := datastore.NewIncompleteKey(c, kindName(trafficName), nil)
 	item.SetKey(key)
-	return model.Put(c, item)
+	return ds.Put(c, item)
 }
 
 func LoadLatest(c appengine.Context, trafficName string, direction int) (*TrafficItem, error) {
@@ -41,7 +43,7 @@ func LoadLatest(c appengine.Context, trafficName string, direction int) (*Traffi
 	q := datastore.NewQuery(kindName(trafficName))
 	q = q.Filter("Direction = ", direction).Order("-CreatedAt").Limit(1)
 
-	if err := model.ExecuteQuery(c, q, &items); err != nil {
+	if err := ds.ExecuteQuery(c, q, &items); err != nil {
 		return nil, err
 	}
 

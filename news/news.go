@@ -1,7 +1,7 @@
 package news
 
 import (
-	"github.com/knightso/base/gae/model"
+	"github.com/knightso/base/gae/ds"
 
 	"appengine"
 	"appengine/datastore"
@@ -13,7 +13,7 @@ const (
 
 // ニュースのモデル
 type NewsItem struct {
-	model.Meta
+	ds.Meta
 	Id       string `datastore:"-"`
 	Author   string `json:"-"`
 	Title    string
@@ -24,13 +24,13 @@ type NewsItem struct {
 func (item *NewsItem) Save(c appengine.Context, keyName string) error {
 	key := datastore.NewKey(c, KindName, keyName, 0, nil)
 	item.SetKey(key)
-	return model.Put(c, item)
+	return ds.Put(c, item)
 }
 
 func (item *NewsItem) Load(c appengine.Context, keyName string) error {
 	key := datastore.NewKey(c, KindName, keyName, 0, nil)
 
-	if err := model.Get(c, key, item); err != nil {
+	if err := ds.Get(c, key, item); err != nil {
 		return err
 	}
 
@@ -48,7 +48,7 @@ func LoadAll(c appengine.Context, first int, size int, publicOnly bool) (*[]News
 		q = q.Filter("IsPublic = ", true)
 	}
 
-	if err := model.ExecuteQuery(c, q, &items); err != nil {
+	if err := ds.ExecuteQuery(c, q, &items); err != nil {
 		return nil, err
 	}
 
