@@ -14,6 +14,7 @@ func (MyMiddleware) MiddlewareFunc(handler rest.HandlerFunc) rest.HandlerFunc {
 	return func(writer rest.ResponseWriter, request *rest.Request) {
 		// if running dev-server, ignore CORS check.
 		if appengine.IsDevAppServer() {
+			writer.Header().Set("Access-Control-Allow-Origin", "*")
 			handler(writer, request)
 			return
 		}
