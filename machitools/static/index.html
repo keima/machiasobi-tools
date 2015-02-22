@@ -9,10 +9,12 @@
 
   <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/cerulean/bootstrap.min.css" rel="stylesheet">
 
+  <!-- build:css style.css -->
   <!-- inject:css -->
   <link rel="stylesheet" href="/stylesheets/base.css">
   <link rel="stylesheet" href="/stylesheets/maps.css">
   <!-- endinject -->
+  <!-- endbuild -->
 
   <title>まち☆つーるず</title>
 </head>
@@ -35,9 +37,13 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.13/angular-ui-router.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/angular-google-maps/2.0.12/angular-google-maps.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.3/moment.min.js"></script>
+
+<!-- build:vendorjs vendor.js -->
 <script src="./bower_components/angular-breadcrumb/release/angular-breadcrumb.min.js"></script>
 <script src="./bower_components/angular-google-staticmaps/angular-google-staticmaps.js"></script>
+<!-- endbuild -->
 
+<!-- build:js app.js -->
 <!-- inject:js -->
 <script src="/scripts/app.js"></script>
 <script src="/scripts/calendar.js"></script>
@@ -54,6 +60,7 @@
 <script src="/scripts/controller/traffic.js"></script>
 <script src="/scripts/services/user.js"></script>
 <!-- endinject -->
+<!-- endbuild -->
 
 </body>
 </html>
