@@ -47,7 +47,15 @@ func PostTraffic(w rest.ResponseWriter, r *rest.Request) {
 	}
 
 	// check pathParam
-	if trafficName(r.PathParam("traffic")) == "" || direction(r.PathParam("direction")) == DirectionError {
+	trafficName := trafficName(r.PathParam("traffic"))
+	direction := direction(r.PathParam("direction"))
+	if trafficName == "" || direction == DirectionError {
+		rest.Error(w, "PathParam Error.", http.StatusBadRequest)
+		return
+	}
+
+	// for `museum`
+	if trafficName == "museum" && direction != DirectionInbound {
 		rest.Error(w, "PathParam Error.", http.StatusBadRequest)
 		return
 	}
@@ -59,10 +67,10 @@ func PostTraffic(w rest.ResponseWriter, r *rest.Request) {
 		return
 	}
 
-	traffic.Direction = direction(r.PathParam("direction"))
+	traffic.Direction = direction
 	traffic.Author = u.String()
 
-	if err := traffic.Save(c, trafficName(r.PathParam("traffic"))); err != nil {
+	if err := traffic.Save(c, trafficName); err != nil {
 		rest.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -71,7 +79,7 @@ func PostTraffic(w rest.ResponseWriter, r *rest.Request) {
 
 func trafficName(name string) string {
 	switch name {
-	case "bus", "ropeway":
+	case "bus", "ropeway", "museum":
 		return name
 	default:
 		return ""
