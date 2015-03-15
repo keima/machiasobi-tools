@@ -46,7 +46,7 @@ angular.module("myApp.controller.delay", [])
 
           // 遅れている＝現在時刻から遅れ分引いたものが今やってるイベント
           // subtract = 減算、引く
-          var time = moment("2014-10-11 12:00:00+09:00").subtract(result.delay, "minutes");
+          var time = moment().subtract(result.delay, "minutes");
 
           Calendar.getTodayData(value.calendarId, time)
             .then(function (_result) {
