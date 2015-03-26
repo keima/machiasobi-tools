@@ -5,3 +5,6 @@ cd $TRAVIS_BUILD_DIR/machitools
 
 $GO_APPENGINE_PATH/goapp test
 $GO_APPENGINE_PATH/goapp build
+
+cd ./static
+gulp build
