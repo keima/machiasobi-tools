@@ -65,7 +65,7 @@ func PostDelay(w rest.ResponseWriter, r *rest.Request) {
 
 func checkPlaceName(placeName string) (string, error) {
 	switch placeName {
-	case "bizan", "shinmachi", "corne", "cinema_entry", "awagin", "bunka":
+	case "bizan", "shinmachi", "corne", "cinema_entry", "awagin", "bunka", "ryogoku":
 		return placeName, nil
 	default:
 		return "", errors.New("PlaceName mismatch.")
