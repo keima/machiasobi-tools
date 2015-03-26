@@ -15,6 +15,7 @@
 
 # デプロイ
 
-    $ goapp deploy
+    $ cd ./machitools
+    $ goapp deploy app-prod.yaml
 
 まぁでも俺しかデプロイできないと思いますけどね！！！！！
