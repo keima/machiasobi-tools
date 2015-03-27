@@ -60,6 +60,12 @@ indexes:
   - name: Date
     direction: desc
 
+- kind: Traffic-museum
+  properties:
+  - name: Direction
+  - name: CreatedAt
+    direction: desc
+
 - kind: Traffic-ropeway
   properties:
   - name: Direction

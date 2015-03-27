@@ -13,6 +13,9 @@
           <label class="btn btn-default"
                  ng-model="ctrl.traffic"
                  btn-radio="'bus'">バス</label>
+          <label class="btn btn-default"
+                 ng-model="ctrl.traffic"
+                 btn-radio="'museum'">橋の下美術館</label>
         </div>
         <input type="hidden"
                ng-model="ctrl.traffic"
@@ -29,11 +32,19 @@
                  btn-radio="'inbound'">山麓駅から(上り)</label>
           <label class="btn btn-default"
                  ng-model="ctrl.direction"
-                 btn-radio="'outbound'">山頂駅から(下り)</label>
+                 btn-radio="'outbound'"
+            ng-disabled="ctrl.traffic == 'museum'">山頂駅から(下り)</label>
         </div>
         <input type="hidden"
                ng-model="ctrl.direction"
                required>
+        <div class="well">
+          <ul>
+            <li>「上り方向」：山麓駅から山頂駅へ登る</li>
+            <li>「下り方向」：山頂駅から山麓駅へ下る</li>
+          </ul>
+
+        </div>
       </div>
 
       <div class="form-group">

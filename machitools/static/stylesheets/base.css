@@ -43,6 +43,14 @@ div.panel-bus .panel-heading {
     border-color: #ffcf64;
 }
 
+div.panel-museum {
+  border-color: #87c5ff;
+}
+div.panel-museum .panel-heading {
+  background-color: #87c5ff;
+  border-color: #87c5ff;
+}
+
 div.panel-bizan {
     border-color: #a0de14;
 }
@@ -59,6 +67,15 @@ div.panel-shinmachi {
 div.panel-shinmachi .panel-heading {
     background-color: #a0ceff;
     border-color: #a0ceff;
+}
+
+div.panel-ryogoku {
+    border-color: #def630;
+}
+
+div.panel-ryogoku .panel-heading {
+    background-color: #def630;
+    border-color: #def630;
 }
 
 div.panel-corne{
