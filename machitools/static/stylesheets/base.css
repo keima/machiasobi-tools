@@ -43,6 +43,14 @@ div.panel-bus .panel-heading {
     border-color: #ffcf64;
 }
 
+div.panel-museum {
+  border-color: #87c5ff;
+}
+div.panel-museum .panel-heading {
+  background-color: #87c5ff;
+  border-color: #87c5ff;
+}
+
 div.panel-bizan {
     border-color: #a0de14;
 }

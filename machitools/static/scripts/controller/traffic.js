@@ -1,40 +1,51 @@
 "use strict";
 
 angular.module("myApp.controller.traffic", [])
-  .controller('TrafficViewCtrl', function (Restangular) {
+  .value('TrafficTransits', [
+    {
+      name: 'ロープウェイ乗り場',
+      id: 'ropeway',
+      places: [
+        {
+          name: '山麓駅(阿波おどり会)',
+          direction: 'inbound'
+        },
+        {
+          name: '山頂駅',
+          direction: 'outbound'
+        }
+      ]
+    },
+    {
+      name: 'シャトルバス乗り場',
+      id: 'bus',
+      places: [
+        {
+          name: '山麓駅(阿波踊り会館 前)',
+          direction: 'inbound'
+        },
+        {
+          name: '山頂駅(かんぽの宿 前)',
+          direction: 'outbound'
+        }
+      ]
+    },
+    {
+      name: '橋の下美術館',
+      id: 'museum',
+      places: [
+        {
+          name: '船着場',
+          direction: 'inbound'
+        }
+      ]
+    }
+  ])
+  .controller('TrafficViewCtrl', function (Restangular, TrafficTransits) {
     var self = this;
     this.now = new Date();
 
-    this.transits = [
-      {
-        name: 'ロープウェイ乗り場',
-        id: 'ropeway',
-        places: [
-          {
-            name: '山麓駅(阿波おどり会)',
-            direction: 'inbound'
-          },
-          {
-            name: '山頂駅',
-            direction: 'outbound'
-          }
-        ]
-      },
-      {
-        name: 'シャトルバス乗り場',
-        id: 'bus',
-        places: [
-          {
-            name: '山麓駅(阿波踊り会館 前)',
-            direction: 'inbound'
-          },
-          {
-            name: '山頂駅(かんぽの宿 前)',
-            direction: 'outbound'
-          }
-        ]
-      }
-    ];
+    this.transits = TrafficTransits;
 
     this.transits.forEach(function (transit) {
       var traffic = transit.id;
@@ -57,7 +68,7 @@ angular.module("myApp.controller.traffic", [])
   })
 
 
-  .controller('TrafficInputCtrl', function ($scope, $cookies, Restangular) {
+  .controller('TrafficInputCtrl', function ($scope, $cookies, Restangular, TrafficTransits) {
     var self = this;
 
     // form lock
