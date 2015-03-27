@@ -61,6 +61,15 @@ div.panel-shinmachi .panel-heading {
     border-color: #a0ceff;
 }
 
+div.panel-ryogoku {
+    border-color: #def630;
+}
+
+div.panel-ryogoku .panel-heading {
+    background-color: #def630;
+    border-color: #def630;
+}
+
 div.panel-corne{
     border-color: #ffc67b;
 }
