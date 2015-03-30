@@ -48,6 +48,11 @@ indexes:
   - name: UpdatedAt
     direction: desc
 
+- kind: Step
+  properties:
+  - name: IsPublic
+  - name: Order
+
 - kind: Traffic-bus
   properties:
   - name: Direction

@@ -35,11 +35,11 @@ func (item *Map) Load(c appengine.Context, keyName string) error {
 	return nil
 }
 
-func LoadAll(c appengine.Context, first, size int, publicOnly bool) (*[]Map, error) {
+func LoadAll(c appengine.Context, first, size int, private bool) (*[]Map, error) {
 	items := make([]Map, 0, size)
 	q := datastore.NewQuery(kindNameMap).Order("-UpdatedAt").Offset(first).Limit(size)
 
-	if publicOnly {
+	if !private {
 		q = q.Filter("IsPublic = ", true)
 	}
 
