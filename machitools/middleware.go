@@ -3,7 +3,7 @@ package machitools
 import (
 	"net/http"
 
-	"github.com/ant0ine/go-json-rest/rest"
+	"gopkg.in/ant0ine/go-json-rest.v2/rest"
 
 	"appengine"
 )
