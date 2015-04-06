@@ -1,8 +1,8 @@
-<ul class="nav nav-tabs nav-justified" role="tablist" ng-controller="TabCtrl as ctrl">
+<ul class="nav nav-tabs nav-justified" role="tablist">
   <li ng-class="{ active: $state.includes('traffic.list') }">
     <a ui-sref="traffic.list">登録一覧</a>
   </li>
-  <li ng-class="{ active: $state.includes('traffic.input') }" ng-show="ctrl.isAdmin">
+  <li ng-class="{ active: $state.includes('traffic.input') }" ng-show="isAdmin">
     <a ui-sref="traffic.input">入力</a>
   </li>
 </ul>

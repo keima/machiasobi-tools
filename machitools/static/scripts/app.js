@@ -9,9 +9,9 @@ angular.module('myApp', [
   'ui.bootstrap',
   'ncy-angular-breadcrumb',
   'wu.staticGmap',
+  'dndLists',
 
   // app component
-  //'myApp.routing',
   'myApp.calendar',
   'myApp.controller',
   'myApp.services'
@@ -35,15 +35,13 @@ angular.module('myApp', [
   })
   .value('Periods', {
     day1: {
-      name: "1日目", date: new Date("2014/10/11")
+      name: "1日目", date: new Date("2015/5/3")
     },
     day2: {
-      name: "2日目", date: new Date("2014/10/12")
+      name: "2日目", date: new Date("2014/5/4")
     },
     day3: {
-      name: "3日目", date: new Date("2014/10/13")
+      name: "3日目", date: new Date("2014/5/5")
     }
   })
-
-
 ;

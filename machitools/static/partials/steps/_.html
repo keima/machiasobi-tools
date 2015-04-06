@@ -1,0 +1,10 @@
+<ul class="nav nav-tabs nav-justified" role="tablist">
+  <li ng-class="{ active: $state.includes('steps.list') }">
+    <a ui-sref="steps.list">スライド一覧</a>
+  </li>
+  <li ng-class="{ active: $state.includes('steps.input') }" ng-show="isAdmin">
+    <a ui-sref="steps.input">新しいスライドを作る</a>
+  </li>
+</ul>
+
+<ui-view></ui-view>

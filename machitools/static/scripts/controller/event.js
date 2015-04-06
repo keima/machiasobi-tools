@@ -92,14 +92,12 @@ angular.module("myApp.controller.event", [])
     };
   })
 
-  .controller('EventListCtrl', function (Restangular, User, Periods) {
+  .controller('EventListCtrl', function (Restangular, Periods) {
     this.periods = Periods;
     this.now = new Date();
   })
-  .controller('EventListDayCtrl', function ($stateParams, Restangular, User, Periods) {
+  .controller('EventListDayCtrl', function ($stateParams, Restangular, Periods) {
     var self = this;
-
-    this.isAdmin = User.isAdmin();
 
     var startAt = moment(Periods[$stateParams.id].date);
     var endAt = startAt.clone().endOf('days');
