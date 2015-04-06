@@ -1,6 +1,7 @@
 package steps
 
 import (
+	"errors"
 	"net/http"
 	"strconv"
 
@@ -53,13 +54,11 @@ func PostStep(w rest.ResponseWriter, r *rest.Request) {
 		return
 	}
 
-	item := StepItem{}
-	if err := r.DecodeJsonPayload(&item); err != nil {
-		rest.Error(w, err.Error(), http.StatusInternalServerError)
+	item, errDec := decodeAndValidate(r, u)
+	if errDec != nil {
+		rest.Error(w, errDec.Error(), http.StatusInternalServerError)
 		return
 	}
-
-	item.Author = u.String()
 
 	if err := item.Save(c); err != nil {
 		rest.Error(w, err.Error(), http.StatusInternalServerError)
@@ -67,6 +66,56 @@ func PostStep(w rest.ResponseWriter, r *rest.Request) {
 	}
 
 	w.WriteJson(&item)
+}
+
+func UpdateStep(w rest.ResponseWriter, r *rest.Request) {
+	c := appengine.NewContext(r.Request)
+
+	u := user.Current(c)
+	if u == nil || !user.IsAdmin(c) {
+		rest.Error(w, "Administrator login Required.", http.StatusUnauthorized)
+		return
+	}
+
+	item, errDec := decodeAndValidate(r, u)
+	if errDec != nil {
+		rest.Error(w, errDec.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	keyId, err := strconv.ParseInt(r.PathParam("id"), 10, 64)
+	if err != nil {
+		rest.Error(w, errDec.Error(), http.StatusInternalServerError)
+		return
+	}
+	if err := item.Update(c, keyId); err != nil {
+		rest.Error(w, errDec.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteJson(&item)
+}
+
+func decodeAndValidate(r *rest.Request, u *user.User) (*StepItem, error) {
+	item := StepItem{}
+	if err := r.DecodeJsonPayload(&item); err != nil {
+		return nil, err
+	}
+
+	matched := false
+	for _, v := range AllowedType {
+		if item.Type == v {
+			matched = true
+			break
+		}
+	}
+	if !matched {
+		return nil, errors.New("Type `" + item.Type + "` is not allowed.")
+	}
+
+	item.Author = u.String()
+
+	return &item, nil
 }
 
 func PostOrder(w rest.ResponseWriter, r *rest.Request) {

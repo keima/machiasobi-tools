@@ -12,6 +12,7 @@ type StepItem struct {
 	Id          int64  `json:"id" datastore:"-"`
 	Type        string `json:"type"`
 	Title       string `json:"title"`
+	ShowTitle   bool   `json:"showTitle"`
 	Description string `json:"description" datastore:",noindex"`
 	Path        string `json:"path"`
 	Author      string `json:"-"`
@@ -44,7 +45,6 @@ func (item *StepItem) Load(c appengine.Context, keyId int64) error {
 		return err
 	}
 
-	// keyNameでもいいけれど。。。
 	// item.Id = strconv.FormatInt(item.GetKey().IntID(), 10)
 	item.Id = item.GetKey().IntID()
 
