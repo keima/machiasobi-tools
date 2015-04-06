@@ -1,8 +1,8 @@
-<ul class="nav nav-tabs nav-justified" role="tablist" ng-controller="TabCtrl as ctrl">
+<ul class="nav nav-tabs nav-justified" role="tablist">
   <li ng-class="{ active: $state.includes('news.list') }">
     <a ui-sref="news.list">記事一覧</a>
   </li>
-  <li ng-class="{ active: $state.includes('news.input') }" ng-show="ctrl.isAdmin">
+  <li ng-class="{ active: $state.includes('news.input') }" ng-show="isAdmin">
     <a ui-sref="news.input">新しい記事を書く</a>
   </li>
 </ul>

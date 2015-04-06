@@ -1,13 +1,13 @@
 <table class="table table-hover table-event" ng-controller="EventListDayCtrl as ctrl">
   <thead>
   <tr>
-    <td ng-show="ctrl.isAdmin"></td>
+    <td ng-show="isAdmin"></td>
     <th>イベント名</th>
     <td>チケット配布場所</td>
     <td>配布開始時刻</td>
     <td>料金・備考など</td>
     <th>ステータス</th>
-    <td ng-show="ctrl.isAdmin" class="button"></td>
+    <td ng-show="isAdmin" class="button"></td>
   </tr>
   </thead>
 
@@ -17,7 +17,7 @@
           info: !item.isFinished && item.isRunning,
           danger: item.isFinished
         }">
-    <td ng-show="ctrl.isAdmin">
+    <td ng-show="isAdmin">
       <span class="text-info glyphicon glyphicon-eye-open" ng-show="item.isPublic"></span>
       <span class="text-warning glyphicon glyphicon-eye-close" ng-hide="item.isPublic"></span>
     </td>
@@ -30,7 +30,7 @@
       <span ng-show="!item.isFinished && item.isRunning">配布中</span>
       <span ng-show="!item.isFinished && !item.isRunning">準備中</span>
     </th>
-    <td ng-show="ctrl.isAdmin">
+    <td ng-show="isAdmin">
       <a class="btn btn-info"
          ui-sref="event.edit({ id: item.Id })"
          role="button">

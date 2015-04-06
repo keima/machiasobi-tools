@@ -34,6 +34,9 @@
         <li ng-class="{ active: $state.includes('maps') }">
           <a ui-sref="maps.list">マップ</a>
         </li>
+        <li ng-class="{ active: $state.includes('steps') }">
+          <a ui-sref="steps.list">スライド</a>
+        </li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
@@ -48,6 +51,6 @@
   <span class="glyphicon"
         ng-class="{
       'glyphicon-folder-open':  !root.hideHeader,
-      'glyphicon-folder-close':  root.hideHeader,
+      'glyphicon-folder-close':  root.hideHeader
       }"></span>
 </div>

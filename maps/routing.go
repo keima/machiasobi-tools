@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/keima/machitools/util"
 	"gopkg.in/ant0ine/go-json-rest.v2/rest"
 
 	"appengine"
@@ -16,24 +17,9 @@ import (
 func GetMapList(w rest.ResponseWriter, r *rest.Request) {
 	c := appengine.NewContext(r.Request)
 
-	first, err := strconv.Atoi(r.FormValue("first"))
-	if err != nil {
-		first = 0
-	}
+	first, size, private := util.ParseFirstSizePrivate(c, r.Request)
 
-	size, err := strconv.Atoi(r.FormValue("size"))
-	if err != nil {
-		size = 10
-	}
-
-	publicOnly := true
-	if r.Request.FormValue("private") == "true" {
-		if u := user.Current(c); u != nil && user.IsAdmin(c) {
-			publicOnly = false
-		}
-	}
-
-	itemList, err := LoadAll(c, first, size, publicOnly)
+	itemList, err := LoadAll(c, first, size, private)
 	if err != nil {
 		rest.Error(w, err.Error(), http.StatusInternalServerError)
 		return

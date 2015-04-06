@@ -130,10 +130,26 @@ angular.module('myApp')
         ncyBreadcrumb: {skip: true}
       })
 
-      //.state('maps.edit', {
-      //  url: '/input/:id',
-      //  templateUrl: 'partials/maps/input.html'
-      //})
+      .state('steps', {
+        url: '/steps',
+        abstract: true,
+        templateUrl: 'partials/steps/_.html'
+      })
+      .state('steps.list', {
+        url: '',
+        templateUrl: 'partials/steps/list.html',
+        controller: 'StepsListCtrl as ctrl'
+      })
+      .state('steps.input', {
+        url: '/input',
+        templateUrl: 'partials/steps/input.html',
+        controller: 'StepsInputCtrl as ctrl'
+      })
+      .state('steps.edit', {
+        url: '/input/:id',
+        templateUrl: 'partials/steps/input.html',
+        controller: 'StepsInputCtrl as ctrl'
+      })
     ;
   })
 ;

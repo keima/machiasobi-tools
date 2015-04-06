@@ -11,6 +11,7 @@ import (
 	"github.com/keima/machitools/event"
 	"github.com/keima/machitools/maps"
 	"github.com/keima/machitools/news"
+	"github.com/keima/machitools/steps"
 	"github.com/keima/machitools/traffic"
 )
 
@@ -54,6 +55,13 @@ func init() {
 		&rest.Route{"PUT", PathPrefix + "/maps/:id", maps.PutMap},
 		&rest.Route{"POST", PathPrefix + "/maps/:id/markers", maps.PostMarker},
 		&rest.Route{"DELETE", PathPrefix + "/maps/:id/markers/:key", maps.DeleteMarker},
+
+		// Steps
+		&rest.Route{"GET", PathPrefix + "/steps", steps.GetStepList},
+		&rest.Route{"POST", PathPrefix + "/steps", steps.PostStep},
+		&rest.Route{"POST", PathPrefix + "/steps/order", steps.PostOrder},
+		&rest.Route{"GET", PathPrefix + "/steps/:id", steps.GetStep},
+		&rest.Route{"POST", PathPrefix + "/steps/:id", steps.UpdateStep},
 
 		// Auth
 		&rest.Route{"GET", PathPrefix + "/auth/check", CheckStatus},

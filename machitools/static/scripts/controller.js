@@ -7,5 +7,6 @@ angular.module('myApp.controller', [
   'myApp.controller.delay',
   'myApp.controller.event',
   'myApp.controller.news',
-  'myApp.controller.maps'
+  'myApp.controller.maps',
+  'myApp.controller.steps'
 ]);

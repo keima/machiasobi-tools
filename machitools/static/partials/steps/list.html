@@ -1,0 +1,49 @@
+<table class="table table-hover">
+  <thead>
+  <tr>
+    <td ng-show="isAdmin"></td>
+    <td>順</td>
+    <td>投稿日</td>
+    <th>タイトル</th>
+    <td>タイプ</td>
+    <td ng-show="isAdmin" class="button"></td>
+  </tr>
+  </thead>
+
+  <tbody dnd-list="ctrl.items">
+  <tr ng-repeat="item in ctrl.items"
+      dnd-draggable="item"
+      dnd-moved="ctrl.move($index)"
+      dnd-effect-allowed="move"
+      dnd-disable-if="!isAdmin"
+    >
+    <td ng-show="isAdmin">
+      <span class="text-info glyphicon glyphicon-eye-open" ng-show="item.isPublic"></span>
+      <span class="text-warning glyphicon glyphicon-eye-close" ng-hide="item.isPublic"></span>
+    </td>
+    <td>{{ item.order }}</td>
+    <td>{{ item.createdAt | date:"yyyy/MM/dd HH:mm" }}</td>
+    <th>{{ item.title }}</th>
+    <td>{{ item.type }}</td>
+    <td ng-show="isAdmin">
+      <a class="btn btn-info btn-xs"
+         ui-sref="steps.edit({ id: item.id })"
+         role="button">
+        <span class="glyphicon glyphicon-edit"></span> 編集</a>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<alert type="{{ ctrl.alert.type }}"
+       close="ctrl.closeAlert()"
+       ng-show="ctrl.alert">{{ctrl.alert.msg}}
+</alert>
+
+<div class="text-right"
+  ng-show="ctrl.modified">
+  <p class="text-info">順序が変更されました。順序変更を反映するには「更新」を押してください。</p>
+  <button class="btn btn-success"
+          ng-disabled="ctrl.lock"
+          ng-click="ctrl.updateOrder()">更新</button>
+</div>

@@ -23,14 +23,4 @@ angular.module('myApp.controller.root', [])
       self.loggedin = User.isLogin();
     })
   })
-
-  .controller('TabCtrl', function ($scope, User) {
-    var self = this;
-
-    self.isAdmin = User.isAdmin();
-
-    $scope.$on(User.BROADCAST_NAME_CHANGED, function () {
-      self.isAdmin = User.isAdmin();
-    })
-  })
 ;
