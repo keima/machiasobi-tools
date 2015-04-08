@@ -1,0 +1,80 @@
+<form name="form" role="form" novalidate>
+<fieldset ng-disabled="ctrl.lock">
+
+  <div class="form-group">
+    <label>タイトル</label>
+    <input type="text"
+           class="form-control"
+           ng-model="ctrl.item.title">
+  </div>
+
+  <div class="form-group">
+    <div class="checkbox">
+      <label>
+        <input type="checkbox"
+               checked
+               ng-model="ctrl.item.showTitle">
+        タイトルをスライドに表示する
+      </label>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>タイプ</label>
+    <select class="form-control"
+            ng-model="ctrl.item.type"
+            required>
+      <option value="html">HTML</option>
+      <option value="markdown">Markdown</option>
+      <option value="partial">Partial</option>
+    </select>
+  </div>
+
+  <div class="form-group" ng-hide="ctrl.item.type === 'partial'">
+    <label>本文</label>
+    <textarea class="form-control"
+              rows="8"
+              ng-model="ctrl.item.description"></textarea>
+  </div>
+
+  <div class="form-group" ng-show="ctrl.item.type === 'partial'">
+    <label>パス <span class="text-danger">正確に入力してください！</span></label>
+    <input type="text"
+           class="form-control"
+           ng-model="ctrl.item.path">
+  </div>
+
+  <div class="form-group">
+    <label>順序(昇順)</label>
+    <input type="number"
+           class="form-control"
+           ng-model="ctrl.item.order"
+           required>
+  </div>
+
+  <div class="form-group">
+    <div class="checkbox">
+      <label>
+        <input type="checkbox"
+               ng-model="ctrl.item.isPublic">
+        記事を公開する
+      </label>
+    </div>
+  </div>
+
+  <p class="bg-danger">
+    内容を削除することは出来ません。
+  </p>
+
+  <alert type="{{ ctrl.alert.type }}"
+         close="ctrl.closeAlert()"
+         ng-show="ctrl.alert">{{ctrl.alert.msg}}
+  </alert>
+
+  <input type="submit"
+         value="登録"
+         class="btn btn-lg btn-primary btn-block"
+         ng-disabled="form.$invalid"
+         ng-click="ctrl.click()">
+</fieldset>
+</form>
