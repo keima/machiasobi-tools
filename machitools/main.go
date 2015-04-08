@@ -13,6 +13,7 @@ import (
 	"github.com/keima/machitools/news"
 	"github.com/keima/machitools/steps"
 	"github.com/keima/machitools/traffic"
+	"github.com/keima/machitools/weather"
 )
 
 const PathPrefix = "/api/#version"
@@ -62,6 +63,9 @@ func init() {
 		&rest.Route{"POST", PathPrefix + "/steps/order", steps.PostOrder},
 		&rest.Route{"GET", PathPrefix + "/steps/:id", steps.GetStep},
 		&rest.Route{"POST", PathPrefix + "/steps/:id", steps.UpdateStep},
+
+		// Weather
+		&rest.Route{"GET", PathPrefix + "/weather/:id", weather.GetWeather},
 
 		// Auth
 		&rest.Route{"GET", PathPrefix + "/auth/check", CheckStatus},
