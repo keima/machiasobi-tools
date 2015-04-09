@@ -1,36 +1,43 @@
 "use strict";
 
 angular.module("myApp.controller.delay", [])
-  .value('DelayPlaces', {
-    shinmachi: {
+  .value("DelayPlaces", [ // arrayで書かないと順番保証されない
+    {
+      id: "shinmachi",
       name: "新町橋公園",
       calendarId: "p-side.net_ctrq60t4vsvfavejbkdmbhv3k4@group.calendar.google.com"
     },
-    ryogoku: {
+    {
+      id: "ryogoku",
       name: "両国橋公園",
       calendarId: "p-side.net_timelrcritenrfmn86lco3qt9o@group.calendar.google.com"
     },
-    bizan: {
+    {
+      id: "bizan",
       name: "眉山林間ステージ",
       calendarId: "p-side.net_m9s9a5ut02n6ap1s6prdj92ss4@group.calendar.google.com"
     },
-    corne: {
+    {
+      id: "corne",
       name: "コルネの泉",
       calendarId: "p-side.net_jo112m9l36p6nlkrv939sb9kr0@group.calendar.google.com"
     },
-    cinema_entry: {
+    {
+      id: "cinema_entry",
       name: "CINEMA前(入り口)",
       calendarId: 'p-side.net_j3mtcq3ejulrovek8kru6vgoe8@group.calendar.google.com'
     },
-    awagin: {
+    {
+      id: "awagin",
       name: "あわぎんホール小ホール",
       calendarId: 'p-side.net_oa45stb6g4h9lqiq5vd1ov844s@group.calendar.google.com'
     },
-    bunka: {
+    {
+      id: "bunka",
       name: "徳島市立文化センター",
       calendarId: 'p-side.net_gocec2ij5sqho46oial3jusn1o@group.calendar.google.com'
     }
-  })
+  ])
   .controller('DelayViewCtrl', function (Restangular, Calendar, DelayPlaces) {
     var self = this;
     this.now = new Date();
@@ -44,24 +51,24 @@ angular.module("myApp.controller.delay", [])
     // calendar data storage
     this.calendarData = {};
 
-    angular.forEach(this.places, function (value, key) {
-      Restangular.all('delay').get(key)
+    angular.forEach(this.places, function (place, i) {
+      Restangular.all('delay').get(place.id)
         .then(function (result) {
-          value.item = result;
+          place.item = result;
 
           // 遅れている＝現在時刻から遅れ分引いたものが今やってるイベント
           // subtract = 減算、引く
           var time = moment().subtract(result.delay, "minutes");
 
-          Calendar.getTodayData(value.calendarId, time)
+          Calendar.getTodayData(place.calendarId, time)
             .then(function (_result) {
-              self.calendarData[key] = _result;
+              self.calendarData[place.id] = _result;
             });
         }, function () {
-          value.item = {
+          place.item = {
             error: true,
             delay: 0,
-            message: 'SYSTEM: 取得に失敗しました',
+            message: '取得に失敗しました',
             updatedAt: '---'
           }
         });

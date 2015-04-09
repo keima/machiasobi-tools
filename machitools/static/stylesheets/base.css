@@ -134,7 +134,7 @@ th.station.station.station {
     vertical-align: middle;
 }
 tbody td.waiting {
-    font-size: 60pt;
+    font-size: 40pt;
     font-weight: bold;
 }
 tbody td.waiting span {
@@ -155,7 +155,7 @@ tbody td.waiting span {
     text-align: center;
 }
 .delay .time {
-    font-size: 60pt;
+    font-size: 40pt;
     font-weight: bold;
 }
 .delay .time span {
@@ -187,15 +187,6 @@ tr.delay-table-row td {
     max-width: 70%;
 }
 
-tr.delay-table-row.index-0 td {
-    font-size: xx-large;
-}
-tr.delay-table-row.index-1 td {
-    font-size: large;
-}
-tr.delay-table-row.index-2 td {
-    font-size: large;
-}
 .delay-item-is-empty {
     text-align: center;
     font-size: x-large;

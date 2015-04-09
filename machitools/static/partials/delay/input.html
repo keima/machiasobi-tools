@@ -1,83 +1,83 @@
 <div ng-controller="DelayInputCtrl as ctrl">
-    <form name="form" role="form" novalidate>
-        <fieldset ng-disabled="ctrl.lock">
+  <form name="form" role="form" novalidate>
+  <fieldset ng-disabled="ctrl.lock">
 
-            <div class="form-group">
-                <label>会場</label>
+    <div class="form-group">
+      <label>会場</label>
 
-              <select class="form-control"
-                      ng-model="ctrl.place"
-                      ng-options="key as item.name for (key, item) in ctrl.places"
-                      required>
-              </select>
+      <select class="form-control"
+              ng-model="ctrl.place"
+              ng-options="item.id as item.name for item in ctrl.places"
+              required>
+      </select>
 
-            </div>
+    </div>
 
-            <div class="form-group">
-                <label>遅延時間</label>
+    <div class="form-group">
+      <label>遅延時間</label>
 
-                <div class="input-group">
-                    <input type="number"
-                           class="form-control"
-                           ng-model="ctrl.item.delay"
+      <div class="input-group">
+        <input type="number"
+               class="form-control"
+               ng-model="ctrl.item.delay"
 
-                           required>
-                    <span class="input-group-addon">分</span>
-                </div>
+               required>
+        <span class="input-group-addon">分</span>
+      </div>
 
-                <p class="help-block">
-                    遅れている場合は 正の数、早く進んでいる場合はー（負の数）で入力して下さい。<br>
-                </p>
+      <p class="help-block">
+        遅れている場合は 正の数、早く進んでいる場合はー（負の数）で入力して下さい。<br>
+      </p>
 
-                <div class="well">
-                    <ul>
-                        <li>20分遅れている場合："20"と入力</li>
-                        <li>10分早く進んでいる場合："-10"と入力</li>
-                    </ul>
-                </div>
-            </div>
+      <div class="well">
+        <ul>
+          <li>20分遅れている場合："20"と入力</li>
+          <li>10分早く進んでいる場合："-10"と入力</li>
+        </ul>
+      </div>
+    </div>
 
-            <div class="form-group">
-                <label>備考欄(スズメバチ情報など)</label>
-                <input type="text"
-                       class="form-control"
-                       ng-model="ctrl.item.message"
-                       placeholder="メッセージを入力(任意)...">
-            </div>
+    <div class="form-group">
+      <label>備考欄(スズメバチ情報など)</label>
+      <input type="text"
+             class="form-control"
+             ng-model="ctrl.item.message"
+             placeholder="メッセージを入力(任意)...">
+    </div>
 
-            <accordion>
-                <accordion-group is-open="isOpen">
-                  <accordion-heading>
-                    <i class="glyphicon" ng-class="{'glyphicon-chevron-down': isOpen, 'glyphicon-chevron-right': !isOpen}"></i>
-                    高度な設定
-                  </accordion-heading>
-                    <div class="form-group">
-                        <div class="checkbox text-danger">
-                            <label>
-                                <input type="checkbox" ng-model="ctrl.item.isPostponed">
-                                この会場のイベントに中止フラグを立てる（目立つ色で中止をアピールします！）
-                            </label>
-                        </div>
-                    </div>
-                </accordion-group>
-            </accordion>
+    <accordion>
+      <accordion-group is-open="isOpen">
+        <accordion-heading>
+          <i class="glyphicon" ng-class="{'glyphicon-chevron-down': isOpen, 'glyphicon-chevron-right': !isOpen}"></i>
+          高度な設定
+        </accordion-heading>
+        <div class="form-group">
+          <div class="checkbox text-danger">
+            <label>
+              <input type="checkbox" ng-model="ctrl.item.isPostponed">
+              この会場のイベントに中止フラグを立てる（目立つ色で中止をアピールします！）
+            </label>
+          </div>
+        </div>
+      </accordion-group>
+    </accordion>
 
-            <p class="bg-danger">
-                この情報は登録後直ちに公開されます。内容を削除することは出来ません。<br>
-                もし誤った情報を入力した場合は、【新しい情報を登録】してください。
-            </p>
+    <p class="bg-danger">
+      この情報は登録後直ちに公開されます。内容を削除することは出来ません。<br>
+      もし誤った情報を入力した場合は、【新しい情報を登録】してください。
+    </p>
 
-            <alert type="{{ ctrl.alert.type }}"
-                   close="ctrl.closeAlert()"
-                   ng-show="ctrl.alert">
-                {{ctrl.alert.msg}}
-            </alert>
+    <alert type="{{ ctrl.alert.type }}"
+           close="ctrl.closeAlert()"
+           ng-show="ctrl.alert">
+      {{ctrl.alert.msg}}
+    </alert>
 
-            <input type="submit"
-                   value="登録"
-                   class="btn btn-lg btn-primary btn-block"
-                   ng-disabled="form.$invalid"
-                   ng-click="ctrl.click()">
-        </fieldset>
-    </form>
+    <input type="submit"
+           value="登録"
+           class="btn btn-lg btn-primary btn-block"
+           ng-disabled="form.$invalid"
+           ng-click="ctrl.click()">
+  </fieldset>
+  </form>
 </div>

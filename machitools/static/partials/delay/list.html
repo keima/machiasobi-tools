@@ -1,18 +1,20 @@
 <div ng-controller="DelayViewCtrl as ctrl">
 
-  <div class="alert alert-danger text-center" role="alert"
-       style="font-size: larger">
-    <strong>遅延の時間は目安です。</strong>遅れ(進み)が突然解消される場合もあります。
-  </div>
+  <div class="row">
+    <div class="alert alert-danger text-center col-sm-6" role="alert"
+         style="font-size: larger">
+      <strong>遅延の時間は目安です。</strong>遅れ(進み)が突然解消される場合もあります。
+    </div>
 
-  <div class="alert alert-info text-center" role="alert"
-       style="font-size: larger">
-    {{ ctrl.now | date:"MM月dd日 HH時mm分ss秒" }} 現在の情報です。
+    <div class="alert alert-info text-center col-sm-6" role="alert"
+         style="font-size: larger">
+      {{ ctrl.now | date:"MM月dd日 HH時mm分ss秒" }} 現在の情報です。
+    </div>
   </div>
 
   <div class="row">
-    <div class="col-sm-4" ng-repeat="(key, place) in ctrl.places">
-      <div class="panel panel-{{ key }}">
+    <div class="col-sm-4 col-lg-3" ng-repeat="place in ctrl.places">
+      <div class="panel panel-{{ place.id }}">
         <div class="panel-heading">
           <h3 class="panel-title">
             {{ place.name }}
@@ -22,19 +24,20 @@
         <div class="panel-body">
           <div class="delay" ng-hide="place.item.isPostponed">
             <div class="time">
-              {{ ctrl.abs(place.item.delay) }} <span>分</span>
+              {{ ctrl.abs(place.item.delay) }}<span>分</span>
             </div>
             <div class="status">
-              <span ng-show="place.item.delay > 0">遅れています</span>
-              <span ng-show="place.item.delay < 0">早く進んでいます</span>
-              <span ng-show="place.item.delay === 0">定刻通りです</span>
+              <span ng-show="place.item.delay > 0">遅れ</span>
+              <span ng-show="place.item.delay < 0">前倒し</span>
+              <span ng-show="place.item.delay === 0">定刻通り</span>
             </div>
           </div>
           <div class="postponed" ng-show="place.item.isPostponed">
             本日開催のイベントは <span>中止</span> となりました。
           </div>
 
-          <div class="alert alert-info" role="alert"
+          <div class="alert" role="alert"
+               ng-class="{ 'alert-info':!place.item.error, 'alert-danger':place.item.error }"
                ng-show="place.item.message">
             {{ place.item.message }}
           </div>
@@ -42,23 +45,16 @@
 
         <table class="table table-delay" ng-hide="place.item.error || place.item.isPostponed">
           <tbody>
-          <tr ng-repeat="calendar in ctrl.calendarData[key]" class="delay-table-row index-{{ $index }}">
+          <tr ng-repeat="calendar in ctrl.calendarData[place.id]" class="delay-table-row index-{{ $index }}">
             <th ng-switch on="$index">
-              <span ng-switch-when="0">現在のイベント</span>
-              <span ng-switch-when="1">次のイベント</span>
-              <span ng-switch-when="2">次の次のイベント</span>
+              <span ng-switch-when="0">現在</span>
+              <span ng-switch-when="1">次</span>
+              <span ng-switch-when="2">次の次</span>
             </th>
             <td>
               {{ calendar.summary }}
             </td>
           </tr>
-
-          <tr ng-hide="ctrl.calendarData[key]">
-            <td class="delay-item-is-empty info">
-              本日の {{ place.name }} での<br>イベントはすべて終了いたしました
-            </td>
-          </tr>
-
           </tbody>
         </table>
 
