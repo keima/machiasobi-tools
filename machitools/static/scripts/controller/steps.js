@@ -57,7 +57,7 @@ angular.module("myApp.controller.steps", [])
             showTitle: result.showTitle,
             type: result.type,
             description: result.description,
-            path: result.path,
+            partialId: result.partialId,
             order: result.order,
             isPublic: result.isPublic
           }

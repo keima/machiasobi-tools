@@ -14,7 +14,8 @@ type StepItem struct {
 	Title       string `json:"title"`
 	ShowTitle   bool   `json:"showTitle"`
 	Description string `json:"description" datastore:",noindex"`
-	Path        string `json:"path"`
+	Path        string `json:"path"` // ← not use
+	PartialId   string `json:"partialId"`
 	Author      string `json:"-"`
 	IsPublic    bool   `json:"isPublic"`
 	Order       int    `json:"order"`
