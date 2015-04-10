@@ -47,6 +47,7 @@ angular.module('myApp')
 
       .state('event', {
         url: '/event',
+        abstract: true,
         templateUrl: "partials/event/_.html"
       })
       .state('event.list', {
