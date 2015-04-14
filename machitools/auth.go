@@ -22,7 +22,12 @@ func Login(w rest.ResponseWriter, r *rest.Request) {
 		w.Header().Set("Location", url)
 		w.WriteHeader(http.StatusFound)
 	} else {
-		w.Header().Set("Location", "/")
+		redirect := "/"
+		if r.FormValue("redirectTo") == "app" {
+			redirect = "http://machi.p-side.net/"
+		}
+
+		w.Header().Set("Location", redirect)
 		w.WriteHeader(http.StatusFound)
 	}
 }
@@ -40,7 +45,12 @@ func Logout(w rest.ResponseWriter, r *rest.Request) {
 		w.Header().Set("Location", url)
 		w.WriteHeader(http.StatusFound)
 	} else {
-		w.Header().Set("Location", "/")
+		redirect := "/"
+		if r.FormValue("redirectTo") == "app" {
+			redirect = "http://machi.p-side.net/"
+		}
+
+		w.Header().Set("Location", redirect)
 		w.WriteHeader(http.StatusFound)
 	}
 }
