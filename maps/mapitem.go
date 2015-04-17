@@ -48,6 +48,10 @@ func (item *MapItem) Load(c appengine.Context, parent *datastore.Key, keyName st
 	return nil
 }
 
+func DeleteMapItem(c appengine.Context, key *datastore.Key) error {
+	return ds.Delete(c, key)
+}
+
 func LoadAllMapItem(c appengine.Context, parent *datastore.Key) (*[]MapItem, error) {
 	items := make([]MapItem, 0, 20) // TODO: magic number...
 	q := datastore.NewQuery(kindNameMapItem).Ancestor(parent)

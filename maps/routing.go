@@ -166,7 +166,7 @@ func DeleteMarker(w rest.ResponseWriter, r *rest.Request) {
 
 	parent := datastore.NewKey(c, kindNameMap, keyName, 0, nil)
 	key := datastore.NewKey(c, kindNameMapItem, "", keyId, parent)
-	if err := datastore.Delete(c, key); err != nil {
+	if err := DeleteMapItem(c, key); err != nil {
 		rest.Error(w, "id or key is not match (or DB error).", http.StatusNotFound)
 		return
 	}
