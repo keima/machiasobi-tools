@@ -1,11 +1,9 @@
 package machitools
 
 import (
-	"gopkg.in/ant0ine/go-json-rest.v2/rest"
-
-	"net/http"
-
 	"log"
+	"net/http"
+	"regexp"
 
 	"github.com/keima/machitools/calendar"
 	"github.com/keima/machitools/delay"
@@ -15,6 +13,8 @@ import (
 	"github.com/keima/machitools/steps"
 	"github.com/keima/machitools/traffic"
 	"github.com/keima/machitools/weather"
+
+	"gopkg.in/ant0ine/go-json-rest.v2/rest"
 
 	"appengine"
 )
@@ -31,7 +31,10 @@ func init() {
 					if appengine.IsDevAppServer() {
 						return true
 					} else if request.Method == "GET" {
-						return true
+						if m, _ := regexp.MatchString("^/auth", str); !m {
+							// 認証系はGETリクエストであれoriginチェックさせたいのでtrue返さない
+							return true
+						}
 					}
 					return origin == "http://machi.p-side.net"
 				},
