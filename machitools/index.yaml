@@ -31,6 +31,12 @@ indexes:
   - name: UpdatedAt
     direction: desc
 
+- kind: Fav
+  ancestor: yes
+  properties:
+  - name: UpdatedAt
+    direction: desc
+
 - kind: Map
   properties:
   - name: IsPublic
