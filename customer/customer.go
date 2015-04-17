@@ -20,7 +20,7 @@ type CustomerItem struct {
 }
 
 func (item *CustomerItem) Init(u *user.User) {
-	item.Email = u.Email
+	item.Email = "" // u.Email is not correct by now...
 	item.ID = u.ID
 }
 
