@@ -11,7 +11,7 @@ import (
 	"appengine/user"
 )
 
-// 登録されているニュースを指定件数取得します
+// GetNewsList では登録されているニュースを取得します
 //
 // URL Parameter:
 // first DB登録されているリストのどの場所から取得開始するか(デフォルトは 0)
@@ -50,7 +50,7 @@ func GetNewsList(w rest.ResponseWriter, r *rest.Request) {
 	w.WriteJson(&itemList)
 }
 
-// ニュースを登録します。認証必須です。
+// PostNews ではニュースを新規登録します。認証必須です。
 //
 // JSON Parameter:
 // Title
@@ -82,6 +82,48 @@ func PostNews(w rest.ResponseWriter, r *rest.Request) {
 	w.WriteJson(&news)
 }
 
+// PutNews ではニュースを上書きします。認証必須です。
+func PutNews(w rest.ResponseWriter, r *rest.Request) {
+	c := appengine.NewContext(r.Request)
+	u := user.Current(c)
+	if u == nil || !user.IsAdmin(c) {
+		rest.Error(w, "Administrator login Required.", http.StatusUnauthorized)
+		return
+	}
+
+	// load old news entity
+	oldNews := NewsItem{}
+	err := oldNews.Load(c, r.PathParam("id"))
+	if err != nil {
+		rest.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	// set news json to news entity
+	newNews := NewsItem{}
+	if err := r.DecodeJsonPayload(&newNews); err != nil {
+		rest.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	// merge new news to old news
+	oldNews.Title = newNews.Title
+	oldNews.Article = newNews.Article
+	oldNews.IsPublic = newNews.IsPublic
+	oldNews.Author = u.String()
+
+	if err := oldNews.Save(c, r.PathParam("id")); err != nil {
+		rest.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteJson(&oldNews)
+}
+
+// GetNews では登録されているニュースから指定されたIDのものだけ返却します
+//
+// Path Parameter:
+// id: ニュースのID
 func GetNews(w rest.ResponseWriter, r *rest.Request) {
 	c := appengine.NewContext(r.Request)
 
