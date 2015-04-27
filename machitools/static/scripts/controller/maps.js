@@ -46,7 +46,8 @@ angular.module('myApp.controller.maps', [])
         return idVal
       },
       setId: function (id) {
-        idVal = id
+        idVal = id;
+        forceReload = true;
       },
       getMap: getMap,
       reload: reload,
