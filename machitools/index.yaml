@@ -51,6 +51,12 @@ indexes:
 - kind: News
   properties:
   - name: IsPublic
+  - name: CreatedAt
+    direction: desc
+
+- kind: News
+  properties:
+  - name: IsPublic
   - name: UpdatedAt
     direction: desc
 
