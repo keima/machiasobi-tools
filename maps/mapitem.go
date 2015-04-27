@@ -3,7 +3,7 @@ package maps
 import (
 	"strconv"
 
-	"github.com/knightso/base/gae/ds"
+	"github.com/keima/base/gae/ds"
 
 	"appengine"
 	"appengine/datastore"
