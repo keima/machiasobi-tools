@@ -68,6 +68,7 @@ func init() {
 		&rest.Route{"GET", pathPrefix + "/news", news.GetNewsList},
 		&rest.Route{"GET", pathPrefix + "/news/:id", news.GetNews},
 		&rest.Route{"POST", pathPrefix + "/news/:id", news.PostNews},
+		&rest.Route{"PUT", pathPrefix + "/news/:id", news.PutNews},
 
 		// Maps
 		&rest.Route{"GET", pathPrefix + "/maps", maps.GetMapList},

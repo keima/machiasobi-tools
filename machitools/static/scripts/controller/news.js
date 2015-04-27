@@ -16,28 +16,30 @@ angular.module("myApp.controller.news", [])
       'IsPublic': false
     };
 
-    if (!_.isNull(this.itemIdParam)) {
+    if (!_.isNull(self.itemIdParam)) {
       Restangular.all('news').get(self.itemIdParam)
         .then(function (result) {
-          self.newsId = result.Id;
-          self.newsItem = {
-            'Title': result.Title,
-            'Article': result.Article,
-            'IsPublic': result.IsPublic
-          }
+          self.newsId = result.id;
+          self.newsItem = result
         });
     }
 
     this.click = function () {
       self.lock = true;
-      Restangular.all('news').all(self.newsId).post(self.newsItem)
-        .then(function (result) {
-          self.lock = false;
-          self.alert = {type: 'success', msg: '登録に成功しました'}
-        }, function (reason) {
-          self.lock = false;
-          self.alert = {type: 'danger', msg: '登録に失敗しました:' + reason.Error}
-        });
+      var req = Restangular.all('news').all(self.newsId);
+      if (_.isNull(self.itemIdParam)) {
+        req = req.post(self.newsItem);
+      } else {
+        req = self.newsItem.put();
+      }
+
+      req.then(function (result) {
+        self.lock = false;
+        self.alert = {type: 'success', msg: '登録に成功しました'}
+      }, function (reason) {
+        self.lock = false;
+        self.alert = {type: 'danger', msg: '登録に失敗しました:' + reason.Error}
+      });
     };
   })
   .controller('NewsListCtrl', function (Restangular) {

@@ -1,7 +1,7 @@
 package news
 
 import (
-	"github.com/knightso/base/gae/ds"
+	"github.com/keima/base/gae/ds"
 
 	"appengine"
 	"appengine/datastore"
@@ -14,7 +14,7 @@ const (
 // ニュースのモデル
 type NewsItem struct {
 	ds.Meta
-	Id       string `datastore:"-"`
+	Id       string `json:"id" datastore:"-"`
 	Author   string `json:"-"`
 	Title    string
 	Article  string `datastore:",noindex"`
@@ -42,7 +42,7 @@ func (item *NewsItem) Load(c appengine.Context, keyName string) error {
 
 func LoadAll(c appengine.Context, first int, size int, publicOnly bool) (*[]NewsItem, error) {
 	items := make([]NewsItem, 0, size)
-	q := datastore.NewQuery(KindName).Order("-UpdatedAt").Offset(first).Limit(size)
+	q := datastore.NewQuery(KindName).Order("-CreatedAt").Offset(first).Limit(size)
 
 	if publicOnly {
 		q = q.Filter("IsPublic = ", true)
