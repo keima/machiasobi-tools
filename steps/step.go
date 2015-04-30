@@ -33,10 +33,26 @@ func (item *StepItem) Save(c appengine.Context) error {
 	return ds.Put(c, item)
 }
 
-func (item *StepItem) Update(c appengine.Context, keyId int64) error {
+func (new *StepItem) Update(c appengine.Context, keyId int64) error {
+	old := StepItem{}
+	if err := old.Load(c, keyId); err != nil {
+		return err
+	}
+
+	old.Id = new.Id
+	old.Type = new.Type
+	old.Title = new.Title
+	old.ShowTitle = new.ShowTitle
+	old.Description = new.Description
+	old.Path = new.Path
+	old.PartialId = new.PartialId
+	old.Author = new.Author
+	old.IsPublic = new.IsPublic
+	old.Order = new.Order
+
 	key := datastore.NewKey(c, KindName, "", keyId, nil)
-	item.SetKey(key)
-	return ds.Put(c, item)
+	old.SetKey(key)
+	return ds.Put(c, &old)
 }
 
 func (item *StepItem) Load(c appengine.Context, keyId int64) error {
