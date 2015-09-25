@@ -3,11 +3,11 @@
 
 # チェックアウト
 
-    $ goapp get github.com/keima/machitools
+    $ goapp get github.com/keima/machiasobi-tools
 
 これでOKだと思います。
 
-ダメだったら、`$GOPATH/src/github.com/keima/machitools` にgit cloneする感じです。
+ダメだったら、`$GOPATH/src/github.com/keima/machiasobi-tools` にgit cloneする感じです。
 
 # 試す
 

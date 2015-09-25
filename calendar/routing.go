@@ -3,7 +3,7 @@ package calendar
 import (
 	"net/http"
 
-	"github.com/keima/machitools/customer"
+	"github.com/keima/machiasobi-tools/customer"
 	"gopkg.in/ant0ine/go-json-rest.v2/rest"
 
 	"appengine"

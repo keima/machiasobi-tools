@@ -5,14 +5,14 @@ import (
 	"net/http"
 	"regexp"
 
-	"github.com/keima/machitools/calendar"
-	"github.com/keima/machitools/delay"
-	"github.com/keima/machitools/event"
-	"github.com/keima/machitools/maps"
-	"github.com/keima/machitools/news"
-	"github.com/keima/machitools/steps"
-	"github.com/keima/machitools/traffic"
-	"github.com/keima/machitools/weather"
+	"github.com/keima/machiasobi-tools/calendar"
+	"github.com/keima/machiasobi-tools/delay"
+	"github.com/keima/machiasobi-tools/event"
+	"github.com/keima/machiasobi-tools/maps"
+	"github.com/keima/machiasobi-tools/news"
+	"github.com/keima/machiasobi-tools/steps"
+	"github.com/keima/machiasobi-tools/traffic"
+	"github.com/keima/machiasobi-tools/weather"
 
 	"gopkg.in/ant0ine/go-json-rest.v2/rest"
 
