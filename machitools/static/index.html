@@ -11,9 +11,9 @@
 
   <!-- build:css style.css -->
   <!-- inject:css -->
-  <link rel="stylesheet" href="/stylesheets/base.css">
-  <link rel="stylesheet" href="/stylesheets/dndList.css">
-  <link rel="stylesheet" href="/stylesheets/maps.css">
+  <link rel="stylesheet" href="stylesheets/base.css">
+  <link rel="stylesheet" href="stylesheets/dndList.css">
+  <link rel="stylesheet" href="stylesheets/maps.css">
   <!-- endinject -->
   <!-- endbuild -->
 
@@ -28,40 +28,43 @@
        ng-class="{showHeader: !root.hideHeader, hideHeader: root.hideHeader}"></div>
 </div>
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-cookies.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.compat.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/restangular/1.4.0/restangular.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.0/ui-bootstrap-tpls.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.13/angular-ui-router.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/angular-google-maps/2.0.12/angular-google-maps.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.3/moment.min.js"></script>
-
 <!-- build:vendorjs vendor.js -->
-<script src="./bower_components/angular-breadcrumb/release/angular-breadcrumb.min.js"></script>
-<script src="./bower_components/angular-google-staticmaps/angular-google-staticmaps.js"></script>
-<script src="./bower_components/angular-drag-and-drop-lists/angular-drag-and-drop-lists.min.js"></script>
+<!-- bower:js -->
+<script src="bower_components/jquery/dist/jquery.js"></script>
+<script src="bower_components/moment/moment.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-cookies/angular-cookies.js"></script>
+<script src="bower_components/lodash/lodash.js"></script>
+<script src="bower_components/restangular/dist/restangular.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+<script src="bower_components/angular-breadcrumb/release/angular-breadcrumb.js"></script>
+<script src="bower_components/angular-google-staticmaps/angular-google-staticmaps.js"></script>
+<script src="bower_components/angular-drag-and-drop-lists/angular-drag-and-drop-lists.js"></script>
+<script src="bower_components/angular-simple-logger/dist/angular-simple-logger.js"></script>
+<script src="bower_components/angular-google-maps/dist/angular-google-maps.js"></script>
+<!-- endinject -->
 <!-- endbuild -->
 
 <!-- build:js app.js -->
 <!-- inject:js -->
-<script src="/scripts/app.js"></script>
-<script src="/scripts/calendar.js"></script>
-<script src="/scripts/controller.js"></script>
-<script src="/scripts/routing.js"></script>
-<script src="/scripts/run.js"></script>
-<script src="/scripts/services.js"></script>
-<script src="/scripts/controller/delay.js"></script>
-<script src="/scripts/controller/event.js"></script>
-<script src="/scripts/controller/maps.js"></script>
-<script src="/scripts/controller/news.js"></script>
-<script src="/scripts/controller/root.js"></script>
-<script src="/scripts/controller/steps.js"></script>
-<script src="/scripts/controller/toppage.js"></script>
-<script src="/scripts/controller/traffic.js"></script>
-<script src="/scripts/services/user.js"></script>
+<script src="scripts/app.js"></script>
+<script src="scripts/calendar.js"></script>
+<script src="scripts/controller.js"></script>
+<script src="scripts/routing.js"></script>
+<script src="scripts/run.js"></script>
+<script src="scripts/services.js"></script>
+<script src="scripts/controller/delay.js"></script>
+<script src="scripts/controller/event.js"></script>
+<script src="scripts/controller/maps.js"></script>
+<script src="scripts/controller/news.js"></script>
+<script src="scripts/controller/periods.js"></script>
+<script src="scripts/controller/root.js"></script>
+<script src="scripts/controller/steps.js"></script>
+<script src="scripts/controller/toppage.js"></script>
+<script src="scripts/controller/traffic.js"></script>
+<script src="scripts/services/user.js"></script>
 <!-- endinject -->
 <!-- endbuild -->
 

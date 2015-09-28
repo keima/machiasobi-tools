@@ -40,6 +40,10 @@
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
+        <li ng-show="header.loggedin" ng-class="{ active: $state.includes('settings') }">
+          <a ui-sref="settings">
+          <i class="glyphicon glyphicon-cog"></i>
+        </a></li>
         <li ng-hide="header.loggedin"><a ng-href="{{ header.apiUrl }}/auth/login">ログイン</a></li>
         <li ng-show="header.loggedin"><a ng-href="{{ header.apiUrl }}/auth/logout">ログアウト</a></li>
       </ul>

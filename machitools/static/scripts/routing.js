@@ -151,6 +151,16 @@ angular.module('myApp')
         templateUrl: 'partials/steps/input.html',
         controller: 'StepsInputCtrl as ctrl'
       })
+
+      .state('settings', {
+        url: '/settings',
+        templateUrl: 'partials/settings/_.html'
+      })
+      .state('settings.periods', {
+        url: '/periods',
+        templateUrl: 'partials/settings/periods.html',
+        controller: 'PeriodsCtrl as ctrl'
+      })
     ;
   })
 ;
