@@ -1,21 +1,23 @@
 {
   "name": "machitools",
-  "version": "0.0.0",
+  "private": true,
   "homepage": "https://github.com/keima/machiasobi-tools",
-  "authors": [
-    "Kouta Imanaka <keima@p-side.net>"
-  ],
-  "license": "MIT",
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
-  ],
   "dependencies": {
-    "angular-breadcrumb": "~0.3.3",
+    "jquery": "~2.1.4",
+    "moment": "~2.10.6",
+    "bootstrap": "~3.3.5",
+    "angular": "~1.3.0",
+    "angular-cookies": "~1.3.0",
+    "lodash": "~3.10.1",
+    "restangular": "~1.5.1",
+    "angular-bootstrap": "~0.13.4",
+    "angular-ui-router": "~0.2.15",
+    "angular-breadcrumb": "~0.4",
     "angular-google-staticmaps": "~0.3.0",
-    "angular-drag-and-drop-lists": "~1.2.0"
+    "angular-drag-and-drop-lists": "~1.3",
+    "angular-google-maps": "~2.2.1"
+  },
+  "resolutions": {
+    "angular": "~1.3.0"
   }
 }

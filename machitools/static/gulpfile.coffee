@@ -22,10 +22,12 @@ gulp.task 'watch', ->
   gulp.watch config.css, ['inject', browserSync.reload]
 
 gulp.task 'inject', ->
+  bower = gulp.src bowerFiles(), {read: false}
   sources = gulp.src [config.js, config.css], {read: false}
 
   gulp.src './index.html'
-  .pipe $.inject sources
+  .pipe $.inject bower, {addRootSlash: false, name: 'bower'}
+  .pipe $.inject sources, {addRootSlash: false}
   .pipe gulp.dest './'
 
 gulp.task 'usemin', ->
@@ -44,7 +46,7 @@ gulp.task 'copy', ->
   .pipe gulp.dest config.output
 
   # other
-  gulp.src ['*.png', './signage/**'], {base: './'}
+  gulp.src ['*.png'], {base: './'}
   .pipe gulp.dest config.output
 
 
