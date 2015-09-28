@@ -11,7 +11,7 @@
 
 # 試す
 
-    $ goapp serve machitools
+    $ goapp serve ./machitools
 
 # デプロイ
 

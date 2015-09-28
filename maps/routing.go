@@ -1,7 +1,6 @@
 package maps
 
 import (
-	"fmt"
 	"net/http"
 	"strconv"
 
@@ -137,8 +136,6 @@ func PostMarker(w rest.ResponseWriter, r *rest.Request) {
 
 func DeleteMarker(w rest.ResponseWriter, r *rest.Request) {
 	c := appengine.NewContext(r.Request)
-	fmt.Println("Wow")
-	c.Infof("Wow")
 
 	u := user.Current(c)
 	if u == nil || !user.IsAdmin(c) {
