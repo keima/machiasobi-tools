@@ -17,6 +17,7 @@ import (
 	"gopkg.in/ant0ine/go-json-rest.v2/rest"
 
 	"appengine"
+	"github.com/keima/machiasobi-tools/periods"
 )
 
 const pathPrefix = "/api/#version"
@@ -92,6 +93,11 @@ func init() {
 		&rest.Route{"GET", pathPrefix + "/calendar", calendar.GetFavList},
 		&rest.Route{"POST", pathPrefix + "/calendar/#calId/#eventId", calendar.PostFav},
 		&rest.Route{"DELETE", pathPrefix + "/calendar/#calId/#eventId", calendar.DeleteFav},
+
+		// Periods
+		&rest.Route{"GET", pathPrefix + "/periods", periods.GetPeriodList},
+		&rest.Route{"POST", pathPrefix + "/periods", periods.PostPeriod},
+		&rest.Route{"POST", pathPrefix + "/periods/:id/deactivate", periods.DeActivatePeriod},
 
 		// Auth
 		&rest.Route{"GET", pathPrefix + "/auth/check", CheckStatus},

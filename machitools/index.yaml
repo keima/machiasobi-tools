@@ -60,6 +60,17 @@ indexes:
   - name: UpdatedAt
     direction: desc
 
+- kind: PeriodItem
+  properties:
+  - name: IsActive
+  - name: Date
+
+- kind: PeriodItem
+  properties:
+  - name: IsActive
+  - name: Date
+    direction: desc
+
 - kind: Step
   properties:
   - name: IsPublic
