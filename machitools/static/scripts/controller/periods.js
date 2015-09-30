@@ -23,7 +23,7 @@ angular.module("myApp.controller.periods", [])
       console.log(self.form.date);
 
       Restangular.all('periods').post({
-        date: self.form.date
+        date: moment(self.form.date).format()
       }).then(function(result) {
         $timeout(updateList, 500);
       });

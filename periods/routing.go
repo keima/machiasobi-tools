@@ -5,6 +5,7 @@ import (
 	"appengine/user"
 	"strconv"
 	"gopkg.in/ant0ine/go-json-rest.v2/rest"
+	"time"
 )
 
 // 公開API
@@ -17,11 +18,13 @@ func GetPeriodList(w rest.ResponseWriter, r *rest.Request) {
 		return
 	}
 
-	// 管理者ユーザーの時だけIDを出力するようにする
 	c := appengine.NewContext(r.Request)
-	if !user.IsAdmin(c) {
-		// remove item.Id
-		for _, item := range items {
+	loc, _ := time.LoadLocation("Asia/Tokyo")
+	for _,item := range items {
+		item.Date = item.Date.In(loc)
+
+		// 管理者ユーザーでないときはIDを消す
+		if !user.IsAdmin(c) {
 			item.Id = 0
 		}
 	}
@@ -46,6 +49,8 @@ func PostPeriod(w rest.ResponseWriter, r *rest.Request) {
 		return
 	}
 
+	loc, _ := time.LoadLocation("Asia/Tokyo")
+	item.Date.In(loc)
 	item.IsActive = true
 
 	if err := item.Save(r.Request); err != nil {
