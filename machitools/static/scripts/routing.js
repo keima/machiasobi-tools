@@ -161,6 +161,26 @@ angular.module('myApp')
         templateUrl: 'partials/settings/periods.html',
         controller: 'PeriodsCtrl as ctrl'
       })
+      .state('settings.calendars', {
+        url: '/calendars',
+        abstract: true,
+        templateUrl: 'partials/settings/calendars.html'
+      })
+      .state('settings.calendars.list', {
+        url: '',
+        templateUrl: 'partials/settings/calendars_list.html',
+        controller: 'CalendarsListCtrl as ctrl'
+      })
+      .state('settings.calendars.create', {
+        url: '/create',
+        templateUrl: 'partials/settings/calendars_input.html',
+        controller: 'CalendarsInputCtrl as ctrl'
+      })
+      .state('settings.calendars.edit', {
+        url: '/edit/:id',
+        templateUrl: 'partials/settings/calendars_input.html',
+        controller: 'CalendarsInputCtrl as ctrl'
+      })
     ;
   })
 ;

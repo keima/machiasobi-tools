@@ -9,5 +9,6 @@ angular.module('myApp.controller', [
   'myApp.controller.news',
   'myApp.controller.maps',
   'myApp.controller.steps',
-  'myApp.controller.periods'
+  'myApp.controller.periods',
+  "myApp.controller.calendars"
 ]);

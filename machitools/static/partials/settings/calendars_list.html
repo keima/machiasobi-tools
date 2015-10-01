@@ -1,0 +1,42 @@
+<table class="table table-hover">
+  <thead>
+  <tr>
+    <td>ID</td>
+    <th>名前</th>
+    <td>カレンダーID</td>
+    <td>固定表示</td>
+    <td> </td>
+  </tr>
+  </thead>
+  <tbody dnd-list="ctrl.items">
+  <tr ng-repeat="item in ctrl.items"
+      dnd-draggable="item"
+      dnd-moved="ctrl.move($index)"
+      dnd-effect-allowed="move"
+      dnd-disable-if="!isAdmin"
+    >
+    <td>{{ item.id }}</td>
+    <th>{{ item.name }}</th>
+    <td>{{ item.calendarId }}</td>
+    <td>{{ item.isSticky }}</td>
+    <td>
+      <a class="btn btn-info" role="button"
+        ui-sref="settings.calendars.edit({ id: item.id })">
+        <span class="glyphicon glyphicon-edit"></span> 編集
+      </a>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<alert type="{{ ctrl.alert.type }}"
+       close="ctrl.closeAlert()"
+       ng-show="ctrl.alert">{{ctrl.alert.msg}}
+</alert>
+
+<div class="text-right" ng-show="ctrl.modified">
+  <p class="text-info">順序が変更されました。順序変更を反映するには「更新」を押してください。</p>
+  <button class="btn btn-success"
+          ng-disabled="ctrl.lock"
+          ng-click="ctrl.updateOrder()">更新</button>
+</div>
