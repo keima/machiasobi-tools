@@ -18,6 +18,7 @@ import (
 
 	"appengine"
 	"github.com/keima/machiasobi-tools/periods"
+	"github.com/keima/machiasobi-tools/favorite"
 )
 
 const pathPrefix = "/api/#version"
@@ -90,9 +91,9 @@ func init() {
 		&rest.Route{"GET", pathPrefix + "/weather/:id", weather.GetWeather},
 
 		// Calendar
-		&rest.Route{"GET", pathPrefix + "/calendar", calendar.GetFavList},
-		&rest.Route{"POST", pathPrefix + "/calendar/#calId/#eventId", calendar.PostFav},
-		&rest.Route{"DELETE", pathPrefix + "/calendar/#calId/#eventId", calendar.DeleteFav},
+		&rest.Route{"GET", pathPrefix +    "/favorite", favorite.GetFavList},
+		&rest.Route{"POST", pathPrefix +   "/favorite/#calId/#eventId", favorite.PostFav},
+		&rest.Route{"DELETE", pathPrefix + "/favorite/#calId/#eventId", favorite.DeleteFav},
 
 		// Periods
 		&rest.Route{"GET", pathPrefix + "/periods", periods.GetPeriodList},

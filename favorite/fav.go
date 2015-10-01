@@ -1,4 +1,4 @@
-package calendar
+package favorite
 
 import (
 	"errors"
