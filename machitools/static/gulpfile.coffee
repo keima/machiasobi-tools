@@ -23,11 +23,13 @@ gulp.task 'watch', ->
 
 gulp.task 'inject', ->
   bower = gulp.src bowerFiles(), {read: false}
-  sources = gulp.src [config.js, config.css], {read: false}
+  js = gulp.src([config.js]).pipe($.angularFilesort())
+  css = gulp.src [config.css], {read: false}
 
   gulp.src './index.html'
   .pipe $.inject bower, {addRootSlash: false, name: 'bower'}
-  .pipe $.inject sources, {addRootSlash: false}
+  .pipe $.inject js, {addRootSlash: false}
+  .pipe $.inject css, {addRootSlash: false}
   .pipe gulp.dest './'
 
 gulp.task 'usemin', ->
