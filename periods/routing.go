@@ -50,7 +50,7 @@ func PostPeriod(w rest.ResponseWriter, r *rest.Request) {
 	}
 
 	loc, _ := time.LoadLocation("Asia/Tokyo")
-	item.Date.In(loc)
+	item.Date = item.Date.In(loc)
 	item.IsActive = true
 
 	if err := item.Save(r.Request); err != nil {
