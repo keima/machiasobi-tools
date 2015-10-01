@@ -5,7 +5,6 @@ import (
 	"net/http"
 	"regexp"
 
-	"github.com/keima/machiasobi-tools/calendar"
 	"github.com/keima/machiasobi-tools/delay"
 	"github.com/keima/machiasobi-tools/event"
 	"github.com/keima/machiasobi-tools/maps"
@@ -19,6 +18,7 @@ import (
 	"appengine"
 	"github.com/keima/machiasobi-tools/periods"
 	"github.com/keima/machiasobi-tools/favorite"
+	"github.com/keima/machiasobi-tools/calendar"
 )
 
 const pathPrefix = "/api/#version"
@@ -91,8 +91,16 @@ func init() {
 		&rest.Route{"GET", pathPrefix + "/weather/:id", weather.GetWeather},
 
 		// Calendar
-		&rest.Route{"GET", pathPrefix +    "/favorite", favorite.GetFavList},
-		&rest.Route{"POST", pathPrefix +   "/favorite/#calId/#eventId", favorite.PostFav},
+		&rest.Route{"GET", pathPrefix + "/calendars", calendar.GetCalendarList},
+		&rest.Route{"POST", pathPrefix + "/calendars", calendar.PostCalendar},
+		&rest.Route{"POST", pathPrefix + "/calendars/order", calendar.PostOrder},
+		&rest.Route{"GET", pathPrefix + "/calendars/:id", calendar.GetCalendar},
+		&rest.Route{"PUT", pathPrefix + "/calendars/:id", calendar.PutCalendar},
+		&rest.Route{"DELETE", pathPrefix + "/calendars/:id", calendar.DeleteCalendar},
+
+		// Favorite
+		&rest.Route{"GET", pathPrefix + "/favorite", favorite.GetFavList},
+		&rest.Route{"POST", pathPrefix + "/favorite/#calId/#eventId", favorite.PostFav},
 		&rest.Route{"DELETE", pathPrefix + "/favorite/#calId/#eventId", favorite.DeleteFav},
 
 		// Periods
