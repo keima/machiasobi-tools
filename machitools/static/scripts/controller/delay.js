@@ -1,44 +1,7 @@
 "use strict";
 
 angular.module("myApp.controller.delay", [])
-  .value("DelayPlaces", [ // arrayで書かないと順番保証されない
-    {
-      id: "shinmachi",
-      name: "新町橋公園",
-      calendarId: "p-side.net_ctrq60t4vsvfavejbkdmbhv3k4@group.calendar.google.com"
-    },
-    {
-      id: "ryogoku",
-      name: "両国橋公園",
-      calendarId: "p-side.net_timelrcritenrfmn86lco3qt9o@group.calendar.google.com"
-    },
-    {
-      id: "bizan",
-      name: "眉山林間ステージ",
-      calendarId: "p-side.net_m9s9a5ut02n6ap1s6prdj92ss4@group.calendar.google.com"
-    },
-    {
-      id: "corne",
-      name: "コルネの泉",
-      calendarId: "p-side.net_jo112m9l36p6nlkrv939sb9kr0@group.calendar.google.com"
-    },
-    {
-      id: "cinema_entry",
-      name: "CINEMA前(入り口)",
-      calendarId: 'p-side.net_j3mtcq3ejulrovek8kru6vgoe8@group.calendar.google.com'
-    },
-    {
-      id: "awagin",
-      name: "あわぎんホール小ホール",
-      calendarId: 'p-side.net_oa45stb6g4h9lqiq5vd1ov844s@group.calendar.google.com'
-    },
-    {
-      id: "bunka",
-      name: "徳島市立文化センター",
-      calendarId: 'p-side.net_gocec2ij5sqho46oial3jusn1o@group.calendar.google.com'
-    }
-  ])
-  .controller('DelayViewCtrl', function (Restangular, Calendar, DelayPlaces) {
+  .controller('DelayViewCtrl', function (Restangular, Calendar) {
     var self = this;
     this.now = new Date();
 
@@ -46,7 +9,7 @@ angular.module("myApp.controller.delay", [])
       return Math.abs(value);
     };
 
-    this.places = DelayPlaces;
+    this.places = Calendar.getList();
 
     // calendar data storage
     this.calendarData = {};
@@ -75,10 +38,10 @@ angular.module("myApp.controller.delay", [])
     });
 
   })
-  .controller('DelayInputCtrl', function (Restangular, DelayPlaces) {
+  .controller('DelayInputCtrl', function (Restangular, Calendar) {
     var self = this;
 
-    this.places = DelayPlaces;
+    this.places = Calendar.getList();
 
     // form lock
     this.lock = false;

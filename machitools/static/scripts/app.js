@@ -33,15 +33,4 @@ angular.module('myApp', [
       return elem;
     })
   })
-  .value('Periods', {
-    day1: {
-      name: "1日目", date: new Date("2015/5/3")
-    },
-    day2: {
-      name: "2日目", date: new Date("2014/5/4")
-    },
-    day3: {
-      name: "3日目", date: new Date("2014/5/5")
-    }
-  })
 ;
