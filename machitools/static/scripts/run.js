@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('myApp')
-  .run(function ($rootScope, $state, Restangular, User) {
+  .run(function ($rootScope, $state, Restangular, User, Calendars, Periods) {
     // convenience state
     $rootScope.$state = $state;
     $rootScope.isAdmin = false;
@@ -15,6 +15,8 @@ angular.module('myApp')
         console.log(reason);
         User.setUser({});
       });
+
+    console.log(Calendars, Periods)
 
   })
 ;

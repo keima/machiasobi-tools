@@ -18,7 +18,7 @@ angular.module("myApp.controller.event", [])
     };
 
     // set startAt date block
-    this.startAtElements = Periods.getList();
+    this.startAtElements = Periods;
     this.selectedStartAt = {
       date: null,
       time: null,
@@ -93,14 +93,14 @@ angular.module("myApp.controller.event", [])
   })
 
   .controller('EventListCtrl', function (Restangular, Periods) {
-    this.periods = Periods.getList();
+    this.periods = Periods;
     this.now = new Date();
   })
   .controller('EventListDayCtrl', function ($stateParams, Restangular, Periods) {
     var self = this;
 
     var index = $stateParams.id.substring(3);
-    var startAt = moment(Periods.getList()[index].date);
+    var startAt = moment(Periods[index].date);
     var endAt = startAt.clone().endOf('days');
 
     Restangular.all('events').getList({

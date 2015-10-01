@@ -13,19 +13,34 @@
   <!-- inject:css -->
   <link rel="stylesheet" href="stylesheets/base.css">
   <link rel="stylesheet" href="stylesheets/dndList.css">
+  <link rel="stylesheet" href="stylesheets/initializeError.css">
   <link rel="stylesheet" href="stylesheets/maps.css">
   <!-- endinject -->
   <!-- endbuild -->
 
   <title>まち☆つーるず</title>
 </head>
-<body ng-app="myApp">
+<body><!--  ng-app="myApp" は bootstrap.js に引っ越し -->
 
 <div ng-controller="RootCtrl as root">
   <ng-include src="'partials/header.html'"></ng-include>
 
   <div ui-view class="container"
        ng-class="{showHeader: !root.hideHeader, hideHeader: root.hideHeader}"></div>
+</div>
+
+<div style="display: none" id="initialize-error">
+  <div class="alert alert-danger" role="alert">
+    <p><strong>致命的なエラーが発生しました :-(</strong></p>
+    <p>
+      重要なデータの取得に失敗した為、画面構築を継続することが出来ませんでした。<br>
+      お手数ですが、この画面を更新して、再度お試し下さい。<br>
+      それでも治らない場合は、管理者に連絡をしてください。
+    </p>
+    <a class="btn btn-default" href="javascript:location.reload()">
+      <i class="glyphicon glyphicon-refresh"></i> 更新
+    </a>
+  </div>
 </div>
 
 <!-- build:vendorjs vendor.js -->
@@ -49,24 +64,25 @@
 
 <!-- build:js app.js -->
 <!-- inject:js -->
-<script src="scripts/app.js"></script>
-<script src="scripts/calendar.js"></script>
-<script src="scripts/controller.js"></script>
-<script src="scripts/routing.js"></script>
-<script src="scripts/run.js"></script>
-<script src="scripts/services.js"></script>
-<script src="scripts/controller/calendars.js"></script>
-<script src="scripts/controller/delay.js"></script>
-<script src="scripts/controller/event.js"></script>
-<script src="scripts/controller/maps.js"></script>
-<script src="scripts/controller/news.js"></script>
-<script src="scripts/controller/periods.js"></script>
-<script src="scripts/controller/root.js"></script>
-<script src="scripts/controller/steps.js"></script>
-<script src="scripts/controller/toppage.js"></script>
-<script src="scripts/controller/traffic.js"></script>
-<script src="scripts/services/periods.js"></script>
 <script src="scripts/services/user.js"></script>
+<script src="scripts/modules/myrestangular.js"></script>
+<script src="scripts/controller/traffic.js"></script>
+<script src="scripts/controller/toppage.js"></script>
+<script src="scripts/controller/steps.js"></script>
+<script src="scripts/controller/root.js"></script>
+<script src="scripts/controller/periods.js"></script>
+<script src="scripts/controller/news.js"></script>
+<script src="scripts/controller/maps.js"></script>
+<script src="scripts/controller/event.js"></script>
+<script src="scripts/controller/delay.js"></script>
+<script src="scripts/controller/calendars.js"></script>
+<script src="scripts/services.js"></script>
+<script src="scripts/app.js"></script>
+<script src="scripts/run.js"></script>
+<script src="scripts/routing.js"></script>
+<script src="scripts/controller.js"></script>
+<script src="scripts/calendar.js"></script>
+<script src="scripts/bootstrap.js"></script>
 <!-- endinject -->
 <!-- endbuild -->
 

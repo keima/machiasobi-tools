@@ -1,7 +1,7 @@
 "use strict";
 
 angular.module("myApp.controller.delay", [])
-  .controller('DelayViewCtrl', function (Restangular, Calendar) {
+  .controller('DelayViewCtrl', function (Restangular, Calendar, Calendars) {
     var self = this;
     this.now = new Date();
 
@@ -9,7 +9,7 @@ angular.module("myApp.controller.delay", [])
       return Math.abs(value);
     };
 
-    this.places = Calendar.getList();
+    this.places = Calendars;
 
     // calendar data storage
     this.calendarData = {};
@@ -41,7 +41,7 @@ angular.module("myApp.controller.delay", [])
   .controller('DelayInputCtrl', function (Restangular, Calendar) {
     var self = this;
 
-    this.places = Calendar.getList();
+    this.places = Calendars;
 
     // form lock
     this.lock = false;

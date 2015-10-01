@@ -10,15 +10,6 @@ angular.module('myApp.calendar',[])
     });
   }).service('Calendar', function(CalendarRest, Restangular) {
 
-    var calendars = [];
-
-    function getList() {
-      if (calendars.length == 0) {
-        calendars = Restangular.all("calendars").getList().$object;
-      }
-      return calendars;
-    }
-
     /**
      * calendarIdの指定時刻から今日の終わりまでのイベント(終日イベントは除く)を取得する
      * @param calId calendar id
@@ -53,7 +44,6 @@ angular.module('myApp.calendar',[])
     }
 
     return {
-      getList: getList,
       getTodayData: getTodayData
     }
   });
