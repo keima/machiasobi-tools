@@ -10,13 +10,16 @@ branches:
   only:
     - release
 
-install: ./script/ci/install.sh
+install:
+- ./_script/ci/install.sh
 
 before_script:
 - npm install -g gulp bower
 - export GO_APPENGINE_PATH=~/go_appengine
-- ./script/ci/before_script.sh
+- ./_script/ci/before_script.sh
 
-script: ./script/ci/script.sh
+script:
+- ./_script/ci/script.sh
 
-after_success: ./script/ci/after_success.sh
+after_success:
+- ./_script/ci/after_success.sh
