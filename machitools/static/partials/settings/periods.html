@@ -1,0 +1,37 @@
+<h2>開催期間設定</h2>
+
+<table class="table table-hover">
+  <thead>
+  <tr>
+    <td></td>
+    <td>開催日</td>
+    <td></td>
+  </tr>
+  </thead>
+  <tbody>
+  <tr ng-repeat="item in ctrl.items">
+    <td>{{ $index + 1 }}日目</td>
+    <td>{{ item.date | date:"yyyy年MM月dd日" }}</td>
+    <td>
+      <button type="button" class="btn btn-block btn-danger"
+        ng-click="ctrl.deactivatePeriod(item)">
+        <i class="glyphicon glyphicon-trash"></i> 無効化
+      </button>
+    </td>
+  </tr>
+  <tr class="info">
+    <td> </td>
+    <td>
+      <input type="date" class="form-control" placeholder="開催日を入力..."
+        ng-model="ctrl.form.date">
+    </td>
+    <td>
+      <button type="button" class="btn btn-block"
+              ng-click="ctrl.postPeriod()"
+              ng-disabled="!ctrl.form.date">
+        <i class="glyphicon glyphicon-plus"></i> 追加
+      </button>
+    </td>
+  </tr>
+  </tbody>
+</table>

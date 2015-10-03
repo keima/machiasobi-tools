@@ -1,11 +1,10 @@
 package maps
 
 import (
-	"fmt"
 	"net/http"
 	"strconv"
 
-	"github.com/keima/machitools/util"
+	"github.com/keima/machiasobi-tools/util"
 	"gopkg.in/ant0ine/go-json-rest.v2/rest"
 
 	"appengine"
@@ -137,8 +136,6 @@ func PostMarker(w rest.ResponseWriter, r *rest.Request) {
 
 func DeleteMarker(w rest.ResponseWriter, r *rest.Request) {
 	c := appengine.NewContext(r.Request)
-	fmt.Println("Wow")
-	c.Infof("Wow")
 
 	u := user.Current(c)
 	if u == nil || !user.IsAdmin(c) {

@@ -1,9 +1,9 @@
-package calendar
+package favorite
 
 import (
 	"errors"
 
-	"github.com/keima/machitools/customer"
+	"github.com/keima/machiasobi-tools/customer"
 	"github.com/keima/base/gae/ds"
 
 	"appengine"

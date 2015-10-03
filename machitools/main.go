@@ -5,18 +5,20 @@ import (
 	"net/http"
 	"regexp"
 
-	"github.com/keima/machitools/calendar"
-	"github.com/keima/machitools/delay"
-	"github.com/keima/machitools/event"
-	"github.com/keima/machitools/maps"
-	"github.com/keima/machitools/news"
-	"github.com/keima/machitools/steps"
-	"github.com/keima/machitools/traffic"
-	"github.com/keima/machitools/weather"
+	"github.com/keima/machiasobi-tools/delay"
+	"github.com/keima/machiasobi-tools/event"
+	"github.com/keima/machiasobi-tools/maps"
+	"github.com/keima/machiasobi-tools/news"
+	"github.com/keima/machiasobi-tools/steps"
+	"github.com/keima/machiasobi-tools/traffic"
+	"github.com/keima/machiasobi-tools/weather"
 
 	"gopkg.in/ant0ine/go-json-rest.v2/rest"
 
 	"appengine"
+	"github.com/keima/machiasobi-tools/periods"
+	"github.com/keima/machiasobi-tools/favorite"
+	"github.com/keima/machiasobi-tools/calendar"
 )
 
 const pathPrefix = "/api/#version"
@@ -31,7 +33,7 @@ func init() {
 					if appengine.IsDevAppServer() {
 						return true
 					} else if request.Method == "GET" {
-						if m, _ := regexp.MatchString("^/api/\\w*/(auth|calendar)", request.URL.Path); !m {
+						if m, _ := regexp.MatchString("^/api/\\w*/(auth|favorite|periods|calendars)", request.URL.Path); !m {
 							// マチアプリAPIはGETリクエストでもoriginチェックさせたいのでtrue返さない
 							return true
 						}
@@ -89,9 +91,22 @@ func init() {
 		&rest.Route{"GET", pathPrefix + "/weather/:id", weather.GetWeather},
 
 		// Calendar
-		&rest.Route{"GET", pathPrefix + "/calendar", calendar.GetFavList},
-		&rest.Route{"POST", pathPrefix + "/calendar/#calId/#eventId", calendar.PostFav},
-		&rest.Route{"DELETE", pathPrefix + "/calendar/#calId/#eventId", calendar.DeleteFav},
+		&rest.Route{"GET", pathPrefix + "/calendars", calendar.GetCalendarList},
+		&rest.Route{"POST", pathPrefix + "/calendars", calendar.PostCalendar},
+		&rest.Route{"POST", pathPrefix + "/calendars/order", calendar.PostOrder},
+		&rest.Route{"GET", pathPrefix + "/calendars/:id", calendar.GetCalendar},
+		&rest.Route{"PUT", pathPrefix + "/calendars/:id", calendar.PutCalendar},
+		&rest.Route{"DELETE", pathPrefix + "/calendars/:id", calendar.DeleteCalendar},
+
+		// Favorite
+		&rest.Route{"GET", pathPrefix + "/favorite", favorite.GetFavList},
+		&rest.Route{"POST", pathPrefix + "/favorite/#calId/#eventId", favorite.PostFav},
+		&rest.Route{"DELETE", pathPrefix + "/favorite/#calId/#eventId", favorite.DeleteFav},
+
+		// Periods
+		&rest.Route{"GET", pathPrefix + "/periods", periods.GetPeriodList},
+		&rest.Route{"POST", pathPrefix + "/periods", periods.PostPeriod},
+		&rest.Route{"POST", pathPrefix + "/periods/:id/deactivate", periods.DeActivatePeriod},
 
 		// Auth
 		&rest.Route{"GET", pathPrefix + "/auth/check", CheckStatus},

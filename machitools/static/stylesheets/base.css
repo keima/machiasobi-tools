@@ -1,4 +1,9 @@
 /* Base CSS */
+html, body {
+  width:100%;
+  height:100%;
+}
+
 body {
     padding-bottom: 20px;
 }
@@ -27,6 +32,14 @@ div.toggle-header {
 }
 
 /* panel */
+div.panel {
+  border-color: #d0d0d0;
+}
+div.panel .panel-heading {
+  background-color: #d0d0d0;
+  border-color: #d0d0d0;
+}
+
 div.panel-ropeway {
     border-color: #62ff9e;
 }

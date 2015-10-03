@@ -10,6 +10,11 @@ indexes:
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
 
+- kind: CalendarItem
+  properties:
+  - name: Enabled
+  - name: Order
+
 - kind: Event
   properties:
   - name: IsPublic
@@ -58,6 +63,17 @@ indexes:
   properties:
   - name: IsPublic
   - name: UpdatedAt
+    direction: desc
+
+- kind: PeriodItem
+  properties:
+  - name: IsActive
+  - name: Date
+
+- kind: PeriodItem
+  properties:
+  - name: IsActive
+  - name: Date
     direction: desc
 
 - kind: Step

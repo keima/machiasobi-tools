@@ -1,0 +1,79 @@
+<table class="table table-hover">
+  <thead>
+  <tr>
+    <td></td>
+    <td>ID</td>
+    <th>名前</th>
+    <td>固定表示</td>
+    <td></td>
+  </tr>
+  </thead>
+  <tbody dnd-list="ctrl.items">
+  <tr ng-repeat="item in ctrl.items"
+      dnd-draggable="item"
+      dnd-moved="ctrl.move($index)"
+      dnd-effect-allowed="move"
+      dnd-disable-if="!isAdmin"
+    >
+    <td ng-click="ctrl.openModal($index)">
+      <span class="text-info glyphicon glyphicon-eye-open" ng-show="item.enabled"></span>
+      <span class="text-warning glyphicon glyphicon-eye-close" ng-hide="item.enabled"></span>
+    </td>
+    <td>{{ item.id }}</td>
+    <th>{{ item.name }}</th>
+    <td>{{ item.isSticky }}</td>
+    <td>
+      <a class="btn btn-info" role="button"
+         ui-sref="settings.calendars.edit({ id: item.id })">
+        <span class="glyphicon glyphicon-edit"></span> 編集
+      </a>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<alert type="{{ ctrl.alert.type }}"
+       close="ctrl.closeAlert()"
+       ng-show="ctrl.alert">{{ctrl.alert.msg}}
+</alert>
+
+<div class="text-right" ng-show="ctrl.modified">
+  <p class="text-info">順序が変更されました。順序変更を反映するには「更新」を押してください。</p>
+  <button class="btn btn-success"
+          ng-disabled="ctrl.lock"
+          ng-click="ctrl.updateOrder()">更新
+  </button>
+</div>
+
+<script type="text/ng-template" id="confirmModal.html">
+  <div class="modal-header">
+    <h3 class="modal-title">
+      以下のカレンダーの公開設定を <strong>{{ item.enabled ? "非公開" : "公開" }}</strong> にしますか？
+    </h3>
+  </div>
+
+  <div class="modal-body">
+    <dl class="dl-horizontal">
+      <dt>ID</dt>
+      <dd>{{ item.id }}</dd>
+
+      <dt>名前</dt>
+      <dd>{{ item.name }}</dd>
+
+      <dt>カレンダーID</dt>
+      <dd>{{ item.calendarId }}</dd>
+
+      <dt>スティッキー表示</dt>
+      <dd>{{ item.isSticky ? "する" : "しない"}}</dd>
+
+      <dt>現在のステータス</dt>
+      <dd>{{ item.enabled ? "表示" : "非表示"}}</dd>
+    </dl>
+  </div>
+
+  <div class="modal-footer">
+    <i class="text-danger" ng-show="lock">更新中...</i>
+    <button class="btn btn-primary" type="button" ng-click="accept()" ng-disabled="lock">設定を変更する</button>
+    <button class="btn btn-default" type="button" ng-click="cancel()" ng-disabled="lock">閉じる</button>
+  </div>
+</script>

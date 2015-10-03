@@ -30,7 +30,7 @@
         <label ng-repeat="element in ctrl.startAtElements"
                class="btn btn-default"
                ng-model="ctrl.selectedStartAt.date"
-               btn-radio="element.date">{{ element.name }}</label>
+               btn-radio="element.date">{{ element.date | date:"MM月dd日(EEE)" }}</label>
       </div>
 
       <input type="time" class="form-control" ng-model="ctrl.selectedStartAt.time">

@@ -1,0 +1,58 @@
+<form name="form" role="form" novalidate>
+  <fieldset ng-disabled="ctrl.lock">
+
+    <div class="form-group">
+      <label>ID</label>
+      <input type="text" class="form-control" required
+             ng-disabled="ctrl.editMode"
+             ng-model="ctrl.item.id">
+    </div>
+
+    <div class="form-group">
+      <label>名前</label>
+      <input type="text" class="form-control" required
+             ng-model="ctrl.item.name">
+    </div>
+
+    <div class="form-group">
+      <label>カレンダーID(完全)</label>
+      <input type="text" class="form-control" required
+             ng-model="ctrl.item.calendarId">
+    </div>
+
+    <div class="form-group">
+      <div class="checkbox">
+        <label>
+          <input type="checkbox"
+                 ng-model="ctrl.item.isSticky">
+          マチアプリ上で常に表示する（スイッチON/OFFの対象にならず、凡例にも表示されません）
+        </label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" checked
+                 ng-model="ctrl.item.enabled">
+          このカレンダーを公開する
+        </label>
+      </div>
+    </div>
+
+    <p class="bg-danger">
+      内容を削除することは出来ませんが非公開にすることは出来ます。
+    </p>
+
+    <alert type="{{ ctrl.alert.type }}"
+           close="ctrl.closeAlert()"
+           ng-show="ctrl.alert">{{ctrl.alert.msg}}
+    </alert>
+
+    <input type="submit"
+           value="登録"
+           class="btn btn-lg btn-primary btn-block"
+           ng-disabled="form.$invalid"
+           ng-click="ctrl.click()">
+  </fieldset>
+</form>

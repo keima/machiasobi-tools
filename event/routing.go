@@ -9,6 +9,7 @@ import (
 
 	"appengine"
 	"appengine/user"
+	"github.com/keima/machiasobi-tools/util"
 )
 
 func GetEventList(w rest.ResponseWriter, r *rest.Request) {
@@ -24,12 +25,12 @@ func GetEventList(w rest.ResponseWriter, r *rest.Request) {
 		size = 10
 	}
 
-	startAt, err := parseDate(r.FormValue("startAt"))
+	startAt, err := util.ParseDate(r.FormValue("startAt"))
 	if err != nil {
 		startAt = time.Time{}
 	}
 
-	endAt, err := parseDate(r.FormValue("endAt"))
+	endAt, err := util.ParseDate(r.FormValue("endAt"))
 	if err != nil {
 		endAt = time.Time{}
 	}
@@ -105,15 +106,6 @@ func PostEvent(w rest.ResponseWriter, r *rest.Request) {
 	}
 
 	w.WriteJson(&item)
-}
-
-// 2014-10-11T15:00:00.000Z のような形式を処理する
-func parseDate(value string) (time.Time, error) {
-	t, err := time.Parse(time.RFC3339, value)
-	if err != nil {
-		return time.Time{}, err
-	}
-	return t, nil
 }
 
 /*

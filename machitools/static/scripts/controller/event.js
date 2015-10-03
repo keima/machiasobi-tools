@@ -99,7 +99,8 @@ angular.module("myApp.controller.event", [])
   .controller('EventListDayCtrl', function ($stateParams, Restangular, Periods) {
     var self = this;
 
-    var startAt = moment(Periods[$stateParams.id].date);
+    var index = $stateParams.id.substring(3);
+    var startAt = moment(Periods[index].date);
     var endAt = startAt.clone().endOf('days');
 
     Restangular.all('events').getList({

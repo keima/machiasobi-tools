@@ -1,6 +1,7 @@
 language: go
+
 go:
-- "1.2"
+- 1.4
 
 env:
 - secure: "gAxbyH3SKSDwNZXTZGeLrDTXiF8LBqLe/s/2I2v3hWftIAAr8r+ajBKMo3qg5MWWpOzJ2KIiwkyKP54V4aPRxn4qCtplTMBRdDu6bEwD6LyPmaT7ISGtv3RW6ePhIQiut4B2p1T7zrZNauneUgns2O7xkwtViPlXcPwTB5HcDd8="
@@ -9,13 +10,16 @@ branches:
   only:
     - release
 
-install: ./script/ci/install.sh
+install:
+- ./_script/ci/install.sh
 
 before_script:
 - npm install -g gulp bower
 - export GO_APPENGINE_PATH=~/go_appengine
-- ./script/ci/before_script.sh
+- ./_script/ci/before_script.sh
 
-script: ./script/ci/script.sh
+script:
+- ./_script/ci/script.sh
 
-after_success: ./script/ci/after_success.sh
+after_success:
+- ./_script/ci/after_success.sh

@@ -8,5 +8,7 @@ angular.module('myApp.controller', [
   'myApp.controller.event',
   'myApp.controller.news',
   'myApp.controller.maps',
-  'myApp.controller.steps'
+  'myApp.controller.steps',
+  'myApp.controller.periods',
+  "myApp.controller.calendars"
 ]);
