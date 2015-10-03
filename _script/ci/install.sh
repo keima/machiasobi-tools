@@ -6,6 +6,10 @@ echo "installing libs..."
 
 cd ~
 curl -O ${SDK_URL} && unzip -q ${FILENAME}
+if test $? -ne 0 ; then
+    echo "installing libs error has occured!" 1>&2
+    exit 1
+fi
 
 echo "installing libs fetched."
 exit 0
