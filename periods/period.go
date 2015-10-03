@@ -4,7 +4,8 @@ import (
 	"github.com/mjibson/goon"
 	"time"
 	"net/http"
-	"appengine/datastore"
+
+	"google.golang.org/appengine/datastore"
 )
 
 type PeriodItem struct {
