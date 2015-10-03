@@ -7,7 +7,7 @@ angular.module("myApp.controller.periods", [])
     this.form = {};
 
     function updateList() {
-      Restangular.all('periods').getList( {time: new Date().getTime()})
+      Restangular.all('periods').getList({time: new Date().getTime()})
         .then(function(result) {
           self.items = result;
         });
