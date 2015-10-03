@@ -33,7 +33,7 @@ func init() {
 					if appengine.IsDevAppServer() {
 						return true
 					} else if request.Method == "GET" {
-						if m, _ := regexp.MatchString("^/api/\\w*/(auth|calendar)", request.URL.Path); !m {
+						if m, _ := regexp.MatchString("^/api/\\w*/(auth|favorite|periods|calendars)", request.URL.Path); !m {
 							// マチアプリAPIはGETリクエストでもoriginチェックさせたいのでtrue返さない
 							return true
 						}
