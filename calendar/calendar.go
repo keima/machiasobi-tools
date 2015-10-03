@@ -11,6 +11,7 @@ type CalendarItem struct {
 	CalendarId      string `json:"calendarId"`
 	IsSticky        bool   `json:"isSticky"`
 	Order           int    `json:"order"`
+	Enabled         bool   `json:"enabled,omitempty"`
 }
 
 type CalendarItemList []*CalendarItem
@@ -37,13 +38,24 @@ func (item *CalendarItem) Delete(r *http.Request) error {
 
 func (items *CalendarItemList) LoadAll(r *http.Request) error {
 	g := goon.NewGoon(r)
-	q := datastore.NewQuery(g.Kind(new(CalendarItem))).Order("Order")
+	q := query(g)
+	_, err := g.GetAll(q, items)
+	return err
+}
+
+func (items *CalendarItemList) LoadEnabled(r *http.Request) error {
+	g := goon.NewGoon(r)
+	q := query(g).Filter("Enabled =", true)
 	_, err := g.GetAll(q, items)
 	return err
 }
 
 func (CalendarItemList) Count(r *http.Request) (int,error) {
 	g := goon.NewGoon(r)
-	q := datastore.NewQuery(g.Kind(new(CalendarItem))).Order("Order")
+	q := query(g)
 	return g.Count(q)
+}
+
+func query(g *goon.Goon) *datastore.Query {
+	return datastore.NewQuery(g.Kind(new(CalendarItem))).Order("Order")
 }

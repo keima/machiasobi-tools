@@ -4,14 +4,33 @@ import (
 	"net/http"
 	"appengine"
 	"appengine/user"
-"appengine/datastore"
+	"appengine/datastore"
 )
 
 func GetCalendarList(w rest.ResponseWriter, r *rest.Request) {
-	items := CalendarItemList{}
-	if err := items.LoadAll(r.Request); err != nil {
-		rest.Error(w, err.Error(), http.StatusInternalServerError)
+	c := appengine.NewContext(r.Request)
+
+	if !user.IsAdmin(c) {
+		rest.Error(w, "Administrator login Required.", http.StatusUnauthorized)
 		return
+	}
+
+	visibility := r.FormValue("visibility")
+
+	items := CalendarItemList{}
+	switch visibility {
+	case "all":
+		if user.IsAdmin(c) {
+			if err := items.LoadAll(r.Request); err != nil {
+				rest.Error(w, err.Error(), http.StatusInternalServerError)
+				return
+			}
+		}
+	default:
+		if err := items.LoadEnabled(r.Request); err != nil {
+			rest.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
 	}
 
 	w.Header().Set("cache-control", "private, max-age=900") // 15min
