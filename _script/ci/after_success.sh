@@ -8,3 +8,7 @@ cd $APP_DIR
 rm app.yaml
 cp app-prod.yaml app.yaml
 python $GAE_DIR/appcfg.py --oauth2_refresh_token=$GAE_OAUTH update ./
+if test $? -ne 0 ; then
+    echo "Deploy is failed!" 1>&2
+    exit 1
+fi

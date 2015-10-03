@@ -2,7 +2,7 @@ package calendar
 import (
 	"net/http"
 	"github.com/mjibson/goon"
-	"appengine/datastore"
+	"google.golang.org/appengine/datastore"
 )
 
 type CalendarItem struct {
