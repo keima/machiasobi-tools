@@ -33,12 +33,28 @@ gulp.task 'inject', ->
   .pipe gulp.dest './'
 
 gulp.task 'usemin', ->
+  cssTask = (files, filename) ->
+    files.pipe $.minifyCss()
+    .pipe $.concat(filename)
+    .pipe $.rev()
+
+  jsTask = (files, filename) ->
+    files.pipe $.ngAnnotate()
+    .pipe $.uglify()
+    .pipe $.concat(filename)
+    .pipe $.rev()
+
   gulp.src './index.html'
-  .pipe $.usemin(
-    css: [$.minifyCss(), $.rev()]
-    html: [$.minifyHtml(empty: true, conditionals: true)]
-    js: [$.ngAnnotate(), $.uglify(), $.rev()]
-    vendorjs: [$.ngAnnotate(), $.uglify(), $.rev()]
+  .pipe $.spa.html(
+    pipelines:
+      main: (files)->
+        files.pipe $.minifyHtml(empty: true, conditionals: true)
+      css: (files)->
+        cssTask files, "app.css"
+      vendorjs: (files)->
+        jsTask files, "vendor.js"
+      js: (files)->
+        jsTask files, "app.js"
   )
   .pipe gulp.dest(config.output)
 
