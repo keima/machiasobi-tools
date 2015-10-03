@@ -10,11 +10,6 @@ import (
 func GetCalendarList(w rest.ResponseWriter, r *rest.Request) {
 	c := appengine.NewContext(r.Request)
 
-	if !user.IsAdmin(c) {
-		rest.Error(w, "Administrator login Required.", http.StatusUnauthorized)
-		return
-	}
-
 	visibility := r.FormValue("visibility")
 
 	items := CalendarItemList{}
