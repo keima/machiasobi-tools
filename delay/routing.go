@@ -1,21 +1,21 @@
 package delay
 
 import (
-	"errors"
 	"net/http"
 
 	"gopkg.in/ant0ine/go-json-rest.v2/rest"
 
 	"appengine"
 	"appengine/user"
+	"gopkg.in/asaskevich/govalidator.v1"
 )
 
 func GetDelay(w rest.ResponseWriter, r *rest.Request) {
 	c := appengine.NewContext(r.Request)
 
-	placeName, err := checkPlaceName(r.PathParam("place"))
-	if err != nil {
-		rest.Error(w, err.Error(), http.StatusBadRequest)
+	placeName := r.PathParam("place")
+	if placeName == "" || !govalidator.IsAlphanumeric(placeName) {
+		rest.Error(w, "Invalid place parameter.", http.StatusBadRequest)
 		return
 	}
 
@@ -41,9 +41,9 @@ func PostDelay(w rest.ResponseWriter, r *rest.Request) {
 		return
 	}
 
-	placeName, err := checkPlaceName(r.PathParam("place"))
-	if err != nil {
-		rest.Error(w, err.Error(), http.StatusBadRequest)
+	placeName := r.PathParam("place")
+	if placeName == "" || !govalidator.IsAlphanumeric(placeName) {
+		rest.Error(w, "Invalid place parameter.", http.StatusBadRequest)
 		return
 	}
 
@@ -61,13 +61,4 @@ func PostDelay(w rest.ResponseWriter, r *rest.Request) {
 	}
 
 	w.WriteJson(&item)
-}
-
-func checkPlaceName(placeName string) (string, error) {
-	switch placeName {
-	case "bizan", "shinmachi", "corne", "cinema_entry", "awagin", "bunka", "ryogoku":
-		return placeName, nil
-	default:
-		return "", errors.New("PlaceName mismatch.")
-	}
 }
