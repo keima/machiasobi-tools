@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"gopkg.in/ant0ine/go-json-rest.v2/rest"
-	valid "gopkg.in/asaskevich/govalidator.v1"
+	valid "gopkg.in/asaskevich/govalidator.v2"
 
 	"appengine"
 	"appengine/urlfetch"
