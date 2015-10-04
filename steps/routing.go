@@ -32,7 +32,7 @@ func GetStep(w rest.ResponseWriter, r *rest.Request) {
 
 	keyId, err := strconv.ParseInt(r.PathParam("id"), 10, 64)
 	if err != nil {
-		rest.Error(w, "Invalid param 'id':"+err.Error(), http.StatusInternalServerError)
+		rest.Error(w, "Invalid param 'id':"+err.Error(), http.StatusBadRequest)
 		return
 	}
 
