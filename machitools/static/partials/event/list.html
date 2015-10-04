@@ -7,7 +7,7 @@
 
   <ul class="nav nav-pills nav-justified">
     <li ng-repeat="(key, period) in ctrl.periods" ui-sref-active="active" class="event-nav">
-      <a ui-sref="event.list.day({id:'day' + $index})">{{ $index }}日目</a>
+      <a ui-sref="event.list.day({id:'day' + $index})">{{ $index + 1 }}日目</a>
     </li>
   </ul>
 

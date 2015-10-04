@@ -7,14 +7,14 @@ import (
 
 	"appengine"
 	"appengine/user"
-	"gopkg.in/asaskevich/govalidator.v1"
+	"gopkg.in/asaskevich/govalidator.v2"
 )
 
 func GetDelay(w rest.ResponseWriter, r *rest.Request) {
 	c := appengine.NewContext(r.Request)
 
 	placeName := r.PathParam("place")
-	if placeName == "" || !govalidator.IsAlphanumeric(placeName) {
+	if placeName == "" || !govalidator.IsPrintableASCII(placeName) {
 		rest.Error(w, "Invalid place parameter.", http.StatusBadRequest)
 		return
 	}
