@@ -42,7 +42,7 @@ func PostDelay(w rest.ResponseWriter, r *rest.Request) {
 	}
 
 	placeName := r.PathParam("place")
-	if placeName == "" || !govalidator.IsAlphanumeric(placeName) {
+	if placeName == "" || !govalidator.IsPrintableASCII(placeName) {
 		rest.Error(w, "Invalid place parameter.", http.StatusBadRequest)
 		return
 	}
