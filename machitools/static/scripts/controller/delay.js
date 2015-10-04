@@ -38,7 +38,7 @@ angular.module("myApp.controller.delay", [])
     });
 
   })
-  .controller('DelayInputCtrl', function (Restangular, Calendar) {
+  .controller('DelayInputCtrl', function (Restangular, Calendars) {
     var self = this;
 
     this.places = Calendars;
