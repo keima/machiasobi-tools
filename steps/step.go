@@ -2,23 +2,24 @@ package steps
 
 import (
 	"github.com/keima/base/gae/ds"
-
+"github.com/russross/blackfriday"
 	"appengine"
 	"appengine/datastore"
 )
 
 type StepItem struct {
 	ds.Meta
-	Id          int64  `json:"id" datastore:"-"`
-	Type        string `json:"type"`
-	Title       string `json:"title"`
-	ShowTitle   bool   `json:"showTitle"`
-	Description string `json:"description" datastore:",noindex"`
-	Path        string `json:"path"` // ← not use
-	PartialId   string `json:"partialId"`
-	Author      string `json:"-"`
-	IsPublic    bool   `json:"isPublic"`
-	Order       int    `json:"order"`
+	Id            int64  `json:"id" datastore:"-"`
+	Type          string `json:"type"`
+	Title         string `json:"title"`
+	ShowTitle     bool   `json:"showTitle"`
+	Description   string `json:"description" datastore:",noindex"`
+	ParsedContent string `json:"content" datastore:"-"`
+	Path          string `json:"path"` // ← not use
+	PartialId     string `json:"partialId"`
+	Author        string `json:"-"`
+	IsPublic      bool   `json:"isPublic"`
+	Order         int    `json:"order"`
 }
 
 const (
@@ -62,10 +63,16 @@ func (item *StepItem) Load(c appengine.Context, keyId int64) error {
 		return err
 	}
 
-	// item.Id = strconv.FormatInt(item.GetKey().IntID(), 10)
-	item.Id = item.GetKey().IntID()
+	item.PostLoadProcess()
 
 	return nil
+}
+
+func (item *StepItem) PostLoadProcess() {
+	item.Id = item.GetKey().IntID()
+	if item.Type == "markdown" {
+		item.ParsedContent = string(blackfriday.MarkdownCommon([]byte(item.Description)))
+	}
 }
 
 func LoadAll(c appengine.Context, first, size int, private bool) (*[]StepItem, error) {
@@ -80,10 +87,10 @@ func LoadAll(c appengine.Context, first, size int, private bool) (*[]StepItem, e
 		return nil, err
 	}
 
-	for i, item := range items {
-		// items[i].Id = strconv.FormatInt(item.GetKey().IntID(), 10)
-		items[i].Id = item.GetKey().IntID()
+	for i, _ := range items {
+		items[i].PostLoadProcess()
 	}
 
 	return &items, nil
 }
+
