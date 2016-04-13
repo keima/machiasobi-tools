@@ -1,5 +1,5 @@
 *.iml
-.idea/
-machitools/static/bower_components
-machitools/static/node_modules
-machitools/static-build
+.idea
+bower_components
+node_modules
+src/static
