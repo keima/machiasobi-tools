@@ -1,10 +1,9 @@
 package maps
 
 import (
-	"github.com/keima/base/gae/ds"
-
-	"appengine"
-	"appengine/datastore"
+	"github.com/knightso/base/gae/ds"
+	"google.golang.org/appengine/datastore"
+	"golang.org/x/net/context"
 )
 
 const kindNameMap = "Map"
@@ -17,13 +16,13 @@ type Map struct {
 	MapItems []MapItem `json:"markers,omitempty" datastore:"-"`
 }
 
-func (item *Map) Save(c appengine.Context, keyName string) error {
+func (item *Map) Save(c context.Context, keyName string) error {
 	key := datastore.NewKey(c, kindNameMap, keyName, 0, nil)
 	item.SetKey(key)
 	return ds.Put(c, item)
 }
 
-func (item *Map) Load(c appengine.Context, keyName string) error {
+func (item *Map) Load(c context.Context, keyName string) error {
 	key := datastore.NewKey(c, kindNameMap, keyName, 0, nil)
 
 	if err := ds.Get(c, key, item); err != nil {
@@ -35,7 +34,7 @@ func (item *Map) Load(c appengine.Context, keyName string) error {
 	return nil
 }
 
-func LoadAll(c appengine.Context, first, size int, private bool) (*[]Map, error) {
+func LoadAll(c context.Context, first, size int, private bool) (*[]Map, error) {
 	items := make([]Map, 0, size)
 	q := datastore.NewQuery(kindNameMap).Order("-UpdatedAt").Offset(first).Limit(size)
 

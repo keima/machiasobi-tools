@@ -4,11 +4,9 @@ import (
 	"log"
 	"strconv"
 	"time"
-
-	"github.com/keima/base/gae/ds"
-
-	"appengine"
-	"appengine/datastore"
+	"github.com/knightso/base/gae/ds"
+	"google.golang.org/appengine/datastore"
+	"golang.org/x/net/context"
 )
 
 type EventItem struct {
@@ -28,19 +26,19 @@ type EventItem struct {
 
 const kindName = "Event"
 
-func (item *EventItem) Save(c appengine.Context) error {
+func (item *EventItem) Save(c context.Context) error {
 	key := datastore.NewIncompleteKey(c, kindName, nil)
 	item.SetKey(key)
 	return ds.Put(c, item)
 }
 
-func (item *EventItem) SaveUpdate(c appengine.Context, intID int64) error {
+func (item *EventItem) SaveUpdate(c context.Context, intID int64) error {
 	key := datastore.NewKey(c, kindName, "", intID, nil)
 	item.SetKey(key)
 	return ds.Put(c, item)
 }
 
-func (item *EventItem) Load(c appengine.Context, keyName string) error {
+func (item *EventItem) Load(c context.Context, keyName string) error {
 	keyId, err := strconv.ParseInt(keyName, 10, 64)
 	if err != nil {
 		return err
@@ -57,7 +55,7 @@ func (item *EventItem) Load(c appengine.Context, keyName string) error {
 	return nil
 }
 
-func LoadAll(c appengine.Context, first int, size int, rangeStart time.Time, rangeEnd time.Time, publicOnly bool) (*[]EventItem, error) {
+func LoadAll(c context.Context, first int, size int, rangeStart time.Time, rangeEnd time.Time, publicOnly bool) (*[]EventItem, error) {
 	items := make([]EventItem, 0, size)
 	q := datastore.NewQuery(kindName)
 

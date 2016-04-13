@@ -4,21 +4,19 @@ import (
 	"log"
 	"net/http"
 	"regexp"
-
-	"github.com/keima/machiasobi-tools/delay"
-	"github.com/keima/machiasobi-tools/event"
-	"github.com/keima/machiasobi-tools/maps"
-	"github.com/keima/machiasobi-tools/news"
-	"github.com/keima/machiasobi-tools/steps"
-	"github.com/keima/machiasobi-tools/traffic"
-	"github.com/keima/machiasobi-tools/weather"
-
+	"google.golang.org/appengine"
 	"gopkg.in/ant0ine/go-json-rest.v2/rest"
 
-	"appengine"
-	"github.com/keima/machiasobi-tools/periods"
-	"github.com/keima/machiasobi-tools/favorite"
-	"github.com/keima/machiasobi-tools/calendar"
+	"machitools/delay"
+	"machitools/event"
+	"machitools/maps"
+	"machitools/news"
+	"machitools/steps"
+	"machitools/traffic"
+	"machitools/weather"
+	"machitools/periods"
+	"machitools/favorite"
+	"machitools/calendar"
 )
 
 const pathPrefix = "/api/#version"

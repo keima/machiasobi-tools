@@ -4,7 +4,6 @@ import (
 	"github.com/mjibson/goon"
 	"time"
 	"net/http"
-
 	"google.golang.org/appengine/datastore"
 )
 

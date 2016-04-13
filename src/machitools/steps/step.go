@@ -1,10 +1,10 @@
 package steps
 
 import (
-	"github.com/keima/base/gae/ds"
-"github.com/russross/blackfriday"
-	"appengine"
-	"appengine/datastore"
+	"github.com/knightso/base/gae/ds"
+	"github.com/russross/blackfriday"
+	"google.golang.org/appengine/datastore"
+	"golang.org/x/net/context"
 )
 
 type StepItem struct {
@@ -28,13 +28,13 @@ const (
 
 var AllowedType = [...]string{"partial", "html", "markdown"}
 
-func (item *StepItem) Save(c appengine.Context) error {
+func (item *StepItem) Save(c context.Context) error {
 	key := datastore.NewIncompleteKey(c, KindName, nil)
 	item.SetKey(key)
 	return ds.Put(c, item)
 }
 
-func (new *StepItem) Update(c appengine.Context, keyId int64) error {
+func (new *StepItem) Update(c context.Context, keyId int64) error {
 	old := StepItem{}
 	if err := old.Load(c, keyId); err != nil {
 		return err
@@ -56,7 +56,7 @@ func (new *StepItem) Update(c appengine.Context, keyId int64) error {
 	return ds.Put(c, &old)
 }
 
-func (item *StepItem) Load(c appengine.Context, keyId int64) error {
+func (item *StepItem) Load(c context.Context, keyId int64) error {
 	key := datastore.NewKey(c, KindName, "", keyId, nil)
 
 	if err := ds.Get(c, key, item); err != nil {
@@ -75,7 +75,7 @@ func (item *StepItem) PostLoadProcess() {
 	}
 }
 
-func LoadAll(c appengine.Context, first, size int, private bool) (*[]StepItem, error) {
+func LoadAll(c context.Context, first, size int, private bool) (*[]StepItem, error) {
 	items := make([]StepItem, 0, size)
 	q := datastore.NewQuery(KindName).Order("Order").Offset(first).Limit(size)
 

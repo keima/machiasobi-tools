@@ -2,11 +2,9 @@ package delay
 
 import (
 	"net/http"
-
 	"gopkg.in/ant0ine/go-json-rest.v2/rest"
-
-	"appengine"
-	"appengine/user"
+	"google.golang.org/appengine"
+	"google.golang.org/appengine/user"
 	"gopkg.in/asaskevich/govalidator.v2"
 )
 

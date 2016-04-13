@@ -1,11 +1,12 @@
 package periods
+
 import (
-	"net/http"
-	"appengine"
-	"appengine/user"
-	"strconv"
-	"gopkg.in/ant0ine/go-json-rest.v2/rest"
 	"time"
+	"strconv"
+	"net/http"
+	"google.golang.org/appengine"
+	"google.golang.org/appengine/user"
+	"gopkg.in/ant0ine/go-json-rest.v2/rest"
 )
 
 // 公開API

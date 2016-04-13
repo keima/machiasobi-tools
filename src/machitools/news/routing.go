@@ -4,11 +4,9 @@ package news
 import (
 	"net/http"
 	"strconv"
-
 	"gopkg.in/ant0ine/go-json-rest.v2/rest"
-
-	"appengine"
-	"appengine/user"
+	"google.golang.org/appengine"
+	"google.golang.org/appengine/user"
 )
 
 // GetNewsList では登録されているニュースを取得します

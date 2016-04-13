@@ -4,12 +4,10 @@ import (
 	"net/http"
 	"strconv"
 	"time"
-
 	"gopkg.in/ant0ine/go-json-rest.v2/rest"
-
-	"appengine"
-	"appengine/user"
-	"github.com/keima/machiasobi-tools/util"
+	"google.golang.org/appengine"
+	"google.golang.org/appengine/user"
+	"machitools/util"
 )
 
 func GetEventList(w rest.ResponseWriter, r *rest.Request) {
@@ -107,10 +105,3 @@ func PostEvent(w rest.ResponseWriter, r *rest.Request) {
 
 	w.WriteJson(&item)
 }
-
-/*
-func GetEventList(w rest.ResponseWriter, r *rest.Request) {
-	c := appengine.NewContext(r.Request)
-
-}
-*/

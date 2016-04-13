@@ -3,11 +3,9 @@ package delay
 import (
 	"errors"
 	"strconv"
-
-	"github.com/keima/base/gae/ds"
-
-	"appengine"
-	"appengine/datastore"
+	"github.com/knightso/base/gae/ds"
+	"google.golang.org/appengine/datastore"
+	"golang.org/x/net/context"
 )
 
 type DelayItem struct {
@@ -21,13 +19,13 @@ type DelayItem struct {
 
 var ErrItemNotFound = errors.New("Item is not found")
 
-func (item *DelayItem) Save(c appengine.Context, placeName string) error {
+func (item *DelayItem) Save(c context.Context, placeName string) error {
 	key := datastore.NewIncompleteKey(c, kindName(placeName), nil)
 	item.SetKey(key)
 	return ds.Put(c, item)
 }
 
-func LoadLatest(c appengine.Context, placeName string) (*DelayItem, error) {
+func LoadLatest(c context.Context, placeName string) (*DelayItem, error) {
 	items := make([]DelayItem, 0, 1)
 
 	q := datastore.NewQuery(kindName(placeName))

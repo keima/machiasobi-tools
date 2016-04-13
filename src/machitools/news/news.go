@@ -1,10 +1,9 @@
 package news
 
 import (
-	"github.com/keima/base/gae/ds"
-
-	"appengine"
-	"appengine/datastore"
+	"github.com/knightso/base/gae/ds"
+	"google.golang.org/appengine/datastore"
+	"golang.org/x/net/context"
 )
 
 const (
@@ -21,13 +20,13 @@ type NewsItem struct {
 	IsPublic bool
 }
 
-func (item *NewsItem) Save(c appengine.Context, keyName string) error {
+func (item *NewsItem) Save(c context.Context, keyName string) error {
 	key := datastore.NewKey(c, KindName, keyName, 0, nil)
 	item.SetKey(key)
 	return ds.Put(c, item)
 }
 
-func (item *NewsItem) Load(c appengine.Context, keyName string) error {
+func (item *NewsItem) Load(c context.Context, keyName string) error {
 	key := datastore.NewKey(c, KindName, keyName, 0, nil)
 
 	if err := ds.Get(c, key, item); err != nil {
@@ -40,7 +39,7 @@ func (item *NewsItem) Load(c appengine.Context, keyName string) error {
 	return nil
 }
 
-func LoadAll(c appengine.Context, first int, size int, publicOnly bool) (*[]NewsItem, error) {
+func LoadAll(c context.Context, first int, size int, publicOnly bool) (*[]NewsItem, error) {
 	items := make([]NewsItem, 0, size)
 	q := datastore.NewQuery(KindName).Order("-CreatedAt").Offset(first).Limit(size)
 

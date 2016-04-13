@@ -2,12 +2,10 @@ package favorite
 
 import (
 	"errors"
-
-	"github.com/keima/machiasobi-tools/customer"
-	"github.com/keima/base/gae/ds"
-
-	"appengine"
-	"appengine/datastore"
+	"machitools/customer"
+	"github.com/knightso/base/gae/ds"
+	"google.golang.org/appengine/datastore"
+	"golang.org/x/net/context"
 )
 
 const KindName = "Fav"
@@ -18,7 +16,7 @@ type FavItem struct {
 	EventID    string `json:"eventId"`
 }
 
-func (item *FavItem) Save(c appengine.Context, parent *datastore.Key) error {
+func (item *FavItem) Save(c context.Context, parent *datastore.Key) error {
 	if parent.Kind() != customer.KindName {
 		return errors.New("parent's kind name mismatch.")
 	}
@@ -31,7 +29,7 @@ func (item *FavItem) Save(c appengine.Context, parent *datastore.Key) error {
 	return ds.Put(c, item)
 }
 
-func (item *FavItem) Delete(c appengine.Context, parent *datastore.Key) error {
+func (item *FavItem) Delete(c context.Context, parent *datastore.Key) error {
 	if parent.Kind() != customer.KindName {
 		return errors.New("parent's kind name mismatch.")
 	}
@@ -43,7 +41,7 @@ func (item *FavItem) Delete(c appengine.Context, parent *datastore.Key) error {
 	return ds.Delete(c, key)
 }
 
-func LoadAll(c appengine.Context, parent *datastore.Key) (*[]FavItem, error) {
+func LoadAll(c context.Context, parent *datastore.Key) (*[]FavItem, error) {
 	if parent.Kind() != customer.KindName {
 		return nil, errors.New("parent's kind name mismatch.")
 	}

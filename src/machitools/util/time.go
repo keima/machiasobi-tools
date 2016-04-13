@@ -1,4 +1,5 @@
 package util
+
 import "time"
 
 // 2014-10-11T15:00:00.000Z のような形式を処理する

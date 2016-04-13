@@ -3,12 +3,10 @@ package weather
 import (
 	"io/ioutil"
 	"net/http"
-
 	"gopkg.in/ant0ine/go-json-rest.v2/rest"
 	valid "gopkg.in/asaskevich/govalidator.v2"
-
-	"appengine"
-	"appengine/urlfetch"
+	"google.golang.org/appengine"
+	"google.golang.org/appengine/urlfetch"
 )
 
 func GetWeather(w rest.ResponseWriter, r *rest.Request) {

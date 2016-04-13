@@ -2,8 +2,7 @@ package maps
 
 import (
 	"encoding/json"
-
-	"appengine"
+	"google.golang.org/appengine"
 )
 
 type GeoPointJson appengine.GeoPoint

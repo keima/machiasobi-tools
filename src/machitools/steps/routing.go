@@ -4,13 +4,13 @@ import (
 	"errors"
 	"net/http"
 	"strconv"
-
-	"github.com/keima/machiasobi-tools/util"
+	"machitools/util"
 	"gopkg.in/ant0ine/go-json-rest.v2/rest"
-
-	"appengine"
-	"appengine/datastore"
-	"appengine/user"
+	"google.golang.org/appengine"
+	"google.golang.org/appengine/datastore"
+	"google.golang.org/appengine/user"
+	"golang.org/x/net/context"
+	"google.golang.org/appengine/log"
 )
 
 func GetStepList(w rest.ResponseWriter, r *rest.Request) {
@@ -133,7 +133,7 @@ func PostOrder(w rest.ResponseWriter, r *rest.Request) {
 		return
 	}
 
-	errTx := datastore.RunInTransaction(c, func(c appengine.Context) error {
+	errTx := datastore.RunInTransaction(c, func(tc context.Context) error {
 		for i, id := range ids {
 			item := StepItem{}
 
@@ -151,7 +151,7 @@ func PostOrder(w rest.ResponseWriter, r *rest.Request) {
 	}, &datastore.TransactionOptions{XG: true})
 
 	if errTx != nil {
-		c.Errorf("Tx Error: %v", errTx)
+		log.Errorf(c, "Tx Error: %v", errTx)
 		rest.Error(w, errTx.Error(), http.StatusInternalServerError)
 		return
 	}

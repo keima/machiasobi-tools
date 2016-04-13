@@ -3,11 +3,9 @@ package traffic
 import (
 	"errors"
 	"strconv"
-
-	"github.com/keima/base/gae/ds"
-
-	"appengine"
-	"appengine/datastore"
+	"github.com/knightso/base/gae/ds"
+	"google.golang.org/appengine/datastore"
+	"golang.org/x/net/context"
 )
 
 // Trafficのモデル
@@ -31,13 +29,13 @@ const (
 // 見つからなかったよエラー
 var ErrItemNotFound = errors.New("Item is not found")
 
-func (item *TrafficItem) Save(c appengine.Context, trafficName string) error {
+func (item *TrafficItem) Save(c context.Context, trafficName string) error {
 	key := datastore.NewIncompleteKey(c, kindName(trafficName), nil)
 	item.SetKey(key)
 	return ds.Put(c, item)
 }
 
-func LoadLatest(c appengine.Context, trafficName string, direction int) (*TrafficItem, error) {
+func LoadLatest(c context.Context, trafficName string, direction int) (*TrafficItem, error) {
 	items := make([]TrafficItem, 0, 1)
 
 	q := datastore.NewQuery(kindName(trafficName))

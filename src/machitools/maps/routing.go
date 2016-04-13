@@ -3,13 +3,11 @@ package maps
 import (
 	"net/http"
 	"strconv"
-
-	"github.com/keima/machiasobi-tools/util"
+	"machitools/util"
 	"gopkg.in/ant0ine/go-json-rest.v2/rest"
-
-	"appengine"
-	"appengine/datastore"
-	"appengine/user"
+	"google.golang.org/appengine"
+	"google.golang.org/appengine/datastore"
+	"google.golang.org/appengine/user"
 )
 
 // Mapの一覧を取得します。公開APIです。

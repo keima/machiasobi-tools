@@ -2,12 +2,10 @@ package customer
 
 import (
 	"errors"
-
-	"github.com/keima/base/gae/ds"
-
-	"appengine"
-	"appengine/datastore"
-	"appengine/user"
+	"github.com/knightso/base/gae/ds"
+	"google.golang.org/appengine/datastore"
+	"google.golang.org/appengine/user"
+	"golang.org/x/net/context"
 )
 
 // Kind name of datastore
@@ -24,7 +22,7 @@ func (item *CustomerItem) Init(u *user.User) {
 	item.ID = u.ID
 }
 
-func (item *CustomerItem) Save(c appengine.Context) error {
+func (item *CustomerItem) Save(c context.Context) error {
 	if item.ID == "" {
 		return errors.New("ID is empty")
 	}
@@ -34,7 +32,7 @@ func (item *CustomerItem) Save(c appengine.Context) error {
 	return ds.Put(c, item)
 }
 
-func (item *CustomerItem) Load(c appengine.Context) error {
+func (item *CustomerItem) Load(c context.Context) error {
 	key := datastore.NewKey(c, KindName, item.ID, 0, nil)
 	if err := ds.Get(c, key, item); err != nil {
 		return err

@@ -3,12 +3,11 @@ package util
 import (
 	"net/http"
 	"strconv"
-
-	"appengine"
-	"appengine/user"
+	"google.golang.org/appengine/user"
+	"golang.org/x/net/context"
 )
 
-func ParseFirstSizePrivate(c appengine.Context, r *http.Request) (int, int, bool) {
+func ParseFirstSizePrivate(c context.Context, r *http.Request) (int, int, bool) {
 	first, err := strconv.Atoi(r.FormValue("first"))
 	if err != nil {
 		first = 0
