@@ -7,9 +7,13 @@ rimraf = require "rimraf"
 
 # config
 config =
-  js: './scripts/**/*.js'
-  css: './stylesheets/**/*.css'
-  output: '../static-build/'
+  js: 'scripts/**/*.js'
+  css: 'stylesheets/**/*.css'
+  partial: 'partials/**/*.html'
+
+  output: '../src/static/'
+
+  watching: false
 
 #
 # Task
@@ -17,9 +21,12 @@ config =
 gulp.task 'browser-sync', ->
   browserSync proxy: 'localhost:8080'
 
-gulp.task 'watch', ->
-  gulp.watch config.js, ['inject', browserSync.reload]
-  gulp.watch config.css, ['inject', browserSync.reload]
+gulp.task "setWatch", ->
+  config.watching = true
+
+gulp.task 'watch', ["setWatch"], ->
+  gulp.watch [config.js, config.css], ['inject', 'usemin', browserSync.reload]
+  gulp.watch config.partial, ['copyPartials']
 
 gulp.task 'inject', ->
   bower = gulp.src bowerFiles(), {read: false}
@@ -34,21 +41,27 @@ gulp.task 'inject', ->
 
 gulp.task 'usemin', ->
   cssTask = (files, filename) ->
-    files.pipe $.minifyCss()
-    .pipe $.concat(filename)
-    .pipe $.rev()
+    s = files
+    s = s.pipe $.cleanCss() if !config.watching
+    s = s.pipe $.concat(filename)
+    s = s.pipe $.rev() if !config.watching
+    return s
 
   jsTask = (files, filename) ->
-    files.pipe $.ngAnnotate()
-    .pipe $.uglify()
-    .pipe $.concat(filename)
-    .pipe $.rev()
+    s = files
+    s = s.pipe $.ngAnnotate() if !config.watching
+    s = s.pipe $.uglify() if !config.watching
+    s = s.pipe $.concat(filename)
+    s = s.pipe $.rev() if !config.watching
+    return s
 
   gulp.src './index.html'
   .pipe $.spa.html(
     pipelines:
       main: (files)->
-        files.pipe $.minifyHtml(empty: true, conditionals: true)
+        s = files
+        s = s.pipe $.minifyHtml(empty: true, conditionals: true) if !config.watching
+        return s
       css: (files)->
         cssTask files, "app.css"
       vendorjs: (files)->
@@ -58,11 +71,14 @@ gulp.task 'usemin', ->
   )
   .pipe gulp.dest(config.output)
 
-gulp.task 'copy', ->
-  gulp.src './partials/**/*.html', {base: './'}
+gulp.task 'copy', ['copyPartials', 'copyOthers']
+
+gulp.task 'copyPartials', ->
+  gulp.src config.partial, {base: './'}
   .pipe $.minifyHtml(empty: true)
   .pipe gulp.dest config.output
 
+gulp.task 'copyOthers', ->
   # other
   gulp.src ['*.png'], {base: './'}
   .pipe gulp.dest config.output
@@ -72,9 +88,9 @@ gulp.task 'clean', (cb) ->
   rimraf(config.output, cb);
 
 
-gulp.task 'default', ['browser-sync', 'watch']
+gulp.task 'default', ['build', 'browser-sync', 'watch']
 
 gulp.task 'build', (cb) -> runSequence(
-  'clean', 'inject', 'usemin', 'copy'
+  'clean', 'inject', ['usemin', 'copy']
   cb
 )

@@ -2,7 +2,7 @@
 
 echo "running tests and building..."
 
-cd $TRAVIS_BUILD_DIR/machitools
+cd $TRAVIS_BUILD_DIR/src/machitools
 
 $GO_APPENGINE_PATH/goapp test
 if test $? -ne 0 ; then
@@ -15,8 +15,9 @@ if test $? -ne 0 ; then
     echo "go build is failed!" 1>&2
     exit 1
 fi
+cd -
 
-cd ./static
+cd $TRAVIS_BUILD_DIR/static
 gulp build
 if test $? -ne 0 ; then
     echo "gulp build is failed!" 1>&2

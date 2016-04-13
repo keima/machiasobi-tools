@@ -16,6 +16,7 @@ install:
 before_script:
 - npm install -g gulp bower
 - export GO_APPENGINE_PATH=~/go_appengine
+- export GOPATH=$TRAVIS_BUILD_DIR
 - ./_script/ci/before_script.sh
 
 script:
