@@ -82,14 +82,18 @@ func CheckStatus(w rest.ResponseWriter, r *rest.Request) {
 	}
 }
 
-func createUserIfNeed(c appengine.Context, u *user.User) error {
+func createUserIfNeed(c context.Context, u *user.User) error {
 	customer := customer.CustomerItem{}
 
 	customer.Init(u)
 	if err := customer.Load(c); err != nil {
-		if err.Error() == datastore.ErrNoSuchEntity.Error() {
-			c.Infof("User created: %s", customer.ID)
-			customer.Save(c)
+		if be, ok := err.(*errors.BaseError); ok {
+			if be.Cause() == datastore.ErrNoSuchEntity {
+				log.Infof(c, "User created: %s", customer.ID)
+				customer.Save(c)
+			} else {
+				return be
+			}
 		} else {
 			return err
 		}
