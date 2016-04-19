@@ -1,0 +1,26 @@
+{
+  "name": "machitools",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "browser-sync": "2.x",
+    "coffee-script": "1.x",
+    "gulp": "~3.9",
+    "gulp-angular-filesort": "^1.1.1",
+    "gulp-clean-css": "^2.0.6",
+    "gulp-concat": "^2.6.0",
+    "gulp-inject": "~4.0.0",
+    "gulp-load-plugins": "~1.2.1",
+    "gulp-minify-html": "~1.0.0",
+    "gulp-ng-annotate": "~2.0.0",
+    "gulp-rev": "~7.0.0",
+    "gulp-spa": "^0.2.2",
+    "gulp-uglify": "~1.5.3",
+    "main-bower-files": "~2.11.1",
+    "rimraf": "~2.5.2",
+    "run-sequence": "~1.1.0"
+  }
+}

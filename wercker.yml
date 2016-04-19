@@ -1,0 +1,36 @@
+box: node:5.10
+build:
+  steps:
+  - keima/go-appengine-util:
+      cwd: ./src/machitools/
+      method: get
+      gopath: $WERCKER_SOURCE_DIR
+  - keima/go-appengine-util:
+      cwd: ./src/machitools/
+      method: test
+      gopath: $WERCKER_SOURCE_DIR
+  - keima/go-appengine-util:
+      cwd: ./src/machitools/
+      method: build
+      gopath: $WERCKER_SOURCE_DIR
+deploy:
+  steps:
+  # frontend setup
+  - npm-install:
+      cwd: ./static
+  - thangngoc89/bower-install:
+      cwd: ./static
+  - hgen/gulp:
+      tasks: build
+      cwd: ./static
+
+  # goapp and frontend deploy
+  - keima/go-appengine-util:
+      cwd: ./src/machitools/
+      method: get
+      gopath: $WERCKER_SOURCE_DIR
+  - keima/go-appengine-util:
+      cwd: ./src/
+      method: deploy
+      gopath: $WERCKER_SOURCE_DIR
+      token:  $APP_ENGINE_TOKEN
