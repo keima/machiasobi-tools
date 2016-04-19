@@ -1,21 +1,23 @@
-# machitools
-マチアプリで使用するAPIサーバーサイドです。
+machitools (まち☆つーるず)
+==============
+API Backend System for Machi ★ Appli (マチ★アプリ)
 
-# チェックアウト
 
-    $ goapp get github.com/keima/machiasobi-tools
+```
+// setup backend
+$ direnv allow
+  (or `export GOPATH=$GOPATH:/path/to/machitools/repo` )
+$ cd src
+$ goapp get
+$ cd -
 
-これでOKだと思います。
+// setup frontend
+$ cd static
+$ npm install
+$ bower install
+$ cd -
 
-ダメだったら、`$GOPATH/src/github.com/keima/machiasobi-tools` にgit cloneする感じです。
-
-# 試す
-
-    $ goapp serve ./machitools
-
-# デプロイ
-
-    $ cd ./machitools
-    $ goapp deploy app-prod.yaml
-
-まぁでも俺しかデプロイできないと思いますけどね！！！！！
+$ goapp serve ./src
+$ cd static
+$ gulp default (or gulp watch)
+```

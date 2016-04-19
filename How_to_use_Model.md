@@ -1,4 +1,8 @@
-# How to use Model
+How to use Model
+==========
+
+> 最近はあまり model.Meta 使ってないです。goonばっかり使ってます。
+
 `github.com/knightso/base/gae/model` を組み込むと、
 痒い所に手が届く`datastore`Entityを作成することが出来ます。
 
