@@ -7,6 +7,7 @@ type MenuItem struct {
 	IconId      string `json:"icon"`
 	State       string `json:"state"`
 	Description string `json:"description"`
+	OrderIndex  int    `json:"order"`
 	Enabled     bool   `json:"enabled"`
 }
 

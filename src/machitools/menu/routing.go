@@ -11,7 +11,9 @@ import (
 // GetMenuList is Public API
 func GetMenuList(w rest.ResponseWriter, r *rest.Request) {
 	c := appengine.NewContext(r.Request)
+
 	builder := NewMenuItemQueryBuilder()
+	builder.OrderIndex.Asc()
 
 	vis := r.FormValue("visibility")
 	if user.IsAdmin(c) && vis == "all" {

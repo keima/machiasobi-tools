@@ -16,6 +16,7 @@ type MenuItemQueryBuilder struct {
 	IconId      *MenuItemQueryProperty
 	State       *MenuItemQueryProperty
 	Description *MenuItemQueryProperty
+	OrderIndex  *MenuItemQueryProperty
 	Enabled     *MenuItemQueryProperty
 }
 
@@ -48,6 +49,10 @@ func NewMenuItemQueryBuilder() *MenuItemQueryBuilder {
 	bldr.Description = &MenuItemQueryProperty{
 		bldr: bldr,
 		name: "Description",
+	}
+	bldr.OrderIndex = &MenuItemQueryProperty{
+		bldr: bldr,
+		name: "OrderIndex",
 	}
 	bldr.Enabled = &MenuItemQueryProperty{
 		bldr: bldr,
