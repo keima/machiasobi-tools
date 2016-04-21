@@ -114,11 +114,11 @@ func init() {
 
 		// Menu
 		&rest.Route{"GET", pathPrefix + "/menu", menu.GetMenuList},
-		//&rest.Route{"POST", pathPrefix + "/menu", },
-		//&rest.Route{"POST", pathPrefix + "/menu/order", },
-		//&rest.Route{"GET", pathPrefix + "/menu/:id", },
-		//&rest.Route{"PUT", pathPrefix + "/menu/:id", },
-		//&rest.Route{"DELETE", pathPrefix + "/menu/:id", },
+		&rest.Route{"POST", pathPrefix + "/menu", menu.PostMenu},
+		&rest.Route{"POST", pathPrefix + "/menu/order", menu.PostOrder},
+		&rest.Route{"GET", pathPrefix + "/menu/:id", menu.GetMenu},
+		&rest.Route{"PUT", pathPrefix + "/menu/:id", menu.PutMenu},
+		&rest.Route{"DELETE", pathPrefix + "/menu/:id", menu.DeleteMenu},
 
 	)
 	//@formatter:on
