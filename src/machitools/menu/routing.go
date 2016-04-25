@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"google.golang.org/appengine/datastore"
 	"google.golang.org/appengine/log"
+	"strconv"
 )
 
 // GetMenuList is Public API
@@ -18,7 +19,7 @@ func GetMenuList(w rest.ResponseWriter, r *rest.Request) {
 	builder.OrderIndex.Asc()
 
 	vis := r.FormValue("visibility")
-	if user.IsAdmin(c) && vis == "all" {
+	if !user.IsAdmin(c) || vis != "all" {
 		builder.Enabled.Equal(true)
 	}
 
@@ -50,14 +51,14 @@ func PostMenu(w rest.ResponseWriter, r *rest.Request) {
 	builder := NewMenuItemQueryBuilder()
 
 	// orderをアイテム群の末尾となるようにする
-	if order, err := g.Count(builder.Query()); err != nil {
+	if count, err := g.Count(builder.Query()); err != nil {
 		rest.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	} else {
-		item.OrderIndex = order;
+		item.OrderIndex = count;
 	}
 
-	if _, err := g.Put(item); err != nil {
+	if _, err := g.Put(&item); err != nil {
 		rest.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -74,8 +75,9 @@ func PostOrder(w rest.ResponseWriter, r *rest.Request) {
 		return
 	}
 
-	ids := []string{}
+	ids := []int64{}
 	if err := r.DecodeJsonPayload(&ids); err != nil {
+		log.Errorf(c, "DeleteMenu: %v", err)
 		rest.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -84,12 +86,12 @@ func PostOrder(w rest.ResponseWriter, r *rest.Request) {
 	if err := g.RunInTransaction(func(tg *goon.Goon) error {
 		for i, id := range ids {
 			item := MenuItem{Id: id}
-			if err := tg.Get(item); err != nil {
+			if err := tg.Get(&item); err != nil {
 				return err
 			}
 
 			item.OrderIndex = i
-			if _, err := tg.Put(item); err != nil {
+			if _, err := tg.Put(&item); err != nil {
 				return err
 			}
 		}
@@ -107,8 +109,14 @@ func PostOrder(w rest.ResponseWriter, r *rest.Request) {
 func GetMenu(w rest.ResponseWriter, r *rest.Request) {
 	c := appengine.NewContext(r.Request)
 
-	item := MenuItem{Id: r.PathParam("id")}
-	if err := goon.FromContext(c).Get(item); err != nil {
+	id, _e := strconv.ParseInt(r.PathParam("id"), 10, 64)
+	if _e != nil {
+		rest.Error(w, _e.Error(), http.StatusBadRequest)
+		return
+	}
+
+	item := MenuItem{Id: id}
+	if err := goon.FromContext(c).Get(&item); err != nil {
 		if err == datastore.ErrNoSuchEntity {
 			rest.Error(w, err.Error(), http.StatusNotFound)
 		} else {
@@ -130,8 +138,14 @@ func PutMenu(w rest.ResponseWriter, r *rest.Request) {
 
 	g := goon.FromContext(c);
 
-	item := MenuItem{Id: r.PathParam("id")}
-	if err := g.Get(item); err != nil {
+	id, _e := strconv.ParseInt(r.PathParam("id"), 10, 64)
+	if _e != nil {
+		rest.Error(w, _e.Error(), http.StatusBadRequest)
+		return
+	}
+
+	item := MenuItem{Id: id}
+	if err := g.Get(&item); err != nil {
 		if err == datastore.ErrNoSuchEntity {
 			rest.Error(w, err.Error(), http.StatusNotFound)
 		} else {
@@ -149,7 +163,7 @@ func PutMenu(w rest.ResponseWriter, r *rest.Request) {
 
 	itemNew.Id = item.Id
 
-	if _, err := g.Put(itemNew); err != nil {
+	if _, err := g.Put(&itemNew); err != nil {
 		rest.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -168,9 +182,14 @@ func DeleteMenu(w rest.ResponseWriter, r *rest.Request) {
 
 	g := goon.FromContext(c);
 
-	item := MenuItem{Id: r.PathParam("id")}
+	id, _e := strconv.ParseInt(r.PathParam("id"), 10, 64)
+	if _e != nil {
+		rest.Error(w, _e.Error(), http.StatusBadRequest)
+		return
+	}
 
-	if err := g.Delete(g.Key(item)); err != nil {
+	item := MenuItem{Id: id}
+	if err := g.Delete(g.Key(&item)); err != nil {
 		if err == datastore.ErrNoSuchEntity {
 			rest.Error(w, err.Error(), http.StatusNotFound)
 		} else {
