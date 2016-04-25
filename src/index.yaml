@@ -53,6 +53,11 @@ indexes:
   properties:
   - name: CreatedAt
 
+- kind: MenuItem
+  properties:
+  - name: Enabled
+  - name: OrderIndex
+
 - kind: News
   properties:
   - name: IsPublic

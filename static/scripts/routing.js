@@ -181,6 +181,27 @@ angular.module('myApp')
         templateUrl: 'partials/settings/calendars_input.html',
         controller: 'CalendarsInputCtrl as ctrl'
       })
+
+      .state('settings.appmenu', {
+        url: '/appmenu',
+        abstract: true,
+        templateUrl: 'partials/settings/appmenu.html'
+      })
+      .state('settings.appmenu.list', {
+        url: '',
+        templateUrl: 'partials/settings/appmenu_list.html',
+        controller: 'AppMenuListCtrl as ctrl'
+      })
+      .state('settings.appmenu.create', {
+        url: '/create',
+        templateUrl: 'partials/settings/appmenu_input.html',
+        controller: 'AppMenuInputCtrl as ctrl'
+      })
+      .state('settings.appmenu.edit', {
+        url: '/edit/:id',
+        templateUrl: 'partials/settings/appmenu_input.html',
+        controller: 'AppMenuInputCtrl as ctrl'
+      })
     ;
   })
 ;

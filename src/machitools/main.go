@@ -17,6 +17,7 @@ import (
 	"machitools/periods"
 	"machitools/favorite"
 	"machitools/calendar"
+	"machitools/menu"
 )
 
 const pathPrefix = "/api/#version"
@@ -110,6 +111,15 @@ func init() {
 		&rest.Route{"GET", pathPrefix + "/auth/check", CheckStatus},
 		&rest.Route{"GET", pathPrefix + "/auth/login", Login},
 		&rest.Route{"GET", pathPrefix + "/auth/logout", Logout},
+
+		// Menu
+		&rest.Route{"GET", pathPrefix + "/menu", menu.GetMenuList},
+		&rest.Route{"POST", pathPrefix + "/menu", menu.PostMenu},
+		&rest.Route{"POST", pathPrefix + "/menu/order", menu.PostOrder},
+		&rest.Route{"GET", pathPrefix + "/menu/:id", menu.GetMenu},
+		&rest.Route{"PUT", pathPrefix + "/menu/:id", menu.PutMenu},
+		&rest.Route{"DELETE", pathPrefix + "/menu/:id", menu.DeleteMenu},
+
 	)
 	//@formatter:on
 
