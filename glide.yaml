@@ -1,0 +1,24 @@
+package: github.com/keima/machiasobi-tools
+import:
+- package: github.com/favclip/qbg
+  subpackages:
+  - qbgutils
+- package: github.com/knightso/base
+  subpackages:
+  - errors
+  - gae/ds
+- package: github.com/mjibson/goon
+- package: github.com/russross/blackfriday
+- package: golang.org/x/net
+  subpackages:
+  - context
+- package: google.golang.org/appengine
+  subpackages:
+  - datastore
+  - log
+  - urlfetch
+  - user
+- package: gopkg.in/ant0ine/go-json-rest.v2
+  subpackages:
+  - rest
+- package: gopkg.in/asaskevich/govalidator.v2
