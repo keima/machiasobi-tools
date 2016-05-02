@@ -18,7 +18,7 @@
       Restangular.all("periods").getList().then(function(result) {
         myAppModule.constant("Periods", result.plain());
       }),
-      Restangular.all("calendars").getList().then(function(result) {
+      Restangular.all("calendars").getList({visibility: "all"}).then(function(result) {
         myAppModule.constant("Calendars", result.plain());
       })
     ]);
