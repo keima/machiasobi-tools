@@ -29,7 +29,10 @@ func GetMenuList(w rest.ResponseWriter, r *rest.Request) {
 		return
 	}
 
-	w.Header().Set("cache-control", "private, max-age=900") // 15min
+	if vis != "all" {
+		w.Header().Set("cache-control", "private, max-age=900") // 15min
+	}
+
 	w.WriteJson(&items)
 }
 
