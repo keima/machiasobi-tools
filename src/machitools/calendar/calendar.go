@@ -6,6 +6,7 @@ import (
 	"google.golang.org/appengine/datastore"
 )
 
+// +qbg
 type CalendarItem struct {
 	Id              string `json:"id" datastore:"-" goon:"id"`
 	Name            string `json:"name"`

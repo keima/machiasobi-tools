@@ -8,30 +8,31 @@ import (
 	"google.golang.org/appengine/datastore"
 	"golang.org/x/net/context"
 	"google.golang.org/appengine/log"
+	"github.com/mjibson/goon"
 )
 
 func GetCalendarList(w rest.ResponseWriter, r *rest.Request) {
 	c := appengine.NewContext(r.Request)
 
-	visibility := r.FormValue("visibility")
+	builder := NewCalendarItemQueryBuilder()
+	builder.Order.Asc()
 
-	items := CalendarItemList{}
-	switch visibility {
-	case "all":
-		if user.IsAdmin(c) {
-			if err := items.LoadAll(r.Request); err != nil {
-				rest.Error(w, err.Error(), http.StatusInternalServerError)
-				return
-			}
-		}
-	default:
-		if err := items.LoadEnabled(r.Request); err != nil {
-			rest.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
+	visibility := r.FormValue("visibility")
+	if !user.IsAdmin(c) || visibility != "all" {
+		builder.Enabled.Equal(true)
 	}
 
-	w.Header().Set("cache-control", "private, max-age=900") // 15min
+	items := CalendarItemList{}
+
+	if _,err := goon.FromContext(c).GetAll(builder.Query(), &items); err != nil {
+		rest.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	if visibility != "all" {
+		w.Header().Set("cache-control", "private, max-age=900") // 15min
+	}
+
 	w.WriteJson(&items)
 }
 
