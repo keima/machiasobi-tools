@@ -85,6 +85,7 @@ func init() {
 		&rest.Route{"POST", pathPrefix + "/steps/order", steps.PostOrder},
 		&rest.Route{"GET", pathPrefix + "/steps/:id", steps.GetStep},
 		&rest.Route{"POST", pathPrefix + "/steps/:id", steps.UpdateStep},
+		&rest.Route{"DELETE", pathPrefix + "/steps/:id", steps.DeleteStep},
 
 		// Weather
 		&rest.Route{"GET", pathPrefix + "/weather/:id", weather.GetWeather},

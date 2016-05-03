@@ -75,6 +75,11 @@ func (item *StepItem) PostLoadProcess() {
 	}
 }
 
+func (item *StepItem) Delete(c context.Context) error {
+	key := datastore.NewKey(c, KindName, "", item.Id, nil)
+	return ds.Delete(c, key)
+}
+
 func LoadAll(c context.Context, first, size int, private bool) (*[]StepItem, error) {
 	items := make([]StepItem, 0, size)
 	q := datastore.NewQuery(KindName).Order("Order").Offset(first).Limit(size)

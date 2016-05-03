@@ -96,6 +96,35 @@ func UpdateStep(w rest.ResponseWriter, r *rest.Request) {
 	w.WriteJson(&item)
 }
 
+func DeleteStep(w rest.ResponseWriter, r *rest.Request) {
+	c := appengine.NewContext(r.Request)
+
+	u := user.Current(c)
+	if u == nil || !user.IsAdmin(c) {
+		rest.Error(w, "Administrator login Required.", http.StatusUnauthorized)
+		return
+	}
+
+	id, _e := strconv.ParseInt(r.PathParam("id"), 10, 64)
+	if _e != nil {
+		rest.Error(w, _e.Error(), http.StatusBadRequest)
+		return
+	}
+
+	item := StepItem{Id: id}
+	if err := item.Delete(c); err != nil {
+		if err == datastore.ErrNoSuchEntity {
+			rest.Error(w, err.Error(), http.StatusNotFound)
+		} else {
+			log.Errorf(c, "DeleteMenu: %v", err)
+			rest.Error(w, err.Error(), http.StatusInternalServerError)
+		}
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+}
+
 func decodeAndValidate(r *rest.Request, u *user.User) (*StepItem, error) {
 	item := StepItem{}
 	if err := r.DecodeJsonPayload(&item); err != nil {
