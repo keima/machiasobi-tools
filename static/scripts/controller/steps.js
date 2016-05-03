@@ -1,7 +1,7 @@
 "use strict";
 
 angular.module("myApp.controller.steps", [])
-  .controller("StepsListCtrl", function (Restangular, $timeout) {
+  .controller("StepsListCtrl", function (Restangular, $timeout, $window) {
     var self = this;
 
     this.lock = false;
@@ -18,6 +18,17 @@ angular.module("myApp.controller.steps", [])
       });
     }
     update();
+
+    this.deleteStep = function (index) {
+      var item = self.items[index];
+      if ($window.confirm("「" + item.title + "」を削除してもよろしいですか？")) {
+        item.remove().then(function () {
+          $timeout(function () {
+            update();
+          }, 200);
+        });
+      }
+    };
 
     this.move = function (index) {
       self.items.splice(index, 1);
