@@ -3,7 +3,7 @@
 angular.module("myApp.controller.delay", [])
   .controller('DelayViewCtrl', function (Restangular, Calendar, Calendars) {
     var self = this;
-    this.now = new Date();
+    this.now = new Date(); // TODO: 不要
 
     this.abs = function (value) {
       return Math.abs(value);
@@ -19,14 +19,15 @@ angular.module("myApp.controller.delay", [])
         .then(function (result) {
           place.item = result;
 
+          // FIXME: カレンダー表示しなくなったので削除予定
           // 遅れている＝現在時刻から遅れ分引いたものが今やってるイベント
           // subtract = 減算、引く
-          var time = moment().subtract(result.delay, "minutes");
-
-          Calendar.getTodayData(place.calendarId, time)
-            .then(function (_result) {
-              self.calendarData[place.id] = _result;
-            });
+          // var time = moment().subtract(result.delay, "minutes");
+          //
+          // Calendar.getTodayData(place.calendarId, time)
+          //   .then(function (_result) {
+          //     self.calendarData[place.id] = _result;
+          //   });
         }, function () {
           place.item = {
             error: true,
@@ -38,7 +39,7 @@ angular.module("myApp.controller.delay", [])
     });
 
   })
-  .controller('DelayInputCtrl', function (Restangular, Calendars) {
+  .controller('DelayInputCtrl', function($stateParams, Restangular, Calendars) {
     var self = this;
 
     this.places = Calendars;
@@ -47,7 +48,7 @@ angular.module("myApp.controller.delay", [])
     this.lock = false;
     this.alert = null;
 
-    this.place = null;
+    this.place = $stateParams.id || null;
     this.item = {
       delay: 0,
       message: "",
