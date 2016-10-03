@@ -26,11 +26,11 @@
     <th>{{ item.title }}</th>
     <td>{{ item.type }}</td>
     <td ng-show="isAdmin" class="fit">
-      <a class="btn btn-info btn-xs" role="button"
+      <a class="btn btn-info" role="button"
          ui-sref="steps.edit({ id: item.id })">
         <span class="glyphicon glyphicon-edit"></span> 編集
       </a>
-      <a class="btn btn-danger btn-xs" role="button"
+      <a class="btn btn-danger" role="button"
          ng-click="ctrl.deleteStep($index)">
         <span class="glyphicon glyphicon-trash"></span> 削除
       </a>

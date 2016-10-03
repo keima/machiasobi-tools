@@ -16,14 +16,16 @@
     <tr ng-repeat="place in ctrl.places">
       <th>{{ place.name }}</th>
       <td>
+        <span ng-show="place.item.error"
+              class="bg-danger text-danger">取得失敗</span>
         <span ng-show="place.item.isPostponed"
-              class="text-danger">中止</span>
-        <span ng-show="!place.item.isPostponed && place.item.delay > 0"
-              class="text-warning">遅れ</span>
-        <span ng-show="!place.item.isPostponed && place.item.delay < 0"
-              class="text-info">前倒し</span>
-        <span ng-show="!place.item.isPostponed && place.item.delay === 0"
-              class="text-success">定刻通り</span>
+              class="bg-danger">中止</span>
+        <span ng-show="!place.item.error && !place.item.isPostponed && place.item.delay > 0"
+              class="bg-warning">遅れ</span>
+        <span ng-show="!place.item.error && !place.item.isPostponed && place.item.delay < 0"
+              class="bg-info">前倒し</span>
+        <span ng-show="!place.item.error && !place.item.isPostponed && place.item.delay === 0"
+              class="bg-success">定刻通り</span>
       </td>
       <td>{{ ctrl.abs(place.item.delay) }}分</td>
       <td>{{ place.item.message }}</td>
