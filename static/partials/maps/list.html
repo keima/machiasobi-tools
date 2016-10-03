@@ -11,12 +11,12 @@
     <td>ID</td>
     <th>名前</th>
     <td>作成日</td>
+    <td ng-show="isAdmin" class="button"> </td>
   </tr>
   </thead>
 
   <tbody>
-  <tr ng-repeat="item in ctrl.items"
-      ui-sref="maps.detail({id:item.id})">
+  <tr ng-repeat="item in ctrl.items">
     <td ng-show="isAdmin">
       <span class="text-info glyphicon glyphicon-eye-open" ng-show="item.isPublic"></span>
       <span class="text-warning glyphicon glyphicon-eye-close" ng-hide="item.isPublic"></span>
@@ -24,6 +24,11 @@
     <td>{{ item.id }}</td>
     <th>{{ item.name }}</th>
     <td>{{ item.createdAt | date:"yyyy/MM/dd HH:mm" }}</td>
+    <td ng-show="isAdmin">
+      <a class="btn btn-info" role="button"
+         ui-sref="maps.detail({id:item.id})"><span
+        class="glyphicon glyphicon-edit"></span>編集</a>
+    </td>
   </tr>
   </tbody>
 
