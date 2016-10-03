@@ -41,7 +41,11 @@ angular.module('myApp')
         templateUrl: "partials/delay/list.html"
       })
       .state('delay.input', {
-        url: '',
+        url: '/input',
+        templateUrl: "partials/delay/input.html"
+      })
+      .state('delay.input.edit', {
+        url: '/input/:id',
         templateUrl: "partials/delay/input.html"
       })
 

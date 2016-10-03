@@ -6,8 +6,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
-    "browser-sync": "2.x",
-    "coffee-script": "1.x",
+    "browser-sync": "~2.17.0",
+    "coffee-script": "~1.11.1",
     "gulp": "~3.9",
     "gulp-angular-filesort": "^1.1.1",
     "gulp-clean-css": "^2.0.6",
